@@ -25,8 +25,7 @@ package:
     - conan install . -if build/ -s build_type=Release
     - conan build . -bf build/
     - conan export . spiessensm/dev
-    - conan remote add gitlab https://gitlab.com/api/v4/projects/24373418/packages/conan
-    - CONAN_LOGIN_USERNAME=ci_user CONAN_PASSWORD=${CI_JOB_TOKEN} conan upload Flow/2.0@spiessensm/dev --all --remote=gitlab
+    - CONAN_LOGIN_USERNAME=ci_user CONAN_PASSWORD=${CI_JOB_TOKEN} conan upload Flow/2.0@spiessensm/dev --all --remote=spiessensm
 
 release:
   stage: deploy
@@ -36,5 +35,4 @@ release:
     - conan install . -if build/ -s build_type=Release
     - conan build . -bf build/
     - conan export . spiessensm/stable
-    - conan remote add gitlab https://gitlab.com/api/v4/projects/24373418/packages/conan
-    - CONAN_LOGIN_USERNAME=ci_user CONAN_PASSWORD=${CI_JOB_TOKEN} conan upload Flow/${CI_COMMIT_TAG}@spiessensm/stable --all --remote=gitlab
+    - CONAN_LOGIN_USERNAME=ci_user CONAN_PASSWORD=${CI_JOB_TOKEN} conan upload Flow/${CI_COMMIT_TAG}@spiessensm/stable --all --remote=spiessensm
