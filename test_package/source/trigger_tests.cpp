@@ -169,7 +169,7 @@ static void consumer(InTrigger* _unitUnderTest,
 
 TEST(Trigger_TestBench, Threadsafe)
 {
-	const unsigned long long count = 100000;
+	const unsigned long long count = 1000;
 	bool success = true;
 
 	std::thread producerAThread(producer, &unitUnderTestOut, count);
