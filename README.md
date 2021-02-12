@@ -3,10 +3,16 @@
 [![pipeline status](https://gitlab.com/m-spiessens/Flow/badges/dev/pipeline.svg)](https://gitlab.com/m-spiessens/Flow/-/commits/master)
 [![coverage report](https://gitlab.com/m-spiessens/Flow/badges/dev/coverage.svg)](https://gitlab.com/m-spiessens/Flow/-/commits/master)
 
-[We have conan packages!](https://gitlab.com/m-spiessens/Flow/-/packages)
-
 Flow is a pipes and filters implementation tailored for (but not exclusive to) ARM Cortex-M microcontrollers. It provides 3 concepts: component, port and connection.
 A minimal cooperative scheduler helps you build low-power, reactive applications with ease.
+
+## Get Flow!
+
+[We have conan packages!](https://gitlab.com/m-spiessens/spiessensm/-/packages)
+
+```bash
+conan remote add spiessensm https://gitlab.com/api/v4/projects/24373418/packages/conan
+```
 
 ## Concepts
 
