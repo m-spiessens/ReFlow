@@ -87,7 +87,7 @@ TEST(Queue_TestBench, EnqueueDequeueItem)
 		CHECK(unitUnderTest[i]->enqueue(stimulus));
 		CHECK(!unitUnderTest[i]->isEmpty());
 		Data response = Data();
-		CHECK(unitUnderTest[i]->elements() == 1)
+		CHECK(unitUnderTest[i]->elements() == 1);
 		CHECK(unitUnderTest[i]->peek(response));
 		CHECK(stimulus == response);
 		response = Data();
@@ -229,7 +229,7 @@ TEST(Queue_TestBench, ElementsOverflow)
 			CHECK(unitUnderTest[u]->enqueue(stimulus));
 			CHECK(!unitUnderTest[u]->isEmpty());
 			Data response = Data();
-			CHECK(unitUnderTest[u]->elements() == 1)
+			CHECK(unitUnderTest[u]->elements() == 1);
 			CHECK(unitUnderTest[u]->peek(response));
 			CHECK(stimulus == response);
 			response = Data();

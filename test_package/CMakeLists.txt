@@ -45,7 +45,7 @@ PRIVATE
 target_link_libraries(FlowTest 
     Threads::Threads
     CONAN_PKG::Flow
-    CONAN_PKG::CppUTest
+    CONAN_PKG::cpputest
 )
 
 add_executable(FlowCoverage "")
@@ -96,5 +96,5 @@ PRIVATE
 
 target_link_libraries(FlowCoverage 
     Threads::Threads
-    CONAN_PKG::CppUTest
+    CONAN_PKG::cpputest
 )

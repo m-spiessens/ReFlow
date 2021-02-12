@@ -2,7 +2,7 @@ from conans import ConanFile, CMake
 import os
 
 class FlowTest(ConanFile):
-      requires = "CppUTest/3.8@spiessensm/stable", "Flow/2.0@spiessensm/testing"
+      requires = "cpputest/4.0", "Flow/2.0@spiessensm/testing"
       settings = "os", "compiler", "build_type", "arch"
       options = { "coverage": [True, False] }
       default_options = { "coverage": False }
