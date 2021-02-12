@@ -202,7 +202,7 @@ TEST(Queue_TestBench, Threadsafe)
 	{
 		CHECK(unitUnderTest[i]->isEmpty());
 
-		const unsigned long long numberOfItems = 1000000;
+		const unsigned long long numberOfItems = 1000;
 		bool success = true;
 
 		std::thread producerThread(producer, unitUnderTest[i], numberOfItems);

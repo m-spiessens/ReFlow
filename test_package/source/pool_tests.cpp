@@ -157,7 +157,7 @@ TEST(Pool_TestBench, Threadsafe)
 	{
 		CHECK(unitUnderTest[i]->haveAvailable());
 
-		const unsigned long long numberOfItems = 1000000;
+		const unsigned long long numberOfItems = 1000;
 		bool success = true;
 
 		for (unsigned int t = 0; t < POOL_SIZE[i]; t++)

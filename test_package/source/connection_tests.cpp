@@ -159,7 +159,7 @@ TEST(ConnectionOfType_TestBench, Threadsafe)
 	// Connection should be empty.
 	CHECK(!unitUnderTest->peek());
 
-	const unsigned long long count = 1000000;
+	const unsigned long long count = 1000;
 	bool success = true;
 
 	std::thread producerThread(producer, unitUnderTest, count);

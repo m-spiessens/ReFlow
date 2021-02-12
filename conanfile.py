@@ -5,7 +5,7 @@ class Flow(ConanFile):
 	version = "2.0"
 	description = """Flow is a pipes and filters implementation tailored for microcontrollers. 
 		It provides 3 base concepts: component, port and connection."""
-	url = "https://github.com/CynaraKrewe/Flow"
+	url = "https://gitlab.com/m-spiessens/Flow"
 	license = "MIT"
 	author = "Mathias Spiessens"
 	build_policy = "missing"

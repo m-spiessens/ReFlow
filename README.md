@@ -1,9 +1,9 @@
 # Flow {#mainpage}
 
-[![Build Status](https://travis-ci.com/CynaraKrewe/Flow.svg?branch=master)](https://travis-ci.com/CynaraKrewe/Flow)
-[![Coverage Status](https://coveralls.io/repos/github/CynaraKrewe/Flow/badge.svg?branch=master)](https://coveralls.io/github/CynaraKrewe/Flow?branch=master)
+[![pipeline status](https://gitlab.com/m-spiessens/Flow/badges/dev/pipeline.svg)](https://gitlab.com/m-spiessens/Flow/-/commits/master)
+[![coverage report](https://gitlab.com/m-spiessens/Flow/badges/dev/coverage.svg)](https://gitlab.com/m-spiessens/Flow/-/commits/master)
 
-[We have conan packages!](https://bintray.com/cynarakrewe/CynaraConan)
+[We have conan packages!](https://gitlab.com/m-spiessens/Flow/-/packages)
 
 Flow is a pipes and filters implementation tailored for (but not exclusive to) ARM Cortex-M microcontrollers. It provides 3 concepts: component, port and connection.
 A minimal cooperative scheduler helps you build low-power, reactive applications with ease.

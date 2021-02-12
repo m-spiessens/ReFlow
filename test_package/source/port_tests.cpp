@@ -169,7 +169,7 @@ static void consumer(InPort<Data>* _unitUnderTest,
 
 TEST(Port_TestBench, Threadsafe)
 {
-	const unsigned long long count = 1000000;
+	const unsigned long long count = 1000;
 	bool success = true;
 
 	std::thread producerThread(producer, outUnitUnderTest, count);
