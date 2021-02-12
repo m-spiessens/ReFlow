@@ -1,7 +1,7 @@
 # Flow {#mainpage}
 
-[![pipeline status](https://gitlab.com/m-spiessens/Flow/badges/dev/pipeline.svg)](https://gitlab.com/m-spiessens/Flow/-/commits/master)
-[![coverage report](https://gitlab.com/m-spiessens/Flow/badges/dev/coverage.svg)](https://gitlab.com/m-spiessens/Flow/-/commits/master)
+[![pipeline status](https://gitlab.com/m-spiessens/Flow/badges/master/pipeline.svg)](https://gitlab.com/m-spiessens/Flow/-/commits/master)
+[![coverage report](https://gitlab.com/m-spiessens/Flow/badges/master/coverage.svg)](https://gitlab.com/m-spiessens/Flow/-/commits/master)
 
 Flow is a pipes and filters implementation tailored for (but not exclusive to) ARM Cortex-M microcontrollers. It provides 3 concepts: component, port and connection.
 A minimal cooperative scheduler helps you build low-power, reactive applications with ease.
