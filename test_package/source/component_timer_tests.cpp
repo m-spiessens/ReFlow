@@ -1,6 +1,6 @@
 /* The MIT License (MIT)
  *
- * Copyright (c) 2020 Cynara Krewe
+ * Copyright (c) 2021 Cynara Krewe
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software, hardware and associated documentation files (the "Solution"), to deal
@@ -39,13 +39,13 @@ TEST_GROUP(Component_SoftwareTimer_TestBench)
 {
 	SoftwareTimer* unitUnderTest;
 	Connection* inResponseConnection;
-	InPort<Tick> inResponse{ nullptr };
+	InPort<void> inResponse{ nullptr };
 
 	void setup()
 	{
 		unitUnderTest = new SoftwareTimer(100);
 
-		inResponseConnection = connect(unitUnderTest->outTick, inResponse);
+		inResponseConnection = connect(unitUnderTest->outTimeout, inResponse);
 	}
 
 	void teardown()
@@ -80,9 +80,7 @@ TEST(Component_SoftwareTimer_TestBench, TickPeriod100)
 
 	unitUnderTest->isr();
 
-	Tick tick = 1;
-	CHECK(inResponse.receive(tick));
-	CHECK(tick == TICK);
+	CHECK(inResponse.receive());
 
 	for (unsigned int i = 0; i < 100 - 1; i++)
 	{
@@ -93,8 +91,7 @@ TEST(Component_SoftwareTimer_TestBench, TickPeriod100)
 
 	unitUnderTest->isr();
 
-	CHECK(inResponse.receive(tick));
-	CHECK(tick == TICK);
+	CHECK(inResponse.receive());
 
 	for (unsigned int i = 0; i < 100 - 1; i++)
 	{
@@ -105,6 +102,5 @@ TEST(Component_SoftwareTimer_TestBench, TickPeriod100)
 
 	unitUnderTest->isr();
 
-	CHECK(inResponse.receive(tick));
-	CHECK(tick == TICK);
+	CHECK(inResponse.receive());
 }

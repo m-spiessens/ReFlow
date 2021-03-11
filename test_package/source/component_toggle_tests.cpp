@@ -1,6 +1,6 @@
 /* The MIT License (MIT)
  *
- * Copyright (c) 2020 Cynara Krewe
+ * Copyright (c) 2021 Cynara Krewe
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software, hardware and associated documentation files (the "Solution"), to deal
@@ -37,7 +37,7 @@ using Flow::connect;
 
 TEST_GROUP(Component_Toggle_TestBench)
 {
-	OutPort<Tick>* outStimulus;
+	OutPort<void>* outStimulus;
 	Connection* outStimulusConnection;
 	Toggle* unitUnderTest;
 	Connection* inResponseConnection;
@@ -45,10 +45,10 @@ TEST_GROUP(Component_Toggle_TestBench)
 
 	void setup()
 	{
-		outStimulus = new OutPort<Tick>;
+		outStimulus = new OutPort<void>;
 		unitUnderTest = new Toggle();
 
-		outStimulusConnection = connect(outStimulus, unitUnderTest->tick);
+		outStimulusConnection = connect(outStimulus, unitUnderTest->in);
 		inResponseConnection = connect(unitUnderTest->out, inResponse);
 	}
 
@@ -75,7 +75,7 @@ TEST(Component_Toggle_TestBench, DormantWithoutStimulus)
 
 TEST(Component_Toggle_TestBench, Toggle)
 {
-	CHECK(outStimulus->send(TICK));
+	CHECK(outStimulus->send());
 
 	CHECK(!inResponse.peek());
 
@@ -92,7 +92,7 @@ TEST(Component_Toggle_TestBench, Toggle)
 
 	CHECK(!inResponse.peek());
 
-	CHECK(outStimulus->send(TICK));
+	CHECK(outStimulus->send());
 
 	unitUnderTest->run();
 
@@ -108,7 +108,7 @@ TEST(Component_Toggle_TestBench, Toggle)
 
 	CHECK(!inResponse.peek());
 
-	CHECK(outStimulus->send(TICK));
+	CHECK(outStimulus->send());
 
 	unitUnderTest->run();
 
@@ -119,7 +119,7 @@ TEST(Component_Toggle_TestBench, Toggle)
 
 	previousResponse = currentResponse;
 
-	CHECK(outStimulus->send(TICK));
+	CHECK(outStimulus->send());
 
 	unitUnderTest->run();
 
@@ -130,7 +130,7 @@ TEST(Component_Toggle_TestBench, Toggle)
 
 	previousResponse = currentResponse;
 
-	CHECK(outStimulus->send(TICK));
+	CHECK(outStimulus->send());
 
 	unitUnderTest->run();
 

@@ -1,6 +1,6 @@
 /* The MIT License (MIT)
  *
- * Copyright (c) 2020 Cynara Krewe
+ * Copyright (c) 2021 Cynara Krewe
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software, hardware and associated documentation files (the "Solution"), to deal
@@ -32,20 +32,19 @@ void SoftwareTimer::isr()
 {
 	sysTicks++;
 
-	if (period > 0)
+	if(period > 0)
 	{
 		if (sysTicks >= period)
 		{
 			sysTicks = 0;
-			outTick.send(TICK);
+			outTimeout.send();
 		}
 	}
 }
 
 void Toggle::run()
 {
-	Tick dummy;
-	if (tick.receive(dummy))
+	if(in.receive())
 	{
 		toggle = !toggle;
 		out.send(toggle);

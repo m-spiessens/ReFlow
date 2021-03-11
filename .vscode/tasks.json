@@ -29,9 +29,9 @@
             ]
         },
         {
-            "label": "Test Install",
+            "label": "Coverage Install",
             "type": "shell",
-            "command": "conan install . -if build/coverage/ -s build_type=Debug --build Flow/2.0@spiessensm/testing",
+            "command": "conan install . -if coverage/ -s build_type=Debug -o coverage=True",
             "dependsOn": [
                 "Export"
             ],
@@ -40,11 +40,11 @@
             }
         },
         {
-            "label": "Test Build",
+            "label": "Coverage Build",
             "type": "shell",
-            "command": "conan build . -bf build/coverage/",
+            "command": "conan build . -bf coverage/",
             "dependsOn": [
-                "Test Install"
+                "Coverage Install"
             ],
             "options": {
                 "cwd": "test_package/"
@@ -57,6 +57,15 @@
             "group": "test",
             "dependsOn": [
                 "Export"
+            ]
+        },
+        {
+            "label": "Coverage",
+            "type": "shell",
+            "command": "gcovr coverage/",
+            "group": "test",
+            "dependsOn": [
+                "Coverage Build"
             ]
         }
     ]

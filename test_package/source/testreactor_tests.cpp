@@ -1,6 +1,6 @@
 /* The MIT License (MIT)
  *
- * Copyright (c) 2020 Cynara Krewe
+ * Copyright (c) 2021 Cynara Krewe
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software, hardware and associated documentation files (the "Solution"), to deal
@@ -40,7 +40,7 @@ TEST_GROUP(TestReactor_TestBench)
 	Reactor* reactor;
 
 	SoftwareTimer* timer;
-	Counter<Tick>* counterA;
+	Counter<void>* counterA;
 	Counter<uint32_t>* counterB;
 
 	std::vector<Flow::Connection*> connections;
@@ -52,12 +52,12 @@ TEST_GROUP(TestReactor_TestBench)
 		reactor = new Reactor;
 
 		timer = new SoftwareTimer{1};
-		counterA = new Counter<Tick>{UINT32_MAX};
+		counterA = new Counter<void>{UINT32_MAX};
 		counterB = new Counter<uint32_t>{UINT32_MAX};
 
 		connections =
 		{
-			Flow::connect(timer->outTick, counterA->in),
+			Flow::connect(timer->outTimeout, counterA->in),
 			Flow::connect(counterA->out, counterB->in),
 			Flow::connect(counterB->out, inCount)
 		};

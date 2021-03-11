@@ -1,6 +1,6 @@
 /* The MIT License (MIT)
  *
- * Copyright (c) 2020 Cynara Krewe
+ * Copyright (c) 2021 Cynara Krewe
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software, hardware and associated documentation files (the "Solution"), to deal
@@ -77,147 +77,57 @@ Peek::Peek(Component* owner)
 	}
 }
 
-ConnectionTrigger::ConnectionTrigger(OutTrigger& sender, InTrigger& receiver) :
-	sender(sender), receiver(receiver)
+ConnectionOfType<void>::ConnectionOfType(OutPort<void>& sender, InPort<void>& receiver) :
+			sender(sender), receiver(receiver)
 {
 	sender.connect(this);
 	receiver.connect(this);
 }
 
-ConnectionTrigger::~ConnectionTrigger()
+ConnectionOfType<void>::~ConnectionOfType<void>()
 {
 	sender.disconnect();
 	receiver.disconnect();
 }
 
-bool ConnectionTrigger::send()
+template<>
+Connection* connect(OutPort<void>& sender, InPort<void>& receiver,
+		uint16_t size)
 {
-	bool available = !full();
+	(void)size;
 
-	if(available)
-	{
-		_send++;
-	}
-
-	return available;
+	return new ConnectionOfType<void>(sender, receiver);
 }
 
-bool ConnectionTrigger::receive()
+template<>
+Connection* connect(OutPort<void>* sender, InPort<void>& receiver,
+		uint16_t size)
 {
-	bool available = peek();
-
-	if(available)
-	{
-		_receive++;
-	}
-
-	return available;
-}
-
-bool ConnectionTrigger::peek() const
-{
-	return _send != _receive;
-}
-
-bool ConnectionTrigger::full() const
-{
-	return _send == static_cast<uint16_t>(_receive + UINT16_MAX);
-}
-
-InTrigger::InTrigger(Component* owner) :
-		owner(owner)
-{
-}
-
-bool InTrigger::receive()
-{
-	return this->isConnected() ? this->connection->receive() : false;
-}
-
-bool InTrigger::peek()
-{
-	return this->isConnected() ? this->connection->peek() : false;
-}
-
-void InTrigger::connect(ConnectionTrigger* connection)
-{
-	assert(!isConnected());
-	this->connection = connection;
-}
-
-void InTrigger::disconnect()
-{
-	this->connection = nullptr;
-}
-
-bool InTrigger::full() const
-{
-	if(connection != nullptr)
-	{
-		return connection->full();
-	}
-	else
-	{
-		return false;
-	}
-}
-
-bool InTrigger::isConnected() const
-{
-	return this->connection != nullptr;
-}
-
-bool OutTrigger::send()
-{
-	return this->isConnected() ? this->connection->send() : false;
-}
-
-bool OutTrigger::full()
-{
-	return this->isConnected() ? this->connection->full() : false;
-}
-
-void OutTrigger::connect(ConnectionTrigger* connection)
-{
-	assert(!isConnected());
-	this->connection = connection;
-}
-
-void OutTrigger::disconnect()
-{
-	this->connection = nullptr;
-}
-
-bool OutTrigger::isConnected() const
-{
-	return this->connection != nullptr;
-}
-
-Connection* connect(OutTrigger& sender, InTrigger& receiver)
-{
-	return new ConnectionTrigger(sender, receiver);
-}
-
-Connection* connect(OutTrigger* sender, InTrigger& receiver)
-{
+	(void)size;
 	assert(sender != nullptr);
 
-	return new ConnectionTrigger(*sender, receiver);
+	return new ConnectionOfType<void>(*sender, receiver);
 }
 
-Connection* connect(OutTrigger& sender, InTrigger* receiver)
+template<>
+Connection* connect(OutPort<void>& sender, InPort<void>* receiver,
+		uint16_t size)
 {
+	(void)size;
 	assert(receiver != nullptr);
 
-	return new ConnectionTrigger(sender, *receiver);
+	return new ConnectionOfType<void>(sender, *receiver);
 }
 
-Connection* connect(OutTrigger* sender, InTrigger* receiver)
+template<>
+Connection* connect(OutPort<void>* sender, InPort<void>* receiver,
+		uint16_t size)
 {
+	(void)size;
 	assert(sender != nullptr);
 	assert(receiver != nullptr);
 
-	return new ConnectionTrigger(*sender, *receiver);
+	return new ConnectionOfType<void>(*sender, *receiver);
 }
 
 } // namespace Flow

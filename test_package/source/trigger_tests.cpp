@@ -1,6 +1,6 @@
 /* The MIT License (MIT)
  *
- * Copyright (c) 2020 Cynara Krewe
+ * Copyright (c) 2021 Cynara Krewe
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software, hardware and associated documentation files (the "Solution"), to deal
@@ -31,14 +31,14 @@
 #include "data.h"
 
 using Flow::Connection;
-using Flow::InTrigger;
-using Flow::OutTrigger;
+using Flow::InPort;
+using Flow::OutPort;
 using Flow::connect;
 
 TEST_GROUP(Trigger_TestBench)
 {
-	OutTrigger unitUnderTestOut;
-	InTrigger unitUnderTestIn{  nullptr  };
+	OutPort<void> unitUnderTestOut;
+	InPort<void> unitUnderTestIn{  nullptr  };
 	Connection* connection;
 
 	void setup()
@@ -139,7 +139,7 @@ TEST(Trigger_TestBench, SendReceiveTriggerFullEmptyWithOverflow)
 	CHECK(!unitUnderTestIn.receive());
 }
 
-static void producer(OutTrigger* _unitUnderTest,
+static void producer(OutPort<void>* _unitUnderTest,
 		const unsigned long long count)
 {
 	for (unsigned long long c = 0; c <= count; c++)
@@ -149,7 +149,7 @@ static void producer(OutTrigger* _unitUnderTest,
 	}
 }
 
-static void consumer(InTrigger* _unitUnderTest,
+static void consumer(InPort<void>* _unitUnderTest,
 		const unsigned long long count, bool* success)
 {
 	unsigned long long c = 0;

@@ -1,6 +1,6 @@
 /* The MIT License (MIT)
  *
- * Copyright (c) 2020 Cynara Krewe
+ * Copyright (c) 2021 Cynara Krewe
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software, hardware and associated documentation files (the "Solution"), to deal
@@ -95,6 +95,57 @@ public:
 	 * \brief Is the connection full?
 	 */
 	virtual bool full() const = 0;
+};
+
+template<>
+class ConnectionOfType<void> :
+		public Connection
+{
+public:
+	ConnectionOfType<void>(OutPort<void>& sender, InPort<void>& receiver);
+
+	virtual ~ConnectionOfType<void>();
+
+	bool send()
+	{
+		bool available = !full();
+
+		if(available)
+		{
+			_send++;
+		}
+
+		return available;
+	}
+
+	bool receive()
+	{
+		bool available = peek();
+
+		if(available)
+		{
+			_receive++;
+		}
+
+		return available;
+	}
+
+	bool peek() const
+	{
+		return _send != _receive;
+	}
+
+	bool full() const
+	{
+		return _send == static_cast<uint16_t>(_receive + UINT16_MAX);
+	}
+
+private:
+	OutPort<void>& sender;
+	InPort<void>& receiver;
+
+	volatile uint16_t _send = 0;
+	volatile uint16_t _receive = 0;
 };
 
 /**
@@ -281,8 +332,7 @@ public:
 	 * \brief Create an input port.
 	 */
 	explicit InPort<Type>(Component* owner) :
-			Peek(owner),
-			connection(nullptr)
+			Peek(owner)
 	{
 	}
 
@@ -362,6 +412,58 @@ private:
 	}
 };
 
+template<>
+class InPort<void> :
+		public Peek
+{
+public:
+	explicit InPort<void>(Component* owner) :
+			Peek(owner)
+	{}
+
+	bool receive()
+	{
+		return this->isConnected() ? this->connection->receive() : false;
+	}
+
+	bool peek() const final override
+	{
+		return this->isConnected() ? this->connection->peek() : false;
+	}
+
+	void connect(ConnectionOfType<void>* connection)
+	{
+		assert(!isConnected());
+		this->connection = connection;
+	}
+
+	void disconnect()
+	{
+		this->connection = nullptr;
+	}
+
+	bool full() const
+	{
+		if(connection != nullptr)
+		{
+			return connection->full();
+		}
+		else
+		{
+			return false;
+		}
+	}
+
+private:
+	Component* owner = nullptr;
+	ConnectionOfType<void>* connection = nullptr;
+
+	bool isConnected() const
+	{
+		return this->connection != nullptr;
+	}
+};
+
 /**
  * \brief An output port of a component.
  */
@@ -372,8 +474,7 @@ public:
 	/**
 	 * \brief Create an output port.
 	 */
-	OutPort<Type>() :
-			connection(nullptr)
+	OutPort<Type>()
 	{
 	}
 
@@ -424,7 +525,41 @@ public:
 	}
 
 private:
-	ConnectionOfType<Type>* connection;
+	ConnectionOfType<Type>* connection = nullptr;
+
+	bool isConnected() const
+	{
+		return this->connection != nullptr;
+	}
+};
+
+template<>
+class OutPort<void>
+{
+public:
+	bool send()
+	{
+		return this->isConnected() ? this->connection->send() : false;
+	}
+
+	bool full()
+	{
+		return this->isConnected() ? this->connection->full() : false;
+	}
+
+	void connect(ConnectionOfType<void>* connection)
+	{
+		assert(!isConnected());
+		this->connection = connection;
+	}
+
+	void disconnect()
+	{
+		this->connection = nullptr;
+	}
+
+private:
+	ConnectionOfType<void>* connection = nullptr;
 
 	bool isConnected() const
 	{
@@ -436,9 +571,9 @@ private:
  * \brief A bidirectional port of a component.
  */
 template<typename Type>
-class InOutPort
-:	public InPort<Type>,
-	public OutPort<Type>
+class InOutPort :	
+		public InPort<Type>,
+		public OutPort<Type>
 {
 public:
 	/**
@@ -471,6 +606,10 @@ Connection* connect(OutPort<Type>& sender, InPort<Type>& receiver,
 	return new ConnectionFIFO<Type>(sender, receiver, size);
 }
 
+template<>
+Connection* connect(OutPort<void>& sender, InPort<void>& receiver,
+		uint16_t size);
+
 /**
  * \brief Connect an output port to an input port.
  *
@@ -486,6 +625,10 @@ Connection* connect(OutPort<Type>* sender, InPort<Type>& receiver,
 
 	return new ConnectionFIFO<Type>(*sender, receiver, size);
 }
+
+template<>
+Connection* connect(OutPort<void>* sender, InPort<void>& receiver,
+		uint16_t size);
 
 /**
  * \brief Connect an output port to an input port.
@@ -503,6 +646,10 @@ Connection* connect(OutPort<Type>& sender, InPort<Type>* receiver,
 	return new ConnectionFIFO<Type>(sender, *receiver, size);
 }
 
+template<>
+Connection* connect(OutPort<void>& sender, InPort<void>* receiver,
+		uint16_t size);
+
 /**
  * \brief Connect an output port to an input port.
  *
@@ -519,6 +666,10 @@ Connection* connect(OutPort<Type>* sender, InPort<Type>* receiver,
 
 	return new ConnectionFIFO<Type>(*sender, *receiver, size);
 }
+
+template<>
+Connection* connect(OutPort<void>* sender, InPort<void>* receiver,
+		uint16_t size);
 
 /**
  * \brief Connect two bidirectional ports.
@@ -582,192 +733,6 @@ Connection* connect(InOutPort<Type>* portA, InOutPort<Type>* portB,
 
 	return new BiDirectionalConnectionFIFO<Type>(*portA, *portB, size);
 }
-
-class InTrigger;
-class OutTrigger;
-
-class ConnectionTrigger :
-		public Connection
-{
-public:
-	/**
-	 * \brief Create a connection between an output and input trigger.
-	 *
-	 * \param sender The output trigger to be connected.
-	 * \param receiver The input trigger to be connected.
-	 */
-	ConnectionTrigger(OutTrigger& sender, InTrigger& receiver);
-
-	/**
-	 * \brief Destructor.
-	 */
-	virtual ~ConnectionTrigger();
-
-	/**
-	 * \brief Send a trigger over the connection.
-	 *
-	 * If the buffering capacity of the connection is full the given trigger is not added.
-	 *
-	 * \return The trigger was successfully sent.
-	 */
-	bool send();
-
-	/**
-	 * \brief Receive a trigger from the connection.
-	 *
-	 * \return A trigger was successfully received.
-	 */
-	bool receive();
-
-	/**
-	 * \brief Is a trigger available for receiving?
-	 */
-	bool peek() const;
-
-	/**
-	 * \brief Is the connection full?
-	 */
-	bool full() const;
-
-private:
-	OutTrigger& sender;
-	InTrigger& receiver;
-
-	volatile uint16_t _send = 0;
-	volatile uint16_t _receive = 0;
-};
-
-class InTrigger
-{
-public:
-	/**
-	 * \brief Create an input trigger.
-	 */
-	explicit InTrigger(Component* owner);
-
-	/**
-	 * \brief Receive a trigger.
-	 *
-	 * Can be called concurrently with respect to send() of the connected output trigger.
-	 *
-	 * \return A trigger was successfully received.
-	 */
-	bool receive();
-
-	/**
-	 * \brief Is a trigger available for receiving?
-	 */
-	bool peek();
-
-	/**
-	 * \brief Associate this input trigger with a connection.
-	 *
-	 * \note Recommendation: use Flow::connect() instead.
-	 *
-	 * \param connection The connection to be associated.
-	 */
-	void connect(ConnectionTrigger* connection);
-
-	/**
-	 * \brief Dissociate this input trigger and it's connection.
-	 *
-	 * \note Recommendation: use Flow::disconnect() instead.
-	 */
-	void disconnect();
-
-	/**
-	 * \brief Check if the connection is full.
-	 *
-	 * \return True when the connection is full.
-	 * False when the connection is not full or the trigger is not connected.
-	 */
-	bool full() const;
-
-private:
-	Component* owner = nullptr;
-	ConnectionTrigger* connection = nullptr;
-
-	/**
-	 * \brief Is this input trigger associated with a connection?
-	 */
-	bool isConnected() const;
-};
-
-/**
- * \brief An output trigger of a component.
- */
-class OutTrigger
-{
-public:
-	/**
-	 * \brief Send a trigger.
-	 *
-	 * Can be called concurrently with respect to receive() of the connected input trigger.
-	 * If the buffering capacity of the connection is full or the trigger is not connected
-	 * the given trigger is not added.
-	 *
-	 * \return The trigger was successfully sent.
-	 */
-	bool send();
-
-	/**
-	 * \brief Is the connection associated with this output trigger full?
-	 */
-	bool full();
-
-	/**
-	 * \brief Associate this output trigger with a connection.
-	 *
-	 * \note Recommendation: use Flow::connect() instead.
-	 *
-	 * \param connection The connection to be associated.
-	 */
-	void connect(ConnectionTrigger* connection);
-
-	/**
-	 * \brief Dissociate this output trigger and it's connection.
-	 *
-	 * \note Recommendation: use Flow::disconnect() instead.
-	 */
-	void disconnect();
-
-private:
-	ConnectionTrigger* connection = nullptr;
-
-	bool isConnected() const;
-};
-
-/**
- * \brief Connect an output trigger to an input trigger.
- *
- * \param sender The output trigger to be connected.
- * \param receiver The input trigger to be connected.
- */
-Connection* connect(OutTrigger& sender, InTrigger& receiver);
-
-/**
- * \brief Connect an output trigger to an input trigger.
- *
- * \param sender The output trigger to be connected.
- * \param receiver The input trigger to be connected.
- */
-Connection* connect(OutTrigger* sender, InTrigger& receiver);
-
-/**
- * \brief Connect an output trigger to an input trigger.
- *
- * \param sender The output trigger to be connected.
- * \param receiver The input trigger to be connected.
- */
-Connection* connect(OutTrigger& sender, InTrigger* receiver);
-
-/**
- * \brief Connect an output trigger to an input trigger.
- *
- * \param sender The output trigger to be connected.
- * \param receiver The input trigger to be connected.
- */
-Connection* connect(OutTrigger* sender, InTrigger* receiver);
 
 } //namespace Flow
 

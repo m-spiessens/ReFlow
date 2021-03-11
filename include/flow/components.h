@@ -1,6 +1,6 @@
 /* The MIT License (MIT)
  *
- * Copyright (c) 2020 Cynara Krewe
+ * Copyright (c) 2021 Cynara Krewe
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software, hardware and associated documentation files (the "Solution"), to deal
@@ -33,7 +33,8 @@
  * The '!' operator is used to apply the inversion.
  */
 template<typename Type>
-class Invert: public Flow::Component
+class Invert :
+		public Flow::Component
 {
 public:
 	Flow::InPort<Type> in{this};
@@ -55,7 +56,8 @@ public:
  * A static_cast is used to perform the conversion.
  */
 template<typename From, typename To>
-class Convert: public Flow::Component
+class Convert :
+		public Flow::Component
 {
 public:
 	Flow::InPort<From> inFrom{this};
@@ -78,7 +80,8 @@ public:
  * When the counter is at range - 1 and another value is received it wraps around to 0.
  */
 template<typename Type>
-class Counter: public Flow::Component
+class Counter :
+		public Flow::Component
 {
 public:
 	Flow::InPort<Type> in{this};
@@ -118,11 +121,53 @@ private:
 	const uint_fast32_t range;
 };
 
+template<>
+class Counter<void> :
+		public Flow::Component
+{
+public:
+	Flow::InPort<void> in{ this };
+	Flow::OutPort<uint32_t> out;
+
+	/**
+	 * \brief Create a counter.
+	 *
+	 * \param range The range specification of the counter.
+	 */
+	explicit Counter(uint32_t range) :
+			range(range)
+	{
+	}
+
+	void run() final override
+	{
+		bool more = false;
+		while (in.receive())
+		{
+			counter++;
+			if (counter == range)
+			{
+				counter = 0;
+			}
+			more = true;
+		}
+		if (more)
+		{
+			out.send(counter);
+		}
+	}
+
+private:
+	uint_fast32_t counter = 0;
+	const uint_fast32_t range;
+};
+
 /**
  * \brief Count up to the upper limit then count down to the lower limit and repeat.
  */
 template<typename Type>
-class UpDownCounter: public Flow::Component
+class UpDownCounter :
+		public Flow::Component
 {
 public:
 	Flow::InPort<Type> in{this};
@@ -174,11 +219,65 @@ private:
 	bool up = true;
 };
 
+template<>
+class UpDownCounter<void> :
+		public Flow::Component
+{
+public:
+	Flow::InPort<void> in{this};
+	Flow::OutPort<uint32_t> out;
+
+	explicit UpDownCounter(uint32_t downLimit, uint32_t upLimit,
+			uint32_t startValue) :
+			counter(startValue), upLimit(upLimit), downLimit(downLimit)
+	{
+	}
+
+	void run() final override
+	{
+		bool more = false;
+		while (in.receive())
+		{
+			if (up)
+			{
+				counter++;
+			}
+			else
+			{
+				counter--;
+			}
+
+			if (counter == upLimit)
+			{
+				up = false;
+			}
+			else if (counter == downLimit)
+			{
+				up = true;
+			}
+
+			more = true;
+		}
+
+		if (more)
+		{
+			out.send(counter);
+		}
+	}
+
+private:
+	uint_fast32_t counter;
+	const uint_fast32_t upLimit;
+	const uint_fast32_t downLimit;
+	bool up = true;
+};
+
 /**
  * Provides one-to-many semantic.
  */
-template<typename Type, uint8_t outputs>
-class Split: public Flow::Component
+template<typename Type, uint_fast8_t outputs>
+class Split :
+		public Flow::Component
 {
 public:
 	Flow::InPort<Type> in{this};
@@ -197,6 +296,26 @@ public:
 	}
 };
 
+template<uint_fast8_t outputs>
+class Split<void, outputs> :
+		public Flow::Component
+{
+public:
+	Flow::InPort<void> in{this};
+	Flow::OutPort<void> out[outputs];
+
+	void run() final override
+	{
+		if (in.receive())
+		{
+			for (uint_fast8_t i = 0; i < outputs; i++)
+			{
+				out[i].send();
+			}
+		}
+	}
+};
+
 /**
  * Provides many-to-one semantic.
  *
@@ -205,7 +324,8 @@ public:
  * all values of a input port will be processed before going to the next input port.
  */
 template<typename Type, uint_fast8_t inputs>
-class Combine: public Flow::Component
+class Combine :
+		public Flow::Component
 {
 public:
 	Flow::InPort<Type>* in[inputs];
@@ -240,8 +360,41 @@ public:
 	}
 };
 
-typedef char Tick;
-#define TICK ((Tick)0)
+template<uint_fast8_t inputs>
+class Combine<void, inputs> :
+		public Flow::Component
+{
+public:
+	Flow::InPort<void>* in[inputs];
+	Flow::OutPort<void> out;
+
+	Combine()
+	{
+		for (uint_fast8_t i = 0; i < inputs; i++)
+		{
+			in[i] = new Flow::InPort<void>(this);
+		}
+	}
+
+	~Combine()
+	{
+		for (uint_fast8_t i = 0; i < inputs; i++)
+		{
+			delete in[i];
+		}
+	}
+
+	void run() final override
+	{
+		for (uint_fast8_t i = 0; i < inputs; i++)
+		{
+			while (in[i]->receive())
+			{
+				out.send();
+			}
+		}
+	}
+};
 
 /**
  * \brief Give an indication every period.
@@ -252,7 +405,7 @@ typedef char Tick;
 class SoftwareTimer
 {
 public:
-	Flow::OutPort<Tick> outTick;
+	Flow::OutPort<void> outTimeout;
 
 	explicit SoftwareTimer(uint32_t period);
 
@@ -266,10 +419,11 @@ private:
 /**
  * \brief Toggles every indication (tick).
  */
-class Toggle: public Flow::Component
+class Toggle :
+		public Flow::Component
 {
 public:
-	Flow::InPort<Tick> tick{this};
+	Flow::InPort<void> in{ this };
 	Flow::OutPort<bool> out;
 
 	void run() final override;
