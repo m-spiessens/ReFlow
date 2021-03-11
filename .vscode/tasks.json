@@ -67,6 +67,15 @@
             "dependsOn": [
                 "Coverage Build"
             ]
+        },
+        {
+            "label": "Deploy",
+            "type": "shell",
+            "command": "conan export . spiessensm/dev; conan upload Flow/2.0@spiessensm/dev --all --remote=artifactory",
+            "group": "test",
+            "dependsOn": [
+                "Test"
+            ]
         }
     ]
 }
