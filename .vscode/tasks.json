@@ -31,7 +31,7 @@
         {
             "label": "Coverage Install",
             "type": "shell",
-            "command": "conan install . -if coverage/ -s build_type=Debug -o coverage=True",
+            "command": "conan install . -if coverage/ -s build_type=Debug -o coverage=True  --build Flow/2.0@spiessensm/testing",
             "dependsOn": [
                 "Export"
             ],
