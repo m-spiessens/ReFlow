@@ -8,10 +8,10 @@ A minimal cooperative scheduler helps you build low-power, reactive applications
 
 ## Get Flow!
 
-[We have conan packages!](https://gitlab.com/m-spiessens/spiessensm/-/packages)
+[We have conan packages!](https://spiessensm.jfrog.io/ui/packages?packageType=conan&type=packages)
 
 ```bash
-conan remote add spiessensm https://gitlab.com/api/v4/projects/24373418/packages/conan
+conan remote add spiessensm https://spiessensm.jfrog.io/artifactory/api/conan/spiessensm
 ```
 
 ## Concepts
