@@ -61,7 +61,7 @@ A few different strategies might be a future extension.
 
 ### Blinky
 
-Blinky is a minimal example application that performs blinking of a LED. It runs on a [EK-TM4CEXL launchpad](http://www.ti.com/tool/EK-TM4C129EXL) with cooperative scheduling.
+Blinky is a minimal example application that performs blinking of a LED. It runs on a [EK-TM4C129EXL launchpad](http://www.ti.com/tool/EK-TM4C129EXL) with cooperative scheduling.
 
 Blinky is composed of 3 components: a timer, toggling and a digital output. The timer will generate a tick every configured period. The toggling will consume the tick and invert an internal boolean value. The boolean value is sent to the digital output, which has a LED attached.
 
@@ -79,7 +79,7 @@ The components (actually the ports of the components) are connected so they can 
 
 ```cpp
 // Connect the components of the application.
-Flow::connect(timer.outTick, toggle.tick);
+Flow::connect(timer.outTimeout, toggle.in);
 Flow::connect(toggle.out, led.inState);
 ```
 
@@ -94,5 +94,4 @@ while(true)
 	Flow::Reactor::run();
 }
 ```
-The full example can be found at [FlowBlinky](https://github.com/CynaraKrewe/FlowBlinky).
-A more complex example with PWM, UART, USB and ADC can be found at [FlowTM4C](https://github.com/CynaraKrewe/FlowTM4C).
+The full example can be found in `example/EK-TM4C129EXL`.

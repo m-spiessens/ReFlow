@@ -1,6 +1,6 @@
 /* The MIT License (MIT)
  *
- * Copyright (c) 2021 Cynara Krewe
+ * Copyright (c) 2021 Mathias Spiessens
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software, hardware and associated documentation files (the "Solution"), to deal
@@ -48,8 +48,8 @@ TEST_GROUP(Reactor_TestBench)
 		Flow::Reactor::reset();
 
 		timer = new SoftwareTimer{ 1 };
-		counterA = new Counter<void>{UINT32_MAX};
-		counterB = new Counter<uint32_t>{UINT32_MAX};
+		counterA = new Counter<void>{50};
+		counterB = new Counter<uint32_t>{101};
 
 		connections =
 		{

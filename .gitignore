@@ -12,6 +12,7 @@ Release
 /__pycache__/
 /documentation/
 test_package/build/
+test_package/debug/
 build/
 coverage/
 CMakeCache.txt

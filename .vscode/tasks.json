@@ -31,7 +31,7 @@
         {
             "label": "Coverage Install",
             "type": "shell",
-            "command": "conan install . -if coverage/ -s build_type=Debug -o coverage=True  --build Flow/2.0@spiessensm/testing",
+            "command": "conan install . -if coverage/ -s build_type=Debug -o coverage=True --build Flow/2.0@spiessensm/testing",
             "dependsOn": [
                 "Export"
             ],
@@ -51,6 +51,28 @@
             }
         },
         {
+            "label": "Debug Install",
+            "type": "shell",
+            "command": "conan install . -if debug/ -s build_type=Debug --build Flow/2.0@spiessensm/testing",
+            "dependsOn": [
+                "Export"
+            ],
+            "options": {
+                "cwd": "test_package/"
+            }
+        },
+        {
+            "label": "Debug Build",
+            "type": "shell",
+            "command": "conan build . -bf debug/",
+            "dependsOn": [
+                "Debug Install"
+            ],
+            "options": {
+                "cwd": "test_package/"
+            }
+        },
+        {
             "label": "Test",
             "type": "shell",
             "command": "conan test test_package Flow/2.0@spiessensm/testing -s build_type=Release --build Flow/2.0@spiessensm/testing",
@@ -62,7 +84,7 @@
         {
             "label": "Coverage",
             "type": "shell",
-            "command": "gcovr coverage/",
+            "command": "gcovr test_package/coverage/",
             "group": "test",
             "dependsOn": [
                 "Coverage Build"
@@ -71,7 +93,7 @@
         {
             "label": "Deploy",
             "type": "shell",
-            "command": "conan export . spiessensm/dev; conan upload Flow/2.0@spiessensm/dev --all --remote=artifactory",
+            "command": "conan export . spiessensm/dev; conan upload Flow/2.0@spiessensm/dev --all --remote=spiessensm",
             "group": "test",
             "dependsOn": [
                 "Test"
