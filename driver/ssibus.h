@@ -96,8 +96,7 @@ public:
 	 */
 	virtual bool transceive(uint8_t slave, uint8_t* const transmit,
 	        uint16_t transmitLength, uint8_t* const receive,
-	        uint16_t receiveLength, bool multipart = false,
-			bool waitMISO = false) = 0;
+	        uint16_t receiveLength, bool multipart = false) = 0;
 
 	virtual void attach(Complete& complete) = 0;
 
@@ -138,6 +137,8 @@ public:
 	{
 	}
 
+	virtual uint32_t size() const = 0;
+
 	/**
 	 * \brief Operation status.
 	 */
@@ -151,7 +152,6 @@ public:
 	uint8_t* receive = nullptr;
 	uint16_t receiveLength = 0;
 	bool multipart = false;
-	bool waitMISO = false;
 
 	uint32_t tag[4];
 
@@ -308,8 +308,7 @@ public:
 						        currentOperation->transmitLength,
 						        currentOperation->receive,
 						        currentOperation->receiveLength,
-								currentOperation->multipart,
-								currentOperation->waitMISO))
+								currentOperation->multipart))
 						{
 							break;
 						}
