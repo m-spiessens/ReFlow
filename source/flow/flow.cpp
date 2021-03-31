@@ -38,42 +38,52 @@ Component::Component()
 	Reactor::add(*this);
 }
 
+void Component::waitFor(Peek& port)
+{
+	assert(port.owner == this);
+	_waitFor = &port;
+}
+
 bool Component::tryRun()
 {
 	bool doRun = false;
 
-	Peek* peekable = this->peekable;
-	while(!doRun && peekable != nullptr)
+	if(_waitFor != nullptr)
 	{
-		doRun = peekable->peek();
-		peekable = peekable->next;
+		doRun = _waitFor->peek();
+	}
+	else
+	{
+		Peek* peekable = this->peekable;
+		while(!doRun && peekable != nullptr)
+		{
+			doRun = peekable->peek();
+			peekable = peekable->next;
+		}
 	}
 
 	if(doRun)
 	{
+		_waitFor = nullptr;
 		run();
 	}
 
 	return doRun;
 }
 
-Peek::Peek(Component* owner)
+Peek::Peek(Component* owner) :
+	owner(owner)
 {
 	if(owner != nullptr)
 	{
-		if(owner->peekable == nullptr)
+		Peek** tail = &owner->peekable;
+
+		while(*tail != nullptr)
 		{
-			owner->peekable = this;
+			tail = &(*tail)->next;
 		}
-		else
-		{
-			Peek* tail = owner->peekable;
-			while(tail->next != nullptr)
-			{
-				tail = tail->next;
-			}
-			tail->next = this;
-		}
+
+		*tail = this;
 	}
 }
 

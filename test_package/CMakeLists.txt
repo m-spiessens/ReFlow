@@ -39,6 +39,7 @@ PRIVATE
     source/connection_tests.cpp
     source/port_tests.cpp
     source/testreactor_tests.cpp
+    source/waitfor_tests.cpp
     ${PROJECT_BINARY_DIR}/source/flow/platform_cpputest.cpp
 )
 
@@ -92,6 +93,7 @@ PRIVATE
     source/connection_tests.cpp
     source/port_tests.cpp
     source/testreactor_tests.cpp
+    source/waitfor_tests.cpp
 )
 
 target_link_libraries(FlowCoverage 

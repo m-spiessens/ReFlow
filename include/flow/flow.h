@@ -190,7 +190,18 @@ public:
      */
     virtual void run() = 0;
 
+protected:
+	/**
+	 * \brief Wait until something is received on the port.
+	 *
+	 * Prevents this component from being scheduled.
+	 * Only when receiving a new item on the specified port will this component
+	 * be scheduled and able to continue its run() execution.
+	 */
+	void waitFor(Peek& port);
+
 private:
+    Peek* _waitFor = nullptr;
     Peek* peekable = nullptr;
 	Component* next = nullptr;
 
@@ -318,6 +329,11 @@ public:
 	virtual bool peek() const = 0;
 
 	Peek* next = nullptr;
+
+private:
+	const Component* const owner;
+
+	friend class Component;
 };
 
 /**
@@ -455,7 +471,6 @@ public:
 	}
 
 private:
-	Component* owner = nullptr;
 	ConnectionOfType<void>* connection = nullptr;
 
 	bool isConnected() const
