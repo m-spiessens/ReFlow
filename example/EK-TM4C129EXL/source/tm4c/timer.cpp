@@ -41,33 +41,102 @@
 namespace TM4C {
 namespace Timer {
 
-Base::Base(Number number) :
+Base::Base(uint8_t number) :
 		_number(number)
 {
-	assert(_number < Number::COUNT);
+	assert(_number < COUNT);
 }
 
-Number Base::number() const
+uint8_t Base::number() const
 {
 	return _number;
 }
 
 uint8_t Base::vector(Channel channel) const
 {
-	return _vector[(unsigned int)number()][(unsigned int)channel];
+	return _vector[number()][(unsigned int)channel];
 }
 
 uint32_t Base::peripheral() const
 {
-	return _peripheral[(unsigned int)number()];
+	return _peripheral[number()];
 }
 
 uint32_t Base::base() const
 {
-	return _base[(unsigned int)number()];
+	return _base[number()];
 }
 
-Continuous::Continuous(Number number, uint16_t periodMs) :
+SingleShot::SingleShot(uint8_t number) :
+		Base(number)
+{
+	while(!SysCtlPeripheralReady(peripheral()))
+	{
+		SysCtlPeripheralEnable(peripheral());
+	}
+}
+
+SingleShot::~SingleShot()
+{
+	SysCtlPeripheralDisable(peripheral());
+}
+
+void SingleShot::start()
+{
+	TimerClockSourceSet(base(), TIMER_CLOCK_SYSTEM);
+	TimerConfigure(base(), (TIMER_CFG_ONE_SHOT));
+	TimerControlStall(base(), TIMER_A, true);
+
+	Interrupt::VectorTable::enable(vector(Channel::A));
+}
+
+void SingleShot::stop()
+{
+	Interrupt::VectorTable::disable(vector(Channel::A));
+
+	TimerIntDisable(base(), TIMER_TIMA_TIMEOUT);
+	TimerDisable(base(), TIMER_A);
+}
+
+void SingleShot::run()
+{
+	uint16_t periodMs;
+	if(inStart.receive(periodMs))
+	{
+		if(periodMs != 0)
+		{
+			TimerIntDisable(base(), TIMER_TIMA_TIMEOUT);
+			TimerDisable(base(), TIMER_A);
+			TimerLoadSet(base(), TIMER_A, Clock::instance().getFrequency() / 1000 * periodMs);
+			TimerIntEnable(base(), TIMER_TIMA_TIMEOUT);
+
+			TimerEnable(base(), TIMER_A);
+		}
+		else
+		{
+			TimerIntDisable(base(), TIMER_TIMA_TIMEOUT);
+			TimerDisable(base(), TIMER_A);
+		}
+	}
+}
+
+void SingleShot::isr()
+{
+	uint32_t status = TimerIntStatus(base(), true);
+	TimerIntClear(base(), status);
+
+	if(status & TIMER_TIMA_TIMEOUT)
+	{
+		outTimeout.send();
+	}
+}
+
+void SingleShot::trigger()
+{
+	Interrupt::VectorTable::trigger(vector(Channel::A));
+}
+
+Continuous::Continuous(uint8_t number, uint16_t periodMs) :
 		Base(number),
 		periodMs(periodMs)
 {
@@ -86,6 +155,7 @@ void Continuous::start()
 {
 	TimerClockSourceSet(base(), TIMER_CLOCK_SYSTEM);
 	TimerConfigure(base(), (TIMER_CFG_PERIODIC));
+	TimerControlStall(base(), TIMER_A, true);
 
 	TimerIntDisable(base(), TIMER_TIMA_TIMEOUT);
 	TimerDisable(base(), TIMER_A);
@@ -125,7 +195,7 @@ void Continuous::trigger()
 	Interrupt::VectorTable::trigger(vector(Channel::A));
 }
 
-const uint8_t Base::_vector[(unsigned int)Number::COUNT][(unsigned int)Channel::COUNT] =
+const uint8_t Base::_vector[COUNT][(unsigned int)Channel::COUNT] =
 {
 	{ INT_TIMER0A, INT_TIMER0B },
 	{ INT_TIMER1A, INT_TIMER1B },

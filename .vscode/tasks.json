@@ -21,7 +21,7 @@
             ]
         },
         {
-            "label": "Export",
+            "label": "ExportTest",
             "type": "shell",
             "command": "conan export . spiessensm/testing",
             "dependsOn": [
@@ -33,7 +33,7 @@
             "type": "shell",
             "command": "conan install . -if coverage/ -s build_type=Debug -o coverage=True --build Flow/2.0@spiessensm/testing",
             "dependsOn": [
-                "Export"
+                "ExportTest"
             ],
             "options": {
                 "cwd": "test_package/"
@@ -55,7 +55,7 @@
             "type": "shell",
             "command": "conan install . -if debug/ -s build_type=Debug --build Flow/2.0@spiessensm/testing",
             "dependsOn": [
-                "Export"
+                "ExportTest"
             ],
             "options": {
                 "cwd": "test_package/"
@@ -78,7 +78,7 @@
             "command": "conan test test_package Flow/2.0@spiessensm/testing -s build_type=Release --build Flow/2.0@spiessensm/testing",
             "group": "test",
             "dependsOn": [
-                "Export"
+                "ExportTest"
             ]
         },
         {
@@ -91,12 +91,21 @@
             ]
         },
         {
-            "label": "Deploy",
+            "label": "ExportDev",
             "type": "shell",
-            "command": "conan export . spiessensm/dev; conan upload Flow/2.0@spiessensm/dev --all --remote=spiessensm",
+            "command": "conan export . spiessensm/dev",
             "group": "test",
             "dependsOn": [
                 "Test"
+            ]
+        },
+        {
+            "label": "UploadDev",
+            "type": "shell",
+            "command": "conan upload Flow/2.0@spiessensm/dev --all --remote=spiessensm",
+            "group": "test",
+            "dependsOn": [
+                "ExportDev"
             ]
         }
     ]

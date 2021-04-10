@@ -29,20 +29,6 @@
 namespace TM4C {
 namespace Timer {
 
-enum class Number :
-		unsigned int
-{
-	_0 = 0,
-	_1 = 1,
-	_2 = 2,
-	_3 = 3,
-	_4 = 4,
-	_5 = 5,
-	_6 = 6,
-	_7 = 7,
-	COUNT
-};
-
 enum class Channel :
 		unsigned int
 {
@@ -54,20 +40,40 @@ enum class Channel :
 class Base
 {
 public:
-	Base(Number number);
+	Base(uint8_t number);
 
 	uint8_t vector(Channel channel) const;
 
 protected:
-    Number number() const;
+    uint8_t number() const;
 	uint32_t peripheral() const;
 	uint32_t base() const;
 
 private:
-	const Number _number;
-	static const uint8_t _vector[(unsigned int)Number::COUNT][(unsigned int)Channel::COUNT];
-	static const uint32_t _peripheral[(unsigned int)Number::COUNT];
-	static const uint32_t _base[(unsigned int)Number::COUNT];
+	static constexpr uint8_t COUNT = 8;
+	const uint8_t _number;
+	static const uint8_t _vector[COUNT][(unsigned int)Channel::COUNT];
+	static const uint32_t _peripheral[COUNT];
+	static const uint32_t _base[COUNT];
+};
+
+class SingleShot :
+		public Flow::Driver::Timer::SingleShot,
+		public Base
+{
+public:
+	SingleShot(uint8_t number);
+    ~SingleShot();
+
+    void start() final override;
+    void stop() final override;
+
+    void run() override;
+
+    void isr() final override;
+
+private:
+    void trigger() final override;
 };
 
 class Continuous :
@@ -75,9 +81,7 @@ class Continuous :
 		public Base
 {
 public:
-	Flow::OutPort<void> outTimeout;
-
-    Continuous(Number number, uint16_t periodMs);
+    Continuous(uint8_t number, uint16_t periodMs);
     ~Continuous();
 
     void start() final override;

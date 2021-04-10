@@ -39,14 +39,14 @@
 using namespace TM4C;
 
 // Create the components of the application.
-Timer::Continuous timer{ Timer::Number::_0, 500 /*ms*/ };
+Timer::Continuous timer{ 0, 500 /*ms*/ };
 Toggle toggle;
 Digital::Output led{ Pin::Port::N, 1, Digital::Polarity::Normal };
 
 int main()
 {
 	// Set up the clock circuit.
-	Clock::instance().configure<Device::TM4C129>(8 MHz);
+	Clock::instance().configure<Device::TM4C129>(80 MHz);
 
 	// Set up the pin mux configuration.
 	PinoutSet();
@@ -80,4 +80,27 @@ extern "C" void __assert_func(const char *file, int line, const char *pretty,
 
 	__asm__ __volatile__("bkpt");
 	while(true);
+}
+
+typedef char *caddr_t;
+
+volatile char* currentHeapTop = nullptr;
+
+// _sbrk - newlib memory allocation routine.
+extern "C" caddr_t _sbrk(int increment)
+{
+	extern char heap __asm("_heap"); // See linker script.
+	extern char eheap __asm("_eheap"); // See linker script.
+
+	if(currentHeapTop == NULL)
+	{
+		currentHeapTop = &heap;
+	}
+	volatile char* previousHeapTop = currentHeapTop;
+
+	assert(currentHeapTop + increment < &eheap);
+
+	currentHeapTop += increment;
+
+	return (caddr_t)previousHeapTop;
 }

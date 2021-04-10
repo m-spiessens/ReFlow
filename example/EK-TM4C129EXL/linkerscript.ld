@@ -31,8 +31,8 @@ MEMORY
     ram (rwx) : ORIGIN = 0x20000000, LENGTH = 256k
 }
 
-_heap_size = 4k;
-_stack_size = 4k;
+_heap_size = 8k;
+_stack_size = 2k;
 
 SECTIONS
 {

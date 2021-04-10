@@ -341,7 +341,7 @@ private:
  */
 template<typename Type>
 class InPort :
-		protected Peek
+		public Peek
 {
 public:
 	/**

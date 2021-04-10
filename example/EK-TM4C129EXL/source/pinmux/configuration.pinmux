@@ -12,14 +12,14 @@
 			"warningText": "",
 			"errorDetailsText": [],
 			"warningDetailsText": [],
-			"gpioPinsUsed": 40,
+			"gpioPinsUsed": 11,
 			"gpioPinsTotal": 90,
 			"errorCount": 0
 		},
 		"devicePinMap": {
-			"5": {
-				"nameDecoratorText": "5",
-				"assignedToName": "EPI0S20",
+			"1": {
+				"nameDecoratorText": "1",
+				"assignedToName": "SSI2XDAT1",
 				"errorText": "",
 				"warningText": "",
 				"errorDetailsText": [],
@@ -27,13 +27,13 @@
 				"errorCount": 0,
 				"warningCount": 0,
 				"nonSolverErrorCount": 0,
-				"requirementName": "MyEPI1",
-				"requirementId": "MyEPI1",
-				"interfacePin": "S20"
+				"requirementName": "ssi0",
+				"requirementId": "MySSI1",
+				"interfacePin": "XDAT1"
 			},
-			"6": {
-				"nameDecoratorText": "6",
-				"assignedToName": "EPI0S21",
+			"2": {
+				"nameDecoratorText": "2",
+				"assignedToName": "SSI2XDAT0",
 				"errorText": "",
 				"warningText": "",
 				"errorDetailsText": [],
@@ -41,13 +41,13 @@
 				"errorCount": 0,
 				"warningCount": 0,
 				"nonSolverErrorCount": 0,
-				"requirementName": "MyEPI1",
-				"requirementId": "MyEPI1",
-				"interfacePin": "S21"
+				"requirementName": "ssi0",
+				"requirementId": "MySSI1",
+				"interfacePin": "XDAT0"
 			},
-			"11": {
-				"nameDecoratorText": "11",
-				"assignedToName": "EPI0S22",
+			"4": {
+				"nameDecoratorText": "4",
+				"assignedToName": "SSI2CLK",
 				"errorText": "",
 				"warningText": "",
 				"errorDetailsText": [],
@@ -55,135 +55,9 @@
 				"errorCount": 0,
 				"warningCount": 0,
 				"nonSolverErrorCount": 0,
-				"requirementName": "MyEPI1",
-				"requirementId": "MyEPI1",
-				"interfacePin": "S22"
-			},
-			"18": {
-				"nameDecoratorText": "18",
-				"assignedToName": "EPI0S0",
-				"errorText": "",
-				"warningText": "",
-				"errorDetailsText": [],
-				"warningDetailsText": [],
-				"errorCount": 0,
-				"warningCount": 0,
-				"nonSolverErrorCount": 0,
-				"requirementName": "MyEPI1",
-				"requirementId": "MyEPI1",
-				"interfacePin": "S0"
-			},
-			"19": {
-				"nameDecoratorText": "19",
-				"assignedToName": "EPI0S1",
-				"errorText": "",
-				"warningText": "",
-				"errorDetailsText": [],
-				"warningDetailsText": [],
-				"errorCount": 0,
-				"warningCount": 0,
-				"nonSolverErrorCount": 0,
-				"requirementName": "MyEPI1",
-				"requirementId": "MyEPI1",
-				"interfacePin": "S1"
-			},
-			"20": {
-				"nameDecoratorText": "20",
-				"assignedToName": "EPI0S2",
-				"errorText": "",
-				"warningText": "",
-				"errorDetailsText": [],
-				"warningDetailsText": [],
-				"errorCount": 0,
-				"warningCount": 0,
-				"nonSolverErrorCount": 0,
-				"requirementName": "MyEPI1",
-				"requirementId": "MyEPI1",
-				"interfacePin": "S2"
-			},
-			"21": {
-				"nameDecoratorText": "21",
-				"assignedToName": "EPI0S3",
-				"errorText": "",
-				"warningText": "",
-				"errorDetailsText": [],
-				"warningDetailsText": [],
-				"errorCount": 0,
-				"warningCount": 0,
-				"nonSolverErrorCount": 0,
-				"requirementName": "MyEPI1",
-				"requirementId": "MyEPI1",
-				"interfacePin": "S3"
-			},
-			"22": {
-				"nameDecoratorText": "22",
-				"assignedToName": "EPI0S4",
-				"errorText": "",
-				"warningText": "",
-				"errorDetailsText": [],
-				"warningDetailsText": [],
-				"errorCount": 0,
-				"warningCount": 0,
-				"nonSolverErrorCount": 0,
-				"requirementName": "MyEPI1",
-				"requirementId": "MyEPI1",
-				"interfacePin": "S4"
-			},
-			"23": {
-				"nameDecoratorText": "23",
-				"assignedToName": "EPI0S5",
-				"errorText": "",
-				"warningText": "",
-				"errorDetailsText": [],
-				"warningDetailsText": [],
-				"errorCount": 0,
-				"warningCount": 0,
-				"nonSolverErrorCount": 0,
-				"requirementName": "MyEPI1",
-				"requirementId": "MyEPI1",
-				"interfacePin": "S5"
-			},
-			"24": {
-				"nameDecoratorText": "24",
-				"assignedToName": "EPI0S6",
-				"errorText": "",
-				"warningText": "",
-				"errorDetailsText": [],
-				"warningDetailsText": [],
-				"errorCount": 0,
-				"warningCount": 0,
-				"nonSolverErrorCount": 0,
-				"requirementName": "MyEPI1",
-				"requirementId": "MyEPI1",
-				"interfacePin": "S6"
-			},
-			"25": {
-				"nameDecoratorText": "25",
-				"assignedToName": "EPI0S7",
-				"errorText": "",
-				"warningText": "",
-				"errorDetailsText": [],
-				"warningDetailsText": [],
-				"errorCount": 0,
-				"warningCount": 0,
-				"nonSolverErrorCount": 0,
-				"requirementName": "MyEPI1",
-				"requirementId": "MyEPI1",
-				"interfacePin": "S7"
-			},
-			"27": {
-				"nameDecoratorText": "27",
-				"assignedToName": "EPI0S23",
-				"errorText": "",
-				"warningText": "",
-				"errorDetailsText": [],
-				"warningDetailsText": [],
-				"errorCount": 0,
-				"warningCount": 0,
-				"nonSolverErrorCount": 0,
-				"requirementName": "MyEPI1",
-				"requirementId": "MyEPI1",
-				"interfacePin": "S23"
+				"requirementName": "ssi0",
+				"requirementId": "MySSI1",
+				"interfacePin": "CLK"
 			},
 			"33": {
 				"nameDecoratorText": "33",
@@ -213,48 +87,6 @@
 				"requirementId": "MyUART1",
 				"interfacePin": "TX"
 			},
-			"40": {
-				"nameDecoratorText": "40",
-				"assignedToName": "EPI0S8",
-				"errorText": "",
-				"warningText": "",
-				"errorDetailsText": [],
-				"warningDetailsText": [],
-				"errorCount": 0,
-				"warningCount": 0,
-				"nonSolverErrorCount": 0,
-				"requirementName": "MyEPI1",
-				"requirementId": "MyEPI1",
-				"interfacePin": "S8"
-			},
-			"41": {
-				"nameDecoratorText": "41",
-				"assignedToName": "EPI0S9",
-				"errorText": "",
-				"warningText": "",
-				"errorDetailsText": [],
-				"warningDetailsText": [],
-				"errorCount": 0,
-				"warningCount": 0,
-				"nonSolverErrorCount": 0,
-				"requirementName": "MyEPI1",
-				"requirementId": "MyEPI1",
-				"interfacePin": "S9"
-			},
-			"42": {
-				"nameDecoratorText": "42",
-				"assignedToName": "M0PWM0",
-				"errorText": "",
-				"warningText": "",
-				"errorDetailsText": [],
-				"warningDetailsText": [],
-				"errorCount": 0,
-				"warningCount": 0,
-				"nonSolverErrorCount": 0,
-				"requirementName": "PWM",
-				"requirementId": "MyPWM1",
-				"interfacePin": "PWM0"
-			},
 			"46": {
 				"nameDecoratorText": "46",
 				"assignedToName": "GPIO_PF4",
@@ -268,258 +100,6 @@
 				"requirementName": "LEDs",
 				"requirementId": "MyGPIO2",
 				"interfacePin": "GPIO#"
-			},
-			"49": {
-				"nameDecoratorText": "49",
-				"assignedToName": "EPI0S11",
-				"errorText": "",
-				"warningText": "",
-				"errorDetailsText": [],
-				"warningDetailsText": [],
-				"errorCount": 0,
-				"warningCount": 0,
-				"nonSolverErrorCount": 0,
-				"requirementName": "MyEPI1",
-				"requirementId": "MyEPI1",
-				"interfacePin": "S11"
-			},
-			"50": {
-				"nameDecoratorText": "50",
-				"assignedToName": "EPI0S10",
-				"errorText": "",
-				"warningText": "",
-				"errorDetailsText": [],
-				"warningDetailsText": [],
-				"errorCount": 0,
-				"warningCount": 0,
-				"nonSolverErrorCount": 0,
-				"requirementName": "MyEPI1",
-				"requirementId": "MyEPI1",
-				"interfacePin": "S10"
-			},
-			"60": {
-				"nameDecoratorText": "60",
-				"assignedToName": "EPI0S24",
-				"errorText": "",
-				"warningText": "",
-				"errorDetailsText": [],
-				"warningDetailsText": [],
-				"errorCount": 0,
-				"warningCount": 0,
-				"nonSolverErrorCount": 0,
-				"requirementName": "MyEPI1",
-				"requirementId": "MyEPI1",
-				"interfacePin": "S24"
-			},
-			"61": {
-				"nameDecoratorText": "61",
-				"assignedToName": "EPI0S25",
-				"errorText": "",
-				"warningText": "",
-				"errorDetailsText": [],
-				"warningDetailsText": [],
-				"errorCount": 0,
-				"warningCount": 0,
-				"nonSolverErrorCount": 0,
-				"requirementName": "MyEPI1",
-				"requirementId": "MyEPI1",
-				"interfacePin": "S25"
-			},
-			"62": {
-				"nameDecoratorText": "62",
-				"assignedToName": "EPI0S31",
-				"errorText": "",
-				"warningText": "",
-				"errorDetailsText": [],
-				"warningDetailsText": [],
-				"errorCount": 0,
-				"warningCount": 0,
-				"nonSolverErrorCount": 0,
-				"requirementName": "MyEPI1",
-				"requirementId": "MyEPI1",
-				"interfacePin": "S31"
-			},
-			"75": {
-				"nameDecoratorText": "75",
-				"assignedToName": "EPI0S12",
-				"errorText": "",
-				"warningText": "",
-				"errorDetailsText": [],
-				"warningDetailsText": [],
-				"errorCount": 0,
-				"warningCount": 0,
-				"nonSolverErrorCount": 0,
-				"requirementName": "MyEPI1",
-				"requirementId": "MyEPI1",
-				"interfacePin": "S12"
-			},
-			"76": {
-				"nameDecoratorText": "76",
-				"assignedToName": "EPI0S13",
-				"errorText": "",
-				"warningText": "",
-				"errorDetailsText": [],
-				"warningDetailsText": [],
-				"errorCount": 0,
-				"warningCount": 0,
-				"nonSolverErrorCount": 0,
-				"requirementName": "MyEPI1",
-				"requirementId": "MyEPI1",
-				"interfacePin": "S13"
-			},
-			"77": {
-				"nameDecoratorText": "77",
-				"assignedToName": "EPI0S14",
-				"errorText": "",
-				"warningText": "",
-				"errorDetailsText": [],
-				"warningDetailsText": [],
-				"errorCount": 0,
-				"warningCount": 0,
-				"nonSolverErrorCount": 0,
-				"requirementName": "MyEPI1",
-				"requirementId": "MyEPI1",
-				"interfacePin": "S14"
-			},
-			"78": {
-				"nameDecoratorText": "78",
-				"assignedToName": "EPI0S15",
-				"errorText": "",
-				"warningText": "",
-				"errorDetailsText": [],
-				"warningDetailsText": [],
-				"errorCount": 0,
-				"warningCount": 0,
-				"nonSolverErrorCount": 0,
-				"requirementName": "MyEPI1",
-				"requirementId": "MyEPI1",
-				"interfacePin": "S15"
-			},
-			"81": {
-				"nameDecoratorText": "81",
-				"assignedToName": "EPI0S16",
-				"errorText": "",
-				"warningText": "",
-				"errorDetailsText": [],
-				"warningDetailsText": [],
-				"errorCount": 0,
-				"warningCount": 0,
-				"nonSolverErrorCount": 0,
-				"requirementName": "MyEPI1",
-				"requirementId": "MyEPI1",
-				"interfacePin": "S16"
-			},
-			"82": {
-				"nameDecoratorText": "82",
-				"assignedToName": "EPI0S17",
-				"errorText": "",
-				"warningText": "",
-				"errorDetailsText": [],
-				"warningDetailsText": [],
-				"errorCount": 0,
-				"warningCount": 0,
-				"nonSolverErrorCount": 0,
-				"requirementName": "MyEPI1",
-				"requirementId": "MyEPI1",
-				"interfacePin": "S17"
-			},
-			"83": {
-				"nameDecoratorText": "83",
-				"assignedToName": "EPI0S18",
-				"errorText": "",
-				"warningText": "",
-				"errorDetailsText": [],
-				"warningDetailsText": [],
-				"errorCount": 0,
-				"warningCount": 0,
-				"nonSolverErrorCount": 0,
-				"requirementName": "MyEPI1",
-				"requirementId": "MyEPI1",
-				"interfacePin": "S18"
-			},
-			"84": {
-				"nameDecoratorText": "84",
-				"assignedToName": "EPI0S19",
-				"errorText": "",
-				"warningText": "",
-				"errorDetailsText": [],
-				"warningDetailsText": [],
-				"errorCount": 0,
-				"warningCount": 0,
-				"nonSolverErrorCount": 0,
-				"requirementName": "MyEPI1",
-				"requirementId": "MyEPI1",
-				"interfacePin": "S19"
-			},
-			"85": {
-				"nameDecoratorText": "85",
-				"assignedToName": "EPI0S26",
-				"errorText": "",
-				"warningText": "",
-				"errorDetailsText": [],
-				"warningDetailsText": [],
-				"errorCount": 0,
-				"warningCount": 0,
-				"nonSolverErrorCount": 0,
-				"requirementName": "MyEPI1",
-				"requirementId": "MyEPI1",
-				"interfacePin": "S26"
-			},
-			"91": {
-				"nameDecoratorText": "91",
-				"assignedToName": "EPI0S27",
-				"errorText": "",
-				"warningText": "",
-				"errorDetailsText": [],
-				"warningDetailsText": [],
-				"errorCount": 0,
-				"warningCount": 0,
-				"nonSolverErrorCount": 0,
-				"requirementName": "MyEPI1",
-				"requirementId": "MyEPI1",
-				"interfacePin": "S27"
-			},
-			"92": {
-				"nameDecoratorText": "92",
-				"assignedToName": "EPI0S28",
-				"errorText": "",
-				"warningText": "",
-				"errorDetailsText": [],
-				"warningDetailsText": [],
-				"errorCount": 0,
-				"warningCount": 0,
-				"nonSolverErrorCount": 0,
-				"requirementName": "MyEPI1",
-				"requirementId": "MyEPI1",
-				"interfacePin": "S28"
-			},
-			"103": {
-				"nameDecoratorText": "103",
-				"assignedToName": "EPI0S29",
-				"errorText": "",
-				"warningText": "",
-				"errorDetailsText": [],
-				"warningDetailsText": [],
-				"errorCount": 0,
-				"warningCount": 0,
-				"nonSolverErrorCount": 0,
-				"requirementName": "MyEPI1",
-				"requirementId": "MyEPI1",
-				"interfacePin": "S29"
-			},
-			"104": {
-				"nameDecoratorText": "104",
-				"assignedToName": "EPI0S30",
-				"errorText": "",
-				"warningText": "",
-				"errorDetailsText": [],
-				"warningDetailsText": [],
-				"errorCount": 0,
-				"warningCount": 0,
-				"nonSolverErrorCount": 0,
-				"requirementName": "MyEPI1",
-				"requirementId": "MyEPI1",
-				"interfacePin": "S30"
 			},
 			"107": {
 				"nameDecoratorText": "107",
@@ -576,6 +156,20 @@
 				"requirementName": "Switches",
 				"requirementId": "MyGPIO1",
 				"interfacePin": "GPIO#"
+			},
+			"124": {
+				"nameDecoratorText": "124",
+				"assignedToName": "GPIO_PE5",
+				"errorText": "",
+				"warningText": "",
+				"errorDetailsText": [],
+				"warningDetailsText": [],
+				"errorCount": 0,
+				"warningCount": 0,
+				"nonSolverErrorCount": 0,
+				"requirementName": "slaveSelect",
+				"requirementId": "MyGPIO3",
+				"interfacePin": "GPIO#"
 			}
 		},
 		"powerDomainSettings": {},
@@ -595,238 +189,7 @@
 				},
 				"name": "PWM",
 				"id": "PWM",
-				"requirements": [
-					{
-						"used": true,
-						"solution": {
-							"nameDecoratorText": "",
-							"assignedToName": "",
-							"errorText": "",
-							"warningText": "",
-							"errorDetailsText": [],
-							"warningDetailsText": [],
-							"gpioPinsUsed": 1,
-							"errorCount": 0
-						},
-						"id": "MyPWM1",
-						"name": "PWM",
-						"selectedInstance": "Any",
-						"selectedVoltage": "Any",
-						"selectedUseCase": "PWM",
-						"pinRequirements": [
-							{
-								"used": false,
-								"solution": {
-									"nameDecoratorText": "",
-									"assignedToName": "",
-									"errorText": "",
-									"warningText": "",
-									"errorDetailsText": [],
-									"warningDetailsText": []
-								},
-								"assignedToName": "Any",
-								"type": "Single",
-								"name": "PWM6",
-								"interfacePinName": "PWM6"
-							},
-							{
-								"used": true,
-								"solution": {
-									"nameDecoratorText": "M0PWM0",
-									"assignedToName": "42",
-									"errorText": "",
-									"warningText": "",
-									"errorDetailsText": [],
-									"warningDetailsText": []
-								},
-								"assignedToName": "42",
-								"type": "Single",
-								"name": "PWM0",
-								"interfacePinName": "PWM0"
-							},
-							{
-								"used": false,
-								"solution": {
-									"nameDecoratorText": "",
-									"assignedToName": "",
-									"errorText": "",
-									"warningText": "",
-									"errorDetailsText": [],
-									"warningDetailsText": []
-								},
-								"assignedToName": "Any",
-								"type": "Single",
-								"name": "FAULT1",
-								"interfacePinName": "FAULT1"
-							},
-							{
-								"used": false,
-								"solution": {
-									"nameDecoratorText": "",
-									"assignedToName": "",
-									"errorText": "",
-									"warningText": "",
-									"errorDetailsText": [],
-									"warningDetailsText": []
-								},
-								"assignedToName": "Any",
-								"type": "Single",
-								"name": "FAULT3",
-								"interfacePinName": "FAULT3"
-							},
-							{
-								"used": false,
-								"solution": {
-									"nameDecoratorText": "",
-									"assignedToName": "",
-									"errorText": "",
-									"warningText": "",
-									"errorDetailsText": [],
-									"warningDetailsText": []
-								},
-								"assignedToName": "Any",
-								"type": "Single",
-								"name": "PWM4",
-								"interfacePinName": "PWM4"
-							},
-							{
-								"used": false,
-								"solution": {
-									"nameDecoratorText": "",
-									"assignedToName": "",
-									"errorText": "",
-									"warningText": "",
-									"errorDetailsText": [],
-									"warningDetailsText": []
-								},
-								"assignedToName": "Any",
-								"type": "Single",
-								"name": "PWM5",
-								"interfacePinName": "PWM5"
-							},
-							{
-								"used": false,
-								"solution": {
-									"nameDecoratorText": "",
-									"assignedToName": "",
-									"errorText": "",
-									"warningText": "",
-									"errorDetailsText": [],
-									"warningDetailsText": []
-								},
-								"assignedToName": "Any",
-								"type": "Single",
-								"name": "PWM2",
-								"interfacePinName": "PWM2"
-							},
-							{
-								"used": false,
-								"solution": {
-									"nameDecoratorText": "",
-									"assignedToName": "",
-									"errorText": "",
-									"warningText": "",
-									"errorDetailsText": [],
-									"warningDetailsText": []
-								},
-								"assignedToName": "Any",
-								"type": "Single",
-								"name": "PWM7",
-								"interfacePinName": "PWM7"
-							},
-							{
-								"used": false,
-								"solution": {
-									"nameDecoratorText": "",
-									"assignedToName": "",
-									"errorText": "",
-									"warningText": "",
-									"errorDetailsText": [],
-									"warningDetailsText": []
-								},
-								"assignedToName": "Any",
-								"type": "Single",
-								"name": "PWM1",
-								"interfacePinName": "PWM1"
-							},
-							{
-								"used": false,
-								"solution": {
-									"nameDecoratorText": "",
-									"assignedToName": "",
-									"errorText": "",
-									"warningText": "",
-									"errorDetailsText": [],
-									"warningDetailsText": []
-								},
-								"assignedToName": "Any",
-								"type": "Single",
-								"name": "FAULT0",
-								"interfacePinName": "FAULT0"
-							},
-							{
-								"used": false,
-								"solution": {
-									"nameDecoratorText": "",
-									"assignedToName": "",
-									"errorText": "",
-									"warningText": "",
-									"errorDetailsText": [],
-									"warningDetailsText": []
-								},
-								"assignedToName": "Any",
-								"type": "Single",
-								"name": "PWM3",
-								"interfacePinName": "PWM3"
-							},
-							{
-								"used": false,
-								"solution": {
-									"nameDecoratorText": "",
-									"assignedToName": "",
-									"errorText": "",
-									"warningText": "",
-									"errorDetailsText": [],
-									"warningDetailsText": []
-								},
-								"assignedToName": "Any",
-								"type": "Single",
-								"name": "FAULT2",
-								"interfacePinName": "FAULT2"
-							}
-						],
-						"peripheralSolution": {
-							"nameDecoratorText": "",
-							"assignedToName": "PWM0",
-							"errorText": "",
-							"warningText": "",
-							"errorDetailsText": [],
-							"warningDetailsText": []
-						},
-						"voltageSolution": {
-							"nameDecoratorText": "",
-							"assignedToName": "",
-							"errorText": "",
-							"warningText": "",
-							"errorDetailsText": [],
-							"warningDetailsText": []
-						},
-						"interfaceName": "PWM",
-						"nonSolverSolution": {
-							"nameDecoratorText": "",
-							"assignedToName": "",
-							"errorText": "",
-							"warningText": "",
-							"errorDetailsText": [],
-							"warningDetailsText": [],
-							"errorCount": 0,
-							"warningCount": 0,
-							"nonSolverErrorCount": 0
-						},
-						"pinConfigurablesHeader": {},
-						"isNameValid": true
-					}
-				],
+				"requirements": [],
 				"requirementsNameIndex": 2
 			},
 			"LCD": {
@@ -906,7 +269,7 @@
 					"warningText": "",
 					"errorDetailsText": [],
 					"warningDetailsText": [],
-					"gpioPinsUsed": 5,
+					"gpioPinsUsed": 6,
 					"errorCount": 0
 				},
 				"name": "GPIO",
@@ -1014,7 +377,8 @@
 										"displayName": "Input"
 									}
 								},
-								"isNameValid": true
+								"isNameValid": true,
+								"configurables": {}
 							},
 							{
 								"used": true,
@@ -1105,7 +469,8 @@
 										"displayName": "Input"
 									}
 								},
-								"isNameValid": true
+								"isNameValid": true,
+								"configurables": {}
 							},
 							{
 								"used": true,
@@ -1194,7 +559,8 @@
 										"displayName": "Input"
 									}
 								},
-								"isNameValid": true
+								"isNameValid": true,
+								"configurables": {}
 							},
 							{
 								"used": true,
@@ -1283,7 +649,8 @@
 										"displayName": "Input"
 									}
 								},
-								"isNameValid": true
+								"isNameValid": true,
+								"configurables": {}
 							},
 							{
 								"used": true,
@@ -1372,7 +739,8 @@
 										"displayName": "Input"
 									}
 								},
-								"isNameValid": true
+								"isNameValid": true,
+								"configurables": {}
 							},
 							{
 								"used": true,
@@ -1461,7 +829,8 @@
 										"displayName": "Input"
 									}
 								},
-								"isNameValid": true
+								"isNameValid": true,
+								"configurables": {}
 							}
 						],
 						"requirementsNameIndex": 7,
@@ -1476,7 +845,19 @@
 								"name": "input",
 								"displayName": "Input"
 							}
-						}
+						},
+						"nonSolverSolution": {
+							"nameDecoratorText": "",
+							"assignedToName": "",
+							"errorText": "",
+							"warningText": "",
+							"errorDetailsText": [],
+							"warningDetailsText": [],
+							"errorCount": 0,
+							"warningCount": 0,
+							"nonSolverErrorCount": 0
+						},
+						"requirementNameErrorMessage": ""
 					},
 					{
 						"used": true,
@@ -1578,7 +959,8 @@
 										"displayName": "Input"
 									}
 								},
-								"isNameValid": true
+								"isNameValid": true,
+								"configurables": {}
 							},
 							{
 								"used": true,
@@ -1667,7 +1049,8 @@
 										"displayName": "Input"
 									}
 								},
-								"isNameValid": true
+								"isNameValid": true,
+								"configurables": {}
 							},
 							{
 								"used": true,
@@ -1756,7 +1139,8 @@
 										"displayName": "Input"
 									}
 								},
-								"isNameValid": true
+								"isNameValid": true,
+								"configurables": {}
 							},
 							{
 								"used": true,
@@ -1845,7 +1229,8 @@
 										"displayName": "Input"
 									}
 								},
-								"isNameValid": true
+								"isNameValid": true,
+								"configurables": {}
 							}
 						],
 						"requirementsNameIndex": 5,
@@ -1860,10 +1245,175 @@
 								"name": "input",
 								"displayName": "Input"
 							}
-						}
+						},
+						"nonSolverSolution": {
+							"nameDecoratorText": "",
+							"assignedToName": "",
+							"errorText": "",
+							"warningText": "",
+							"errorDetailsText": [],
+							"warningDetailsText": [],
+							"errorCount": 0,
+							"warningCount": 0,
+							"nonSolverErrorCount": 0
+						},
+						"requirementNameErrorMessage": ""
+					},
+					{
+						"used": true,
+						"solution": {
+							"nameDecoratorText": "",
+							"assignedToName": "",
+							"errorText": "",
+							"warningText": "",
+							"errorDetailsText": [],
+							"warningDetailsText": [],
+							"errorCount": 0,
+							"warningCount": 0,
+							"nonSolverErrorCount": 0
+						},
+						"nonSolverSolution": {
+							"nameDecoratorText": "",
+							"assignedToName": "",
+							"errorText": "",
+							"warningText": "",
+							"errorDetailsText": [],
+							"warningDetailsText": [],
+							"errorCount": 0,
+							"warningCount": 0,
+							"nonSolverErrorCount": 0
+						},
+						"requirementsNameIndex": 2,
+						"requirements": [
+							{
+								"used": true,
+								"solution": {
+									"nameDecoratorText": "",
+									"assignedToName": "",
+									"errorText": "",
+									"warningText": "",
+									"errorDetailsText": [],
+									"warningDetailsText": [],
+									"errorCount": 0,
+									"warningCount": 0,
+									"nonSolverErrorCount": 0,
+									"gpioPinsUsed": 1
+								},
+								"nonSolverSolution": {
+									"nameDecoratorText": "",
+									"assignedToName": "",
+									"errorText": "",
+									"warningText": "",
+									"errorDetailsText": [],
+									"warningDetailsText": [],
+									"errorCount": 0,
+									"warningCount": 0,
+									"nonSolverErrorCount": 0
+								},
+								"selectedInstance": "Any",
+								"selectedVoltage": "Any",
+								"selectedUseCase": "GPIO",
+								"pinRequirements": [
+									{
+										"used": true,
+										"solution": {
+											"nameDecoratorText": "GPIO_PE5",
+											"assignedToName": "124",
+											"errorText": "",
+											"warningText": "",
+											"errorDetailsText": [],
+											"warningDetailsText": [],
+											"errorCount": 0,
+											"warningCount": 0,
+											"nonSolverErrorCount": 0
+										},
+										"nonSolverSolution": {
+											"nameDecoratorText": "",
+											"assignedToName": "",
+											"errorText": "",
+											"warningText": "",
+											"errorDetailsText": [],
+											"warningDetailsText": [],
+											"errorCount": 0,
+											"warningCount": 0,
+											"nonSolverErrorCount": 0
+										},
+										"assignedToName": "124",
+										"removable": false,
+										"type": "Single",
+										"name": "GPIO#",
+										"interfacePinName": "GPIO#",
+										"configurables": {
+											"pu_pd": {
+												"name": "float",
+												"displayName": "FLOAT"
+											},
+											"io": {
+												"name": "output",
+												"displayName": "Output"
+											}
+										}
+									}
+								],
+								"peripheralSolution": {
+									"nameDecoratorText": "",
+									"assignedToName": "GPIO_PE5",
+									"errorText": "",
+									"warningText": "",
+									"errorDetailsText": [],
+									"warningDetailsText": [],
+									"errorCount": 0,
+									"warningCount": 0,
+									"nonSolverErrorCount": 0
+								},
+								"voltageSolution": {
+									"nameDecoratorText": "",
+									"assignedToName": "",
+									"errorText": "",
+									"warningText": "",
+									"errorDetailsText": [],
+									"warningDetailsText": [],
+									"errorCount": 0,
+									"warningCount": 0,
+									"nonSolverErrorCount": 0
+								},
+								"isNameValid": true,
+								"assignedToName": "",
+								"id": "MyGPIO3_intenal_1",
+								"name": "MyGPIO3_intenal_1",
+								"interfaceName": "GPIO",
+								"parentReqName": "slaveSelect",
+								"parentReqID": "MyGPIO3",
+								"pinConfigurablesHeader": {
+									"pu_pd": {
+										"name": "float",
+										"displayName": "FLOAT"
+									},
+									"io": {
+										"name": "input",
+										"displayName": "Input"
+									}
+								},
+								"configurables": {}
+							}
+						],
+						"numOfGPIOPins": 0,
+						"name": "slaveSelect",
+						"id": "MyGPIO3",
+						"pinConfigurablesHeader": {
+							"pu_pd": {
+								"name": "float",
+								"displayName": "FLOAT"
+							},
+							"io": {
+								"name": "output",
+								"displayName": "Output"
+							}
+						},
+						"requirementNameErrorMessage": ""
 					}
 				],
-				"requirementsNameIndex": 3
+				"requirementsNameIndex": 4
 			},
 			"Comparator": {
 				"used": true,
@@ -2013,7 +1563,8 @@
 								"assignedToName": "33",
 								"type": "Single",
 								"name": "RX",
-								"interfacePinName": "RX"
+								"interfacePinName": "RX",
+								"configurables": {}
 							},
 							{
 								"used": true,
@@ -2028,7 +1579,8 @@
 								"assignedToName": "34",
 								"type": "Single",
 								"name": "TX",
-								"interfacePinName": "TX"
+								"interfacePinName": "TX",
+								"configurables": {}
 							},
 							{
 								"used": false,
@@ -2043,7 +1595,8 @@
 								"assignedToName": "Any",
 								"type": "Single",
 								"name": "DCD",
-								"interfacePinName": "DCD"
+								"interfacePinName": "DCD",
+								"configurables": {}
 							},
 							{
 								"used": false,
@@ -2058,7 +1611,8 @@
 								"assignedToName": "Any",
 								"type": "Single",
 								"name": "DTR",
-								"interfacePinName": "DTR"
+								"interfacePinName": "DTR",
+								"configurables": {}
 							},
 							{
 								"used": false,
@@ -2073,7 +1627,8 @@
 								"assignedToName": "Any",
 								"type": "Single",
 								"name": "CTS",
-								"interfacePinName": "CTS"
+								"interfacePinName": "CTS",
+								"configurables": {}
 							},
 							{
 								"used": false,
@@ -2088,7 +1643,8 @@
 								"assignedToName": "Any",
 								"type": "Single",
 								"name": "DSR",
-								"interfacePinName": "DSR"
+								"interfacePinName": "DSR",
+								"configurables": {}
 							},
 							{
 								"used": false,
@@ -2103,7 +1659,8 @@
 								"assignedToName": "Any",
 								"type": "Single",
 								"name": "RTS",
-								"interfacePinName": "RTS"
+								"interfacePinName": "RTS",
+								"configurables": {}
 							},
 							{
 								"used": false,
@@ -2118,7 +1675,8 @@
 								"assignedToName": "Any",
 								"type": "Single",
 								"name": "RI",
-								"interfacePinName": "RI"
+								"interfacePinName": "RI",
+								"configurables": {}
 							}
 						],
 						"peripheralSolution": {
@@ -2150,7 +1708,9 @@
 							"nonSolverErrorCount": 0
 						},
 						"pinConfigurablesHeader": {},
-						"isNameValid": true
+						"isNameValid": true,
+						"configurables": {},
+						"requirementNameErrorMessage": ""
 					}
 				],
 				"requirementsNameIndex": 2
@@ -2164,13 +1724,261 @@
 					"warningText": "",
 					"errorDetailsText": [],
 					"warningDetailsText": [],
-					"gpioPinsUsed": 0,
+					"gpioPinsUsed": 3,
 					"errorCount": 0
 				},
 				"name": "SSI",
 				"id": "SSI",
-				"requirements": [],
-				"requirementsNameIndex": 1
+				"requirements": [
+					{
+						"used": true,
+						"solution": {
+							"nameDecoratorText": "",
+							"assignedToName": "",
+							"errorText": "",
+							"warningText": "",
+							"errorDetailsText": [],
+							"warningDetailsText": [],
+							"errorCount": 0,
+							"warningCount": 0,
+							"nonSolverErrorCount": 0,
+							"gpioPinsUsed": 3
+						},
+						"nonSolverSolution": {
+							"nameDecoratorText": "",
+							"assignedToName": "",
+							"errorText": "",
+							"warningText": "",
+							"errorDetailsText": [],
+							"warningDetailsText": [],
+							"errorCount": 0,
+							"warningCount": 0,
+							"nonSolverErrorCount": 0
+						},
+						"selectedInstance": "SSI2",
+						"selectedVoltage": "Any",
+						"selectedUseCase": "SSI",
+						"pinRequirements": [
+							{
+								"used": true,
+								"solution": {
+									"nameDecoratorText": "SSI2XDAT0",
+									"assignedToName": "2",
+									"errorText": "",
+									"warningText": "",
+									"errorDetailsText": [],
+									"warningDetailsText": [],
+									"errorCount": 0,
+									"warningCount": 0,
+									"nonSolverErrorCount": 0
+								},
+								"nonSolverSolution": {
+									"nameDecoratorText": "",
+									"assignedToName": "",
+									"errorText": "",
+									"warningText": "",
+									"errorDetailsText": [],
+									"warningDetailsText": [],
+									"errorCount": 0,
+									"warningCount": 0,
+									"nonSolverErrorCount": 0
+								},
+								"assignedToName": "Any",
+								"removable": false,
+								"type": "Single",
+								"name": "XDAT0",
+								"interfacePinName": "XDAT0",
+								"configurables": {}
+							},
+							{
+								"used": false,
+								"solution": {
+									"nameDecoratorText": "",
+									"assignedToName": "",
+									"errorText": "",
+									"warningText": "",
+									"errorDetailsText": [],
+									"warningDetailsText": [],
+									"errorCount": 0,
+									"warningCount": 0,
+									"nonSolverErrorCount": 0
+								},
+								"nonSolverSolution": {
+									"nameDecoratorText": "",
+									"assignedToName": "",
+									"errorText": "",
+									"warningText": "",
+									"errorDetailsText": [],
+									"warningDetailsText": [],
+									"errorCount": 0,
+									"warningCount": 0,
+									"nonSolverErrorCount": 0
+								},
+								"assignedToName": "Any",
+								"removable": false,
+								"type": "Single",
+								"name": "XDAT3",
+								"interfacePinName": "XDAT3",
+								"configurables": {}
+							},
+							{
+								"used": true,
+								"solution": {
+									"nameDecoratorText": "SSI2XDAT1",
+									"assignedToName": "1",
+									"errorText": "",
+									"warningText": "",
+									"errorDetailsText": [],
+									"warningDetailsText": [],
+									"errorCount": 0,
+									"warningCount": 0,
+									"nonSolverErrorCount": 0
+								},
+								"nonSolverSolution": {
+									"nameDecoratorText": "",
+									"assignedToName": "",
+									"errorText": "",
+									"warningText": "",
+									"errorDetailsText": [],
+									"warningDetailsText": [],
+									"errorCount": 0,
+									"warningCount": 0,
+									"nonSolverErrorCount": 0
+								},
+								"assignedToName": "Any",
+								"removable": false,
+								"type": "Single",
+								"name": "XDAT1",
+								"interfacePinName": "XDAT1",
+								"configurables": {}
+							},
+							{
+								"used": false,
+								"solution": {
+									"nameDecoratorText": "",
+									"assignedToName": "",
+									"errorText": "",
+									"warningText": "",
+									"errorDetailsText": [],
+									"warningDetailsText": [],
+									"errorCount": 0,
+									"warningCount": 0,
+									"nonSolverErrorCount": 0
+								},
+								"nonSolverSolution": {
+									"nameDecoratorText": "",
+									"assignedToName": "",
+									"errorText": "",
+									"warningText": "",
+									"errorDetailsText": [],
+									"warningDetailsText": [],
+									"errorCount": 0,
+									"warningCount": 0,
+									"nonSolverErrorCount": 0
+								},
+								"assignedToName": "Any",
+								"removable": false,
+								"type": "Single",
+								"name": "FSS",
+								"interfacePinName": "FSS",
+								"configurables": {}
+							},
+							{
+								"used": false,
+								"solution": {
+									"nameDecoratorText": "",
+									"assignedToName": "",
+									"errorText": "",
+									"warningText": "",
+									"errorDetailsText": [],
+									"warningDetailsText": [],
+									"errorCount": 0,
+									"warningCount": 0,
+									"nonSolverErrorCount": 0
+								},
+								"nonSolverSolution": {
+									"nameDecoratorText": "",
+									"assignedToName": "",
+									"errorText": "",
+									"warningText": "",
+									"errorDetailsText": [],
+									"warningDetailsText": [],
+									"errorCount": 0,
+									"warningCount": 0,
+									"nonSolverErrorCount": 0
+								},
+								"assignedToName": "Any",
+								"removable": false,
+								"type": "Single",
+								"name": "XDAT2",
+								"interfacePinName": "XDAT2",
+								"configurables": {}
+							},
+							{
+								"used": true,
+								"solution": {
+									"nameDecoratorText": "SSI2CLK",
+									"assignedToName": "4",
+									"errorText": "",
+									"warningText": "",
+									"errorDetailsText": [],
+									"warningDetailsText": [],
+									"errorCount": 0,
+									"warningCount": 0,
+									"nonSolverErrorCount": 0
+								},
+								"nonSolverSolution": {
+									"nameDecoratorText": "",
+									"assignedToName": "",
+									"errorText": "",
+									"warningText": "",
+									"errorDetailsText": [],
+									"warningDetailsText": [],
+									"errorCount": 0,
+									"warningCount": 0,
+									"nonSolverErrorCount": 0
+								},
+								"assignedToName": "Any",
+								"removable": false,
+								"type": "Single",
+								"name": "CLK",
+								"interfacePinName": "CLK",
+								"configurables": {}
+							}
+						],
+						"peripheralSolution": {
+							"nameDecoratorText": "",
+							"assignedToName": "SSI2",
+							"errorText": "",
+							"warningText": "",
+							"errorDetailsText": [],
+							"warningDetailsText": [],
+							"errorCount": 0,
+							"warningCount": 0,
+							"nonSolverErrorCount": 0
+						},
+						"voltageSolution": {
+							"nameDecoratorText": "",
+							"assignedToName": "",
+							"errorText": "",
+							"warningText": "",
+							"errorDetailsText": [],
+							"warningDetailsText": [],
+							"errorCount": 0,
+							"warningCount": 0,
+							"nonSolverErrorCount": 0
+						},
+						"isNameValid": true,
+						"assignedToName": "",
+						"id": "MySSI1",
+						"name": "ssi0",
+						"interfaceName": "SSI",
+						"pinConfigurablesHeader": {},
+						"configurables": {},
+						"requirementNameErrorMessage": ""
+					}
+				],
+				"requirementsNameIndex": 2
 			},
 			"ETHERNET": {
 				"used": true,
@@ -2237,1147 +2045,7 @@
 				},
 				"name": "EPI",
 				"id": "EPI",
-				"requirements": [
-					{
-						"used": true,
-						"solution": {
-							"nameDecoratorText": "",
-							"assignedToName": "",
-							"errorText": "",
-							"warningText": "",
-							"errorDetailsText": [],
-							"warningDetailsText": [],
-							"errorCount": 0,
-							"warningCount": 0,
-							"nonSolverErrorCount": 0,
-							"gpioPinsUsed": 32
-						},
-						"nonSolverSolution": {
-							"nameDecoratorText": "",
-							"assignedToName": "",
-							"errorText": "",
-							"warningText": "",
-							"errorDetailsText": [],
-							"warningDetailsText": [],
-							"errorCount": 0,
-							"warningCount": 0,
-							"nonSolverErrorCount": 0
-						},
-						"selectedInstance": "Any",
-						"selectedVoltage": "Any",
-						"selectedUseCase": "EPI",
-						"pinRequirements": [
-							{
-								"used": false,
-								"solution": {
-									"nameDecoratorText": "",
-									"assignedToName": "",
-									"errorText": "",
-									"warningText": "",
-									"errorDetailsText": [],
-									"warningDetailsText": [],
-									"errorCount": 0,
-									"warningCount": 0,
-									"nonSolverErrorCount": 0
-								},
-								"nonSolverSolution": {
-									"nameDecoratorText": "",
-									"assignedToName": "",
-									"errorText": "",
-									"warningText": "",
-									"errorDetailsText": [],
-									"warningDetailsText": [],
-									"errorCount": 0,
-									"warningCount": 0,
-									"nonSolverErrorCount": 0
-								},
-								"assignedToName": "Any",
-								"removable": false,
-								"type": "Single",
-								"name": "S32",
-								"interfacePinName": "S32"
-							},
-							{
-								"used": true,
-								"solution": {
-									"nameDecoratorText": "EPI0S26",
-									"assignedToName": "85",
-									"errorText": "",
-									"warningText": "",
-									"errorDetailsText": [],
-									"warningDetailsText": [],
-									"errorCount": 0,
-									"warningCount": 0,
-									"nonSolverErrorCount": 0
-								},
-								"nonSolverSolution": {
-									"nameDecoratorText": "",
-									"assignedToName": "",
-									"errorText": "",
-									"warningText": "",
-									"errorDetailsText": [],
-									"warningDetailsText": [],
-									"errorCount": 0,
-									"warningCount": 0,
-									"nonSolverErrorCount": 0
-								},
-								"assignedToName": "85",
-								"removable": false,
-								"type": "Single",
-								"name": "S26",
-								"interfacePinName": "S26"
-							},
-							{
-								"used": true,
-								"solution": {
-									"nameDecoratorText": "EPI0S25",
-									"assignedToName": "61",
-									"errorText": "",
-									"warningText": "",
-									"errorDetailsText": [],
-									"warningDetailsText": [],
-									"errorCount": 0,
-									"warningCount": 0,
-									"nonSolverErrorCount": 0
-								},
-								"nonSolverSolution": {
-									"nameDecoratorText": "",
-									"assignedToName": "",
-									"errorText": "",
-									"warningText": "",
-									"errorDetailsText": [],
-									"warningDetailsText": [],
-									"errorCount": 0,
-									"warningCount": 0,
-									"nonSolverErrorCount": 0
-								},
-								"assignedToName": "61",
-								"removable": false,
-								"type": "Single",
-								"name": "S25",
-								"interfacePinName": "S25"
-							},
-							{
-								"used": true,
-								"solution": {
-									"nameDecoratorText": "EPI0S16",
-									"assignedToName": "81",
-									"errorText": "",
-									"warningText": "",
-									"errorDetailsText": [],
-									"warningDetailsText": [],
-									"errorCount": 0,
-									"warningCount": 0,
-									"nonSolverErrorCount": 0
-								},
-								"nonSolverSolution": {
-									"nameDecoratorText": "",
-									"assignedToName": "",
-									"errorText": "",
-									"warningText": "",
-									"errorDetailsText": [],
-									"warningDetailsText": [],
-									"errorCount": 0,
-									"warningCount": 0,
-									"nonSolverErrorCount": 0
-								},
-								"assignedToName": "81",
-								"removable": false,
-								"type": "Single",
-								"name": "S16",
-								"interfacePinName": "S16"
-							},
-							{
-								"used": true,
-								"solution": {
-									"nameDecoratorText": "EPI0S11",
-									"assignedToName": "49",
-									"errorText": "",
-									"warningText": "",
-									"errorDetailsText": [],
-									"warningDetailsText": [],
-									"errorCount": 0,
-									"warningCount": 0,
-									"nonSolverErrorCount": 0
-								},
-								"nonSolverSolution": {
-									"nameDecoratorText": "",
-									"assignedToName": "",
-									"errorText": "",
-									"warningText": "",
-									"errorDetailsText": [],
-									"warningDetailsText": [],
-									"errorCount": 0,
-									"warningCount": 0,
-									"nonSolverErrorCount": 0
-								},
-								"assignedToName": "49",
-								"removable": false,
-								"type": "Single",
-								"name": "S11",
-								"interfacePinName": "S11"
-							},
-							{
-								"used": true,
-								"solution": {
-									"nameDecoratorText": "EPI0S8",
-									"assignedToName": "40",
-									"errorText": "",
-									"warningText": "",
-									"errorDetailsText": [],
-									"warningDetailsText": [],
-									"errorCount": 0,
-									"warningCount": 0,
-									"nonSolverErrorCount": 0
-								},
-								"nonSolverSolution": {
-									"nameDecoratorText": "",
-									"assignedToName": "",
-									"errorText": "",
-									"warningText": "",
-									"errorDetailsText": [],
-									"warningDetailsText": [],
-									"errorCount": 0,
-									"warningCount": 0,
-									"nonSolverErrorCount": 0
-								},
-								"assignedToName": "40",
-								"removable": false,
-								"type": "Single",
-								"name": "S8",
-								"interfacePinName": "S8"
-							},
-							{
-								"used": true,
-								"solution": {
-									"nameDecoratorText": "EPI0S1",
-									"assignedToName": "19",
-									"errorText": "",
-									"warningText": "",
-									"errorDetailsText": [],
-									"warningDetailsText": [],
-									"errorCount": 0,
-									"warningCount": 0,
-									"nonSolverErrorCount": 0
-								},
-								"nonSolverSolution": {
-									"nameDecoratorText": "",
-									"assignedToName": "",
-									"errorText": "",
-									"warningText": "",
-									"errorDetailsText": [],
-									"warningDetailsText": [],
-									"errorCount": 0,
-									"warningCount": 0,
-									"nonSolverErrorCount": 0
-								},
-								"assignedToName": "19",
-								"removable": false,
-								"type": "Single",
-								"name": "S1",
-								"interfacePinName": "S1"
-							},
-							{
-								"used": true,
-								"solution": {
-									"nameDecoratorText": "EPI0S30",
-									"assignedToName": "104",
-									"errorText": "",
-									"warningText": "",
-									"errorDetailsText": [],
-									"warningDetailsText": [],
-									"errorCount": 0,
-									"warningCount": 0,
-									"nonSolverErrorCount": 0
-								},
-								"nonSolverSolution": {
-									"nameDecoratorText": "",
-									"assignedToName": "",
-									"errorText": "",
-									"warningText": "",
-									"errorDetailsText": [],
-									"warningDetailsText": [],
-									"errorCount": 0,
-									"warningCount": 0,
-									"nonSolverErrorCount": 0
-								},
-								"assignedToName": "104",
-								"removable": false,
-								"type": "Single",
-								"name": "S30",
-								"interfacePinName": "S30"
-							},
-							{
-								"used": true,
-								"solution": {
-									"nameDecoratorText": "EPI0S27",
-									"assignedToName": "91",
-									"errorText": "",
-									"warningText": "",
-									"errorDetailsText": [],
-									"warningDetailsText": [],
-									"errorCount": 0,
-									"warningCount": 0,
-									"nonSolverErrorCount": 0
-								},
-								"nonSolverSolution": {
-									"nameDecoratorText": "",
-									"assignedToName": "",
-									"errorText": "",
-									"warningText": "",
-									"errorDetailsText": [],
-									"warningDetailsText": [],
-									"errorCount": 0,
-									"warningCount": 0,
-									"nonSolverErrorCount": 0
-								},
-								"assignedToName": "91",
-								"removable": false,
-								"type": "Single",
-								"name": "S27",
-								"interfacePinName": "S27"
-							},
-							{
-								"used": false,
-								"solution": {
-									"nameDecoratorText": "",
-									"assignedToName": "",
-									"errorText": "",
-									"warningText": "",
-									"errorDetailsText": [],
-									"warningDetailsText": [],
-									"errorCount": 0,
-									"warningCount": 0,
-									"nonSolverErrorCount": 0
-								},
-								"nonSolverSolution": {
-									"nameDecoratorText": "",
-									"assignedToName": "",
-									"errorText": "",
-									"warningText": "",
-									"errorDetailsText": [],
-									"warningDetailsText": [],
-									"errorCount": 0,
-									"warningCount": 0,
-									"nonSolverErrorCount": 0
-								},
-								"assignedToName": "Any",
-								"removable": false,
-								"type": "Single",
-								"name": "S34",
-								"interfacePinName": "S34"
-							},
-							{
-								"used": true,
-								"solution": {
-									"nameDecoratorText": "EPI0S21",
-									"assignedToName": "6",
-									"errorText": "",
-									"warningText": "",
-									"errorDetailsText": [],
-									"warningDetailsText": [],
-									"errorCount": 0,
-									"warningCount": 0,
-									"nonSolverErrorCount": 0
-								},
-								"nonSolverSolution": {
-									"nameDecoratorText": "",
-									"assignedToName": "",
-									"errorText": "",
-									"warningText": "",
-									"errorDetailsText": [],
-									"warningDetailsText": [],
-									"errorCount": 0,
-									"warningCount": 0,
-									"nonSolverErrorCount": 0
-								},
-								"assignedToName": "6",
-								"removable": false,
-								"type": "Single",
-								"name": "S21",
-								"interfacePinName": "S21"
-							},
-							{
-								"used": true,
-								"solution": {
-									"nameDecoratorText": "EPI0S19",
-									"assignedToName": "84",
-									"errorText": "",
-									"warningText": "",
-									"errorDetailsText": [],
-									"warningDetailsText": [],
-									"errorCount": 0,
-									"warningCount": 0,
-									"nonSolverErrorCount": 0
-								},
-								"nonSolverSolution": {
-									"nameDecoratorText": "",
-									"assignedToName": "",
-									"errorText": "",
-									"warningText": "",
-									"errorDetailsText": [],
-									"warningDetailsText": [],
-									"errorCount": 0,
-									"warningCount": 0,
-									"nonSolverErrorCount": 0
-								},
-								"assignedToName": "84",
-								"removable": false,
-								"type": "Single",
-								"name": "S19",
-								"interfacePinName": "S19"
-							},
-							{
-								"used": true,
-								"solution": {
-									"nameDecoratorText": "EPI0S15",
-									"assignedToName": "78",
-									"errorText": "",
-									"warningText": "",
-									"errorDetailsText": [],
-									"warningDetailsText": [],
-									"errorCount": 0,
-									"warningCount": 0,
-									"nonSolverErrorCount": 0
-								},
-								"nonSolverSolution": {
-									"nameDecoratorText": "",
-									"assignedToName": "",
-									"errorText": "",
-									"warningText": "",
-									"errorDetailsText": [],
-									"warningDetailsText": [],
-									"errorCount": 0,
-									"warningCount": 0,
-									"nonSolverErrorCount": 0
-								},
-								"assignedToName": "78",
-								"removable": false,
-								"type": "Single",
-								"name": "S15",
-								"interfacePinName": "S15"
-							},
-							{
-								"used": true,
-								"solution": {
-									"nameDecoratorText": "EPI0S13",
-									"assignedToName": "76",
-									"errorText": "",
-									"warningText": "",
-									"errorDetailsText": [],
-									"warningDetailsText": [],
-									"errorCount": 0,
-									"warningCount": 0,
-									"nonSolverErrorCount": 0
-								},
-								"nonSolverSolution": {
-									"nameDecoratorText": "",
-									"assignedToName": "",
-									"errorText": "",
-									"warningText": "",
-									"errorDetailsText": [],
-									"warningDetailsText": [],
-									"errorCount": 0,
-									"warningCount": 0,
-									"nonSolverErrorCount": 0
-								},
-								"assignedToName": "76",
-								"removable": false,
-								"type": "Single",
-								"name": "S13",
-								"interfacePinName": "S13"
-							},
-							{
-								"used": true,
-								"solution": {
-									"nameDecoratorText": "EPI0S28",
-									"assignedToName": "92",
-									"errorText": "",
-									"warningText": "",
-									"errorDetailsText": [],
-									"warningDetailsText": [],
-									"errorCount": 0,
-									"warningCount": 0,
-									"nonSolverErrorCount": 0
-								},
-								"nonSolverSolution": {
-									"nameDecoratorText": "",
-									"assignedToName": "",
-									"errorText": "",
-									"warningText": "",
-									"errorDetailsText": [],
-									"warningDetailsText": [],
-									"errorCount": 0,
-									"warningCount": 0,
-									"nonSolverErrorCount": 0
-								},
-								"assignedToName": "92",
-								"removable": false,
-								"type": "Single",
-								"name": "S28",
-								"interfacePinName": "S28"
-							},
-							{
-								"used": true,
-								"solution": {
-									"nameDecoratorText": "EPI0S23",
-									"assignedToName": "27",
-									"errorText": "",
-									"warningText": "",
-									"errorDetailsText": [],
-									"warningDetailsText": [],
-									"errorCount": 0,
-									"warningCount": 0,
-									"nonSolverErrorCount": 0
-								},
-								"nonSolverSolution": {
-									"nameDecoratorText": "",
-									"assignedToName": "",
-									"errorText": "",
-									"warningText": "",
-									"errorDetailsText": [],
-									"warningDetailsText": [],
-									"errorCount": 0,
-									"warningCount": 0,
-									"nonSolverErrorCount": 0
-								},
-								"assignedToName": "27",
-								"removable": false,
-								"type": "Single",
-								"name": "S23",
-								"interfacePinName": "S23"
-							},
-							{
-								"used": true,
-								"solution": {
-									"nameDecoratorText": "EPI0S10",
-									"assignedToName": "50",
-									"errorText": "",
-									"warningText": "",
-									"errorDetailsText": [],
-									"warningDetailsText": [],
-									"errorCount": 0,
-									"warningCount": 0,
-									"nonSolverErrorCount": 0
-								},
-								"nonSolverSolution": {
-									"nameDecoratorText": "",
-									"assignedToName": "",
-									"errorText": "",
-									"warningText": "",
-									"errorDetailsText": [],
-									"warningDetailsText": [],
-									"errorCount": 0,
-									"warningCount": 0,
-									"nonSolverErrorCount": 0
-								},
-								"assignedToName": "50",
-								"removable": false,
-								"type": "Single",
-								"name": "S10",
-								"interfacePinName": "S10"
-							},
-							{
-								"used": true,
-								"solution": {
-									"nameDecoratorText": "EPI0S31",
-									"assignedToName": "62",
-									"errorText": "",
-									"warningText": "",
-									"errorDetailsText": [],
-									"warningDetailsText": [],
-									"errorCount": 0,
-									"warningCount": 0,
-									"nonSolverErrorCount": 0
-								},
-								"nonSolverSolution": {
-									"nameDecoratorText": "",
-									"assignedToName": "",
-									"errorText": "",
-									"warningText": "",
-									"errorDetailsText": [],
-									"warningDetailsText": [],
-									"errorCount": 0,
-									"warningCount": 0,
-									"nonSolverErrorCount": 0
-								},
-								"assignedToName": "62",
-								"removable": false,
-								"type": "Single",
-								"name": "S31",
-								"interfacePinName": "S31"
-							},
-							{
-								"used": true,
-								"solution": {
-									"nameDecoratorText": "EPI0S29",
-									"assignedToName": "103",
-									"errorText": "",
-									"warningText": "",
-									"errorDetailsText": [],
-									"warningDetailsText": [],
-									"errorCount": 0,
-									"warningCount": 0,
-									"nonSolverErrorCount": 0
-								},
-								"nonSolverSolution": {
-									"nameDecoratorText": "",
-									"assignedToName": "",
-									"errorText": "",
-									"warningText": "",
-									"errorDetailsText": [],
-									"warningDetailsText": [],
-									"errorCount": 0,
-									"warningCount": 0,
-									"nonSolverErrorCount": 0
-								},
-								"assignedToName": "103",
-								"removable": false,
-								"type": "Single",
-								"name": "S29",
-								"interfacePinName": "S29"
-							},
-							{
-								"used": true,
-								"solution": {
-									"nameDecoratorText": "EPI0S3",
-									"assignedToName": "21",
-									"errorText": "",
-									"warningText": "",
-									"errorDetailsText": [],
-									"warningDetailsText": [],
-									"errorCount": 0,
-									"warningCount": 0,
-									"nonSolverErrorCount": 0
-								},
-								"nonSolverSolution": {
-									"nameDecoratorText": "",
-									"assignedToName": "",
-									"errorText": "",
-									"warningText": "",
-									"errorDetailsText": [],
-									"warningDetailsText": [],
-									"errorCount": 0,
-									"warningCount": 0,
-									"nonSolverErrorCount": 0
-								},
-								"assignedToName": "21",
-								"removable": false,
-								"type": "Single",
-								"name": "S3",
-								"interfacePinName": "S3"
-							},
-							{
-								"used": true,
-								"solution": {
-									"nameDecoratorText": "EPI0S6",
-									"assignedToName": "24",
-									"errorText": "",
-									"warningText": "",
-									"errorDetailsText": [],
-									"warningDetailsText": [],
-									"errorCount": 0,
-									"warningCount": 0,
-									"nonSolverErrorCount": 0
-								},
-								"nonSolverSolution": {
-									"nameDecoratorText": "",
-									"assignedToName": "",
-									"errorText": "",
-									"warningText": "",
-									"errorDetailsText": [],
-									"warningDetailsText": [],
-									"errorCount": 0,
-									"warningCount": 0,
-									"nonSolverErrorCount": 0
-								},
-								"assignedToName": "24",
-								"removable": false,
-								"type": "Single",
-								"name": "S6",
-								"interfacePinName": "S6"
-							},
-							{
-								"used": true,
-								"solution": {
-									"nameDecoratorText": "EPI0S9",
-									"assignedToName": "41",
-									"errorText": "",
-									"warningText": "",
-									"errorDetailsText": [],
-									"warningDetailsText": [],
-									"errorCount": 0,
-									"warningCount": 0,
-									"nonSolverErrorCount": 0
-								},
-								"nonSolverSolution": {
-									"nameDecoratorText": "",
-									"assignedToName": "",
-									"errorText": "",
-									"warningText": "",
-									"errorDetailsText": [],
-									"warningDetailsText": [],
-									"errorCount": 0,
-									"warningCount": 0,
-									"nonSolverErrorCount": 0
-								},
-								"assignedToName": "41",
-								"removable": false,
-								"type": "Single",
-								"name": "S9",
-								"interfacePinName": "S9"
-							},
-							{
-								"used": true,
-								"solution": {
-									"nameDecoratorText": "EPI0S0",
-									"assignedToName": "18",
-									"errorText": "",
-									"warningText": "",
-									"errorDetailsText": [],
-									"warningDetailsText": [],
-									"errorCount": 0,
-									"warningCount": 0,
-									"nonSolverErrorCount": 0
-								},
-								"nonSolverSolution": {
-									"nameDecoratorText": "",
-									"assignedToName": "",
-									"errorText": "",
-									"warningText": "",
-									"errorDetailsText": [],
-									"warningDetailsText": [],
-									"errorCount": 0,
-									"warningCount": 0,
-									"nonSolverErrorCount": 0
-								},
-								"assignedToName": "18",
-								"removable": false,
-								"type": "Single",
-								"name": "S0",
-								"interfacePinName": "S0"
-							},
-							{
-								"used": true,
-								"solution": {
-									"nameDecoratorText": "EPI0S7",
-									"assignedToName": "25",
-									"errorText": "",
-									"warningText": "",
-									"errorDetailsText": [],
-									"warningDetailsText": [],
-									"errorCount": 0,
-									"warningCount": 0,
-									"nonSolverErrorCount": 0
-								},
-								"nonSolverSolution": {
-									"nameDecoratorText": "",
-									"assignedToName": "",
-									"errorText": "",
-									"warningText": "",
-									"errorDetailsText": [],
-									"warningDetailsText": [],
-									"errorCount": 0,
-									"warningCount": 0,
-									"nonSolverErrorCount": 0
-								},
-								"assignedToName": "25",
-								"removable": false,
-								"type": "Single",
-								"name": "S7",
-								"interfacePinName": "S7"
-							},
-							{
-								"used": true,
-								"solution": {
-									"nameDecoratorText": "EPI0S17",
-									"assignedToName": "82",
-									"errorText": "",
-									"warningText": "",
-									"errorDetailsText": [],
-									"warningDetailsText": [],
-									"errorCount": 0,
-									"warningCount": 0,
-									"nonSolverErrorCount": 0
-								},
-								"nonSolverSolution": {
-									"nameDecoratorText": "",
-									"assignedToName": "",
-									"errorText": "",
-									"warningText": "",
-									"errorDetailsText": [],
-									"warningDetailsText": [],
-									"errorCount": 0,
-									"warningCount": 0,
-									"nonSolverErrorCount": 0
-								},
-								"assignedToName": "82",
-								"removable": false,
-								"type": "Single",
-								"name": "S17",
-								"interfacePinName": "S17"
-							},
-							{
-								"used": false,
-								"solution": {
-									"nameDecoratorText": "",
-									"assignedToName": "",
-									"errorText": "",
-									"warningText": "",
-									"errorDetailsText": [],
-									"warningDetailsText": [],
-									"errorCount": 0,
-									"warningCount": 0,
-									"nonSolverErrorCount": 0
-								},
-								"nonSolverSolution": {
-									"nameDecoratorText": "",
-									"assignedToName": "",
-									"errorText": "",
-									"warningText": "",
-									"errorDetailsText": [],
-									"warningDetailsText": [],
-									"errorCount": 0,
-									"warningCount": 0,
-									"nonSolverErrorCount": 0
-								},
-								"assignedToName": "Any",
-								"removable": false,
-								"type": "Single",
-								"name": "S33",
-								"interfacePinName": "S33"
-							},
-							{
-								"used": false,
-								"solution": {
-									"nameDecoratorText": "",
-									"assignedToName": "",
-									"errorText": "",
-									"warningText": "",
-									"errorDetailsText": [],
-									"warningDetailsText": [],
-									"errorCount": 0,
-									"warningCount": 0,
-									"nonSolverErrorCount": 0
-								},
-								"nonSolverSolution": {
-									"nameDecoratorText": "",
-									"assignedToName": "",
-									"errorText": "",
-									"warningText": "",
-									"errorDetailsText": [],
-									"warningDetailsText": [],
-									"errorCount": 0,
-									"warningCount": 0,
-									"nonSolverErrorCount": 0
-								},
-								"assignedToName": "Any",
-								"removable": false,
-								"type": "Single",
-								"name": "S35",
-								"interfacePinName": "S35"
-							},
-							{
-								"used": true,
-								"solution": {
-									"nameDecoratorText": "EPI0S14",
-									"assignedToName": "77",
-									"errorText": "",
-									"warningText": "",
-									"errorDetailsText": [],
-									"warningDetailsText": [],
-									"errorCount": 0,
-									"warningCount": 0,
-									"nonSolverErrorCount": 0
-								},
-								"nonSolverSolution": {
-									"nameDecoratorText": "",
-									"assignedToName": "",
-									"errorText": "",
-									"warningText": "",
-									"errorDetailsText": [],
-									"warningDetailsText": [],
-									"errorCount": 0,
-									"warningCount": 0,
-									"nonSolverErrorCount": 0
-								},
-								"assignedToName": "77",
-								"removable": false,
-								"type": "Single",
-								"name": "S14",
-								"interfacePinName": "S14"
-							},
-							{
-								"used": true,
-								"solution": {
-									"nameDecoratorText": "EPI0S24",
-									"assignedToName": "60",
-									"errorText": "",
-									"warningText": "",
-									"errorDetailsText": [],
-									"warningDetailsText": [],
-									"errorCount": 0,
-									"warningCount": 0,
-									"nonSolverErrorCount": 0
-								},
-								"nonSolverSolution": {
-									"nameDecoratorText": "",
-									"assignedToName": "",
-									"errorText": "",
-									"warningText": "",
-									"errorDetailsText": [],
-									"warningDetailsText": [],
-									"errorCount": 0,
-									"warningCount": 0,
-									"nonSolverErrorCount": 0
-								},
-								"assignedToName": "60",
-								"removable": false,
-								"type": "Single",
-								"name": "S24",
-								"interfacePinName": "S24"
-							},
-							{
-								"used": true,
-								"solution": {
-									"nameDecoratorText": "EPI0S4",
-									"assignedToName": "22",
-									"errorText": "",
-									"warningText": "",
-									"errorDetailsText": [],
-									"warningDetailsText": [],
-									"errorCount": 0,
-									"warningCount": 0,
-									"nonSolverErrorCount": 0
-								},
-								"nonSolverSolution": {
-									"nameDecoratorText": "",
-									"assignedToName": "",
-									"errorText": "",
-									"warningText": "",
-									"errorDetailsText": [],
-									"warningDetailsText": [],
-									"errorCount": 0,
-									"warningCount": 0,
-									"nonSolverErrorCount": 0
-								},
-								"assignedToName": "22",
-								"removable": false,
-								"type": "Single",
-								"name": "S4",
-								"interfacePinName": "S4"
-							},
-							{
-								"used": true,
-								"solution": {
-									"nameDecoratorText": "EPI0S18",
-									"assignedToName": "83",
-									"errorText": "",
-									"warningText": "",
-									"errorDetailsText": [],
-									"warningDetailsText": [],
-									"errorCount": 0,
-									"warningCount": 0,
-									"nonSolverErrorCount": 0
-								},
-								"nonSolverSolution": {
-									"nameDecoratorText": "",
-									"assignedToName": "",
-									"errorText": "",
-									"warningText": "",
-									"errorDetailsText": [],
-									"warningDetailsText": [],
-									"errorCount": 0,
-									"warningCount": 0,
-									"nonSolverErrorCount": 0
-								},
-								"assignedToName": "83",
-								"removable": false,
-								"type": "Single",
-								"name": "S18",
-								"interfacePinName": "S18"
-							},
-							{
-								"used": true,
-								"solution": {
-									"nameDecoratorText": "EPI0S12",
-									"assignedToName": "75",
-									"errorText": "",
-									"warningText": "",
-									"errorDetailsText": [],
-									"warningDetailsText": [],
-									"errorCount": 0,
-									"warningCount": 0,
-									"nonSolverErrorCount": 0
-								},
-								"nonSolverSolution": {
-									"nameDecoratorText": "",
-									"assignedToName": "",
-									"errorText": "",
-									"warningText": "",
-									"errorDetailsText": [],
-									"warningDetailsText": [],
-									"errorCount": 0,
-									"warningCount": 0,
-									"nonSolverErrorCount": 0
-								},
-								"assignedToName": "75",
-								"removable": false,
-								"type": "Single",
-								"name": "S12",
-								"interfacePinName": "S12"
-							},
-							{
-								"used": true,
-								"solution": {
-									"nameDecoratorText": "EPI0S20",
-									"assignedToName": "5",
-									"errorText": "",
-									"warningText": "",
-									"errorDetailsText": [],
-									"warningDetailsText": [],
-									"errorCount": 0,
-									"warningCount": 0,
-									"nonSolverErrorCount": 0
-								},
-								"nonSolverSolution": {
-									"nameDecoratorText": "",
-									"assignedToName": "",
-									"errorText": "",
-									"warningText": "",
-									"errorDetailsText": [],
-									"warningDetailsText": [],
-									"errorCount": 0,
-									"warningCount": 0,
-									"nonSolverErrorCount": 0
-								},
-								"assignedToName": "5",
-								"removable": false,
-								"type": "Single",
-								"name": "S20",
-								"interfacePinName": "S20"
-							},
-							{
-								"used": true,
-								"solution": {
-									"nameDecoratorText": "EPI0S22",
-									"assignedToName": "11",
-									"errorText": "",
-									"warningText": "",
-									"errorDetailsText": [],
-									"warningDetailsText": [],
-									"errorCount": 0,
-									"warningCount": 0,
-									"nonSolverErrorCount": 0
-								},
-								"nonSolverSolution": {
-									"nameDecoratorText": "",
-									"assignedToName": "",
-									"errorText": "",
-									"warningText": "",
-									"errorDetailsText": [],
-									"warningDetailsText": [],
-									"errorCount": 0,
-									"warningCount": 0,
-									"nonSolverErrorCount": 0
-								},
-								"assignedToName": "11",
-								"removable": false,
-								"type": "Single",
-								"name": "S22",
-								"interfacePinName": "S22"
-							},
-							{
-								"used": true,
-								"solution": {
-									"nameDecoratorText": "EPI0S5",
-									"assignedToName": "23",
-									"errorText": "",
-									"warningText": "",
-									"errorDetailsText": [],
-									"warningDetailsText": [],
-									"errorCount": 0,
-									"warningCount": 0,
-									"nonSolverErrorCount": 0
-								},
-								"nonSolverSolution": {
-									"nameDecoratorText": "",
-									"assignedToName": "",
-									"errorText": "",
-									"warningText": "",
-									"errorDetailsText": [],
-									"warningDetailsText": [],
-									"errorCount": 0,
-									"warningCount": 0,
-									"nonSolverErrorCount": 0
-								},
-								"assignedToName": "23",
-								"removable": false,
-								"type": "Single",
-								"name": "S5",
-								"interfacePinName": "S5"
-							},
-							{
-								"used": true,
-								"solution": {
-									"nameDecoratorText": "EPI0S2",
-									"assignedToName": "20",
-									"errorText": "",
-									"warningText": "",
-									"errorDetailsText": [],
-									"warningDetailsText": [],
-									"errorCount": 0,
-									"warningCount": 0,
-									"nonSolverErrorCount": 0
-								},
-								"nonSolverSolution": {
-									"nameDecoratorText": "",
-									"assignedToName": "",
-									"errorText": "",
-									"warningText": "",
-									"errorDetailsText": [],
-									"warningDetailsText": [],
-									"errorCount": 0,
-									"warningCount": 0,
-									"nonSolverErrorCount": 0
-								},
-								"assignedToName": "20",
-								"removable": false,
-								"type": "Single",
-								"name": "S2",
-								"interfacePinName": "S2"
-							}
-						],
-						"peripheralSolution": {
-							"nameDecoratorText": "",
-							"assignedToName": "EPI0",
-							"errorText": "",
-							"warningText": "",
-							"errorDetailsText": [],
-							"warningDetailsText": [],
-							"errorCount": 0,
-							"warningCount": 0,
-							"nonSolverErrorCount": 0
-						},
-						"voltageSolution": {
-							"nameDecoratorText": "",
-							"assignedToName": "",
-							"errorText": "",
-							"warningText": "",
-							"errorDetailsText": [],
-							"warningDetailsText": [],
-							"errorCount": 0,
-							"warningCount": 0,
-							"nonSolverErrorCount": 0
-						},
-						"isNameValid": true,
-						"assignedToName": "",
-						"id": "MyEPI1",
-						"name": "MyEPI1",
-						"interfaceName": "EPI",
-						"pinConfigurablesHeader": {}
-					}
-				],
+				"requirements": [],
 				"requirementsNameIndex": 2
 			},
 			"QEI": {
@@ -3398,13 +2066,13 @@
 				"requirementsNameIndex": 1
 			}
 		},
-		"version": "2.0.0",
+		"version": "2.0.1",
 		"isLoad": true
 	},
 	"versions": {
-		"data": "2017030715",
-		"timestamp": "2017030715",
-		"tool": "4.0.1483 ",
-		"templates": "2017030715"
+		"data": "2020011313",
+		"timestamp": "2020011313",
+		"tool": "4.0.1543 ",
+		"templates": "2020011313"
 	}
 }

@@ -21,6 +21,8 @@
  * SOLUTION.
  */
 
+#include <assert.h>
+
 #include "tm4c/clock.h"
 
 #include "driverlib/debug.h"

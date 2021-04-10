@@ -33,21 +33,21 @@ class Pin
 public:
     enum class Port : uint8_t
     {
-        A = 'A',
-        B = 'B',
-        C = 'C',
-        D = 'D',
-        E = 'E',
-        F = 'F',
-        G = 'G',
-        H = 'H',
-        J = 'J',
-        K = 'K',
-        L = 'L',
-        M = 'M',
-        N = 'N',
-        P = 'P',
-        Q = 'Q',
+        A,
+        B,
+        C,
+        D,
+        E,
+        F,
+        G,
+        H,
+        J,
+        K,
+        L,
+        M,
+        N,
+        P,
+        Q,
         COUNT
     };
 

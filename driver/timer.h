@@ -24,6 +24,8 @@
 #ifndef FLOW_DRIVER_TIMER_H_
 #define FLOW_DRIVER_TIMER_H_
 
+#include "flow/flow.h"
+
 #include "driver/isr.h"
 
 namespace Flow {
