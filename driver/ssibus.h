@@ -137,7 +137,29 @@ public:
 	{
 	}
 
-	virtual uint32_t size() const = 0;
+	virtual uint16_t size() const = 0;
+
+	void transmitLength(uint16_t length)
+	{
+		assert(length <= size());
+		_transmitLength = length;
+	}
+
+	uint16_t transmitLength() const
+	{
+		return _transmitLength;
+	}
+
+	void receiveLength(uint16_t length)
+	{
+		assert(length <= size());
+		_receiveLength = length;
+	}
+
+	uint16_t receiveLength() const
+	{
+		return _receiveLength;
+	}
 
 	/**
 	 * \brief Operation status.
@@ -148,14 +170,16 @@ public:
 	} status = Status::TBD;
 
 	uint8_t* transmit = nullptr;
-	uint16_t transmitLength = 0;
 	uint8_t* receive = nullptr;
-	uint16_t receiveLength = 0;
 	bool multipart = false;
 
 	uint32_t tag[4];
 
 	Flow::Driver::Digital::Output* slaveSelect = nullptr;
+
+private:
+	uint16_t _transmitLength = 0;
+	uint16_t _receiveLength = 0;
 };
 
 /**
@@ -305,9 +329,9 @@ public:
 						}
 
 						if(peripheral.transceive(currentEndPoint, currentOperation->transmit,
-						        currentOperation->transmitLength,
+						        currentOperation->transmitLength(),
 						        currentOperation->receive,
-						        currentOperation->receiveLength,
+						        currentOperation->receiveLength(),
 								currentOperation->multipart))
 						{
 							break;

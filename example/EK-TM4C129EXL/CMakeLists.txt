@@ -12,6 +12,13 @@ set(CMAKE_C_STANDARD_REQUIRED True)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
+macro(remove_cxx_flag flag)
+string(REPLACE "${flag}" "" CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE}")
+endmacro()
+
+remove_cxx_flag("-O3")
+set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -O2")
+
 add_compile_options(-fno-rtti -fno-exceptions -fno-unwind-tables -ffunction-sections -fdata-sections -Wall -Wextra)
 
 add_definitions(-D${DEFINE_PART} -Dgcc)
@@ -34,16 +41,20 @@ target_sources(blinky.elf
         source/main.cpp
         source/pinmux/pinout.c
         source/tm4c/clock.cpp
-        source/tm4c/interrupt.cpp
         source/tm4c/digitalio.cpp
+        source/tm4c/dma.cpp
+        source/tm4c/interrupt.cpp
+        source/tm4c/ssi.cpp
         source/tm4c/timer.cpp
         SW-TM4C/driverlib/cpu.c
         SW-TM4C/driverlib/fpu.c
         SW-TM4C/driverlib/gpio.c
         SW-TM4C/driverlib/interrupt.c
+        SW-TM4C/driverlib/ssi.c
         SW-TM4C/driverlib/sysctl.c
         SW-TM4C/driverlib/systick.c
         SW-TM4C/driverlib/timer.c
+        SW-TM4C/driverlib/udma.c
 )
 
 target_link_libraries(blinky.elf 
