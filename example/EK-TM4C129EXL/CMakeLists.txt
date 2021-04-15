@@ -61,4 +61,14 @@ target_link_libraries(blinky.elf
     CONAN_PKG::Flow
 )
 
-configure_file(FlowBlinky-Debug_EK-TM4C129EXL.launch FlowBlinky-Debug_EK-TM4C129EXL.launch COPYONLY)
+add_custom_command(TARGET blinky.elf POST_BUILD
+    COMMAND arm-none-eabi-size --format=gnu blinky.elf
+    WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/bin
+    COMMENT "Firmware size:"
+)
+
+add_custom_command(TARGET blinky.elf POST_BUILD
+    COMMAND arm-none-eabi-objcopy -O ihex blinky.elf blinky.hex
+    WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/bin
+    COMMENT "Converting to HEX..."
+)

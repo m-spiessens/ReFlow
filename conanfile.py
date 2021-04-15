@@ -15,6 +15,7 @@ class Flow(ConanFile):
 
 	def build(self):
 		cmake = CMake(self)
+		# cmake.verbose = True
 
 		if self.settings.os == "none":
 			cmake.definitions["CMAKE_TRY_COMPILE_TARGET_TYPE"] = "STATIC_LIBRARY"

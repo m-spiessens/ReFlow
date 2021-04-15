@@ -48,6 +48,8 @@ public:
 private:
     DMA();
 
+    static DMA _instance;
+
     uint8_t uDmaControlTable[1024] __attribute__ ((aligned(1024)));
     uint32_t inUse = 0;
 };

@@ -43,7 +43,7 @@ public:
     Flow::InPort<uint16_t> inStart{ this };
     Flow::OutPort<void> outTimeout;
 
-    virtual ~SingleShot(){}
+    virtual ~SingleShot() = default;
 };
 
 /**
@@ -56,7 +56,7 @@ class Continuous :
 public:
     Flow::OutPort<void> outTimeout;
 
-    virtual ~Continuous(){}
+    virtual ~Continuous() = default;
 };
 
 } // namespace Timer

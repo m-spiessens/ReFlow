@@ -26,31 +26,25 @@
 #include "flow/platform.h"
 #include "flow/reactor.h"
 
-Flow::Reactor& Flow::Reactor::theOne()
-{
-	static Reactor me;
-	return me;
-}
-
 void Flow::Reactor::add(Component& component)
 {
-	if(theOne().first == nullptr && theOne().last == nullptr)
+	if(me.first == nullptr && me.last == nullptr)
 	{
-	    theOne().first = &component;
-	    theOne().last = &component;
+	    me.first = &component;
+	    me.last = &component;
 	}
 	else
 	{
-	    theOne().last->next = &component;
-	    theOne().last = &component;
+	    me.last->next = &component;
+	    me.last = &component;
 	}
 }
 
 void Flow::Reactor::start()
 {
-    assert(!theOne().running);
+    assert(!me.running);
 
-    Component* current = theOne().first;
+    Component* current = me.first;
     while(current != nullptr)
     {
         current->start();
@@ -58,14 +52,14 @@ void Flow::Reactor::start()
         current = current->next;
     }
 
-    theOne().running = true;
+    me.running = true;
 }
 
 void Flow::Reactor::stop()
 {
-    assert(theOne().running);
+    assert(me.running);
 
-    Component* current = theOne().first;
+    Component* current = me.first;
     while(current != nullptr)
     {
         current->stop();
@@ -73,15 +67,15 @@ void Flow::Reactor::stop()
         current = current->next;
     }
 
-    theOne().running = false;
+    me.running = false;
 }
 
 void Flow::Reactor::run()
 {
-    assert(theOne().running);
+    assert(me.running);
 
 	bool ranSomething = false;
-	Component* current = theOne().first;
+	Component* current = me.first;
 	while(current != nullptr)
 	{
 		if(current->tryRun())
@@ -100,11 +94,13 @@ void Flow::Reactor::run()
 
 void Flow::Reactor::reset()
 {
-	theOne().first = nullptr;
-	theOne().last = nullptr;
+	me.first = nullptr;
+	me.last = nullptr;
 }
 
 Flow::Reactor::Reactor()
 {
 	Platform::configure();
 }
+
+Flow::Reactor Flow::Reactor::me;

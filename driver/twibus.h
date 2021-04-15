@@ -65,19 +65,25 @@ public:
 		INIT, ADDRESS, DATA, IDLE, NACK
 	};
 
-	virtual ~Peripheral()
-	{
-	}
+	virtual ~Peripheral() = default;
 
 	/**
 	 * \brief Configure and enable the peripheral.
 	 */
-	virtual void start() = 0;
+	virtual void start()
+	{
+		// Should be overloaded.
+		assert(false);
+	}
 
 	/**
 	 * \brief Disable the peripheral.
 	 */
-	virtual void stop() = 0;
+	virtual void stop()
+	{
+		// Should be overloaded.
+		assert(false);
+	}
 
 	/**
 	 * \brief Perform a TWI operation.
@@ -89,7 +95,15 @@ public:
 	 *
 	 * \return Operation request was successful.
 	 */
-	virtual bool transceive(uint8_t address, Direction direction, uint32_t length, uint8_t* data) = 0;
+	virtual bool transceive(uint8_t address, Direction direction, uint32_t length, uint8_t* data)
+	{
+		(void)address;
+		(void)direction;
+		(void)length;
+		(void)data;
+		// Should be overloaded.
+		assert(false);
+	}
 
 	/**
 	 * \brief Get the peripheral status.
@@ -136,9 +150,7 @@ public:
 		this->direction = direction;
 	}
 
-	virtual ~Operation()
-	{
-	}
+	virtual ~Operation() = default;
 
 	/**
 	 * \brief Operation status.
@@ -164,7 +176,9 @@ public:
  * It uses round robin scheduling if multiple slaves are connected.
  */
 template<uint_fast8_t ENDPOINT_COUNT>
-class Bus: public Flow::Component, public Flow::Driver::WithISR
+class Bus :
+		public Flow::Component, 
+		public Flow::Driver::WithISR
 {
 public:
 	/**

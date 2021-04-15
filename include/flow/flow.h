@@ -74,7 +74,13 @@ public:
 	 * \param element The element to be sent.
 	 * \return The element was successfully sent.
 	 */
-	virtual bool send(const Type& element) = 0;
+	virtual bool send(const Type& element)
+	{
+		(void)element;
+		// Should be overloaded.
+		assert(false);
+		return false; 
+	}
 
 	/**
 	 * \brief Receive an element from the connection.
@@ -84,17 +90,33 @@ public:
 	 * \return An element was successfully received.
 	 * 		Thus the element output parameter has a valid value.
 	 */
-	virtual bool receive(Type& element) = 0;
+	virtual bool receive(Type& element)
+	{
+		(void)element;
+		// Should be overloaded.
+		assert(false);
+		return false; 
+	}
 
 	/**
 	 * \brief Is an element available for receiving?
 	 */
-	virtual bool peek() const = 0;
+	virtual bool peek() const
+	{
+		// Should be overloaded.
+		assert(false);
+		return false; 
+	}
 
 	/**
 	 * \brief Is the connection full?
 	 */
-	virtual bool full() const = 0;
+	virtual bool full() const
+	{
+		// Should be overloaded.
+		assert(false);
+		return false; 
+	}
 };
 
 template<>
@@ -188,7 +210,11 @@ public:
      * \remark DO NOT manually call this function if you are using the Flow::Reactor,
      * it will do that for you when needed.
      */
-    virtual void run() = 0;
+    virtual void run()
+	{
+		// Should be overloaded.
+		assert(false);
+	}
 
 protected:
 	/**
@@ -326,7 +352,13 @@ class Peek
 public:
 	Peek(Component* owner);
 	virtual ~Peek() = default;
-	virtual bool peek() const = 0;
+
+	virtual bool peek() const
+	{
+		// Should be overloaded.
+		assert(false);
+		return false;
+	}
 
 	Peek* next = nullptr;
 

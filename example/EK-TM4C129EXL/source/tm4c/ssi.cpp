@@ -48,10 +48,6 @@ Base::Base(uint8_t number) :
 	assert(_number < COUNT);
 }
 
-Base::~Base()
-{
-}
-
 void Base::trigger()
 {
     IntTrigger(vector());
@@ -170,7 +166,7 @@ Master::~Master()
 
 void Master::start()
 {
-    Frequency coreFrequency = Clock::instance().getFrequency();
+    Frequency coreFrequency = Clock::getFrequency();
     SSIConfigSetExpClk(base(), coreFrequency, SSI_FRF_MOTO_MODE_0, SSI_MODE_MASTER, 1000000, 8);
 
     SSIEnable(base());

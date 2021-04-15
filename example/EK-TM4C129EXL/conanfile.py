@@ -20,9 +20,5 @@ class FlowBlinky(ConanFile):
 
       cmake.configure()
       cmake.build()
-      self.run("arm-none-eabi-objcopy -O ihex " + os.path.join(cmake.build_folder, "bin", "blinky.elf") + " blinky.hex")
-      print("\n####################################\n")
-      self.run("arm-none-eabi-size --format=gnu " + os.path.join(cmake.build_folder, "bin", "blinky.elf"))
-      print("\n####################################\n")
 
       self.run("rm -f arm-none-eabi-gdb; ln -s `which arm-none-eabi-gdb`")

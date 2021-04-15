@@ -22,6 +22,7 @@
  */
 
 #include <assert.h>
+#include <malloc.h>
 #include <stdint.h>
 #include <string.h>
 
@@ -46,7 +47,7 @@ Digital::Output led{ Pin::Port::N, 1, Digital::Polarity::Normal };
 int main()
 {
 	// Set up the clock circuit.
-	Clock::instance().configure<Device::TM4C129>(80 MHz);
+	Clock::configure<Device::TM4C129>(80 MHz);
 
 	// Set up the pin mux configuration.
 	PinoutSet();
@@ -103,4 +104,9 @@ extern "C" caddr_t _sbrk(int increment)
 	currentHeapTop += increment;
 
 	return (caddr_t)previousHeapTop;
+}
+
+void* operator new(size_t size)
+{
+	return malloc(size);
 }

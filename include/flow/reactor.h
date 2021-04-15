@@ -76,19 +76,12 @@ public:
 private:
 	Reactor();
 
-	/**
-	* \brief Get the singleton instance.
-	*
-	* Yes, a singleton is actually useful here.
-	*
-	* \return The singleton instance.
-	*/
-	static Reactor& theOne();
-
 	Component* first = nullptr;
 	Component* last = nullptr;
 
 	bool running = false;
+
+	static Reactor me;
 };
 
 namespace Test {

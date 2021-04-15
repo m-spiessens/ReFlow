@@ -46,7 +46,12 @@ public:
 	{
 		Idle, TransmitComplete, ReceiveComplete, Error, Overflow
 	};
-	virtual void complete(Status status) = 0;
+	virtual void complete(Status status)
+	{
+		(void)status;
+		// Should be overloaded.
+		assert(false);
+	}
 };
 
 /**
@@ -64,24 +69,48 @@ public:
 		Init, Ready, Overflow
 	};
 
-	virtual ~Peripheral()
-	{
-	}
+	virtual ~Peripheral() = default;
 
 	/**
 	 * \brief Configure and enable the peripheral.
 	 */
-	virtual void start() = 0;
+	virtual void start()
+	{
+		// Should be overloaded.
+		assert(false);
+	}
 
 	/**
 	 * \brief Disable the peripheral.
 	 */
-	virtual void stop() = 0;
+	virtual void stop()
+	{
+		// Should be overloaded.
+		assert(false);
+	}
 
-	virtual bool send(const void* const buffer, uint16_t& length) = 0;
-	virtual bool receive(volatile void* const buffer, uint16_t& length) = 0;
+	virtual bool send(const void* const buffer, uint16_t& length)
+	{
+		(void)buffer;
+		(void)length;
+		// Should be overloaded.
+		assert(false);
+	}
 
-	virtual void attach(Complete& complete) = 0;
+	virtual bool receive(volatile void* const buffer, uint16_t& length)
+	{
+		(void)buffer;
+		(void)length;
+		// Should be overloaded.
+		assert(false);
+	}
+
+	virtual void attach(Complete& complete)
+	{
+		(void)complete;
+		// Should be overloaded.
+		assert(false);
+	}
 
 	/**
 	 * \brief Get the peripheral status.

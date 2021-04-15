@@ -32,7 +32,6 @@ namespace TM4C {
 
 DMA& DMA::peripheral()
 {
-    static DMA _instance;
     return _instance;
 }
 
@@ -57,5 +56,7 @@ DMA::DMA()
     uDMAEnable();
     uDMAControlBaseSet(uDmaControlTable);
 }
+
+DMA DMA::_instance;
 
 } // namespace TM4C

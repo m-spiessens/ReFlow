@@ -48,7 +48,13 @@ public:
 	{
 		Success, Error
 	};
-	virtual void complete(Status status) = 0;
+
+	virtual void complete(Status status)
+	{
+		(void)status;
+		// Should be overloaded.
+		assert(false);
+	}
 };
 
 /**
@@ -69,19 +75,25 @@ public:
 		Init, Busy, Ready
 	};
 
-	virtual ~Peripheral()
-	{
-	}
+	virtual ~Peripheral() = default;
 
 	/**
 	 * \brief Configure and enable the peripheral.
 	 */
-	virtual void start() = 0;
+	virtual void start()
+	{
+		// Should be overloaded.
+		assert(false);
+	}
 
 	/**
 	 * \brief Disable the peripheral.
 	 */
-	virtual void stop() = 0;
+	virtual void stop()
+	{
+		// Should be overloaded.
+		assert(false);
+	}
 
 	/**
 	 * \brief Perform a full duplex SSI operation.
@@ -96,9 +108,25 @@ public:
 	 */
 	virtual bool transceive(uint8_t slave, uint8_t* const transmit,
 	        uint16_t transmitLength, uint8_t* const receive,
-	        uint16_t receiveLength, bool multipart = false) = 0;
+	        uint16_t receiveLength, bool multipart = false)
+	{
+		(void)slave;
+		(void)transmit;
+		(void)transmitLength;
+		(void)receive;
+		(void)receiveLength;
+		(void)multipart;
+		// Should be overloaded.
+		assert(false);
+		return false;
+	}
 
-	virtual void attach(Complete& complete) = 0;
+	virtual void attach(Complete& complete)
+	{
+		(void)complete;
+		// Should be overloaded.
+		assert(false);
+	}
 
 	/**
 	 * \brief Get the peripheral status.
@@ -133,11 +161,14 @@ public:
 	{
 	}
 
-	virtual ~Operation()
-	{
-	}
+	virtual ~Operation() = default;
 
-	virtual uint16_t size() const = 0;
+	virtual uint16_t size() const
+	{
+		// Should be overloaded.
+		assert(false);
+		return 0;
+	}
 
 	void transmitLength(uint16_t length)
 	{
@@ -210,8 +241,6 @@ public:
 		peripheral.attach(*this);
 	}
 
-	Flow::InPort<bool> inEnable{ this };
-
 	/**
 	 * \brief The bus end points.
 	 *
@@ -226,6 +255,7 @@ public:
 	 */
 	void start() final override
 	{
+		peripheral.start();
 	}
 
 	/**
@@ -235,6 +265,7 @@ public:
 	 */
 	void stop() final override
 	{
+		peripheral.stop();
 	}
 
 	/**
@@ -246,39 +277,9 @@ public:
 	 */
 	void run() final override
 	{
-		bool enable = false;
-		if(inEnable.receive(enable))
-		{
-			if(!enabled && enable)
-			{
-				peripheral.start();
-				enabled = true;
-			}
-			else if(enabled && !enable)
-			{
-				enabled = false;
-				peripheral.stop();
-
-				if(currentOperation != nullptr)
-				{
-					currentOperation->status = Operation::Status::FAIL;
-					endPoint[currentEndPoint]->send(currentOperation);
-					currentOperation = nullptr;
-					flushEndpoint(currentEndPoint);
-				}
-			}
-		}
-
-		if(enabled && currentOperation == nullptr)
+		if(currentOperation == nullptr)
 		{
 			peripheral.trigger();
-		}
-		else if(!enabled)
-		{
-			for(uint_fast8_t e = 0; e < ENDPOINT_COUNT; e++)
-			{
-				flushEndpoint(e);
-			}
 		}
 	}
 
@@ -356,7 +357,6 @@ public:
 private:
 	Peripheral& peripheral;
 
-	bool enabled = false;
 	uint_fast8_t currentEndPoint = ENDPOINT_COUNT;
 	Operation* currentOperation = nullptr;
 
@@ -375,81 +375,19 @@ private:
  * \brief The interface drivers for SSI devices should adhere to
  * (on the master side implementation).
  */
-class Slave:
-    public Flow::Component
+class Slave :
+    	public Flow::Component
 {
 public:
-	/**
-	 * \brief Create a SSI slave.
-	 *
-	 * \param slaveSelect The slave select to be asserted during operations.
-	 */
-	explicit Slave(Flow::Driver::Digital::Output* slaveSelect = nullptr) :
-			slaveSelect(slaveSelect)
-	{
-	}
-
 	/**
 	 * \brief The slave end point.
 	 *
 	 * flow::connect() this to one of the SSI::Bus end points.
 	 */
-	Flow::InOutPort<Operation*> endPoint
-	{ this };
-
-protected:
-	Flow::Driver::Digital::Output* slaveSelect = nullptr;
+	Flow::InOutPort<Operation*> endPoint{ this };
 };
 
 } // namespace Master
-
-namespace Slave
-{
-
-/**
- * \brief An SSI operation.
- *
- * This implementation is target agnostic.
- */
-class Operation
-{
-public:
-	Operation(const uint8_t* const transmit, uint8_t* const receive) :
-			transmit(transmit),
-			receive(receive)
-	{}
-
-	virtual ~Operation()
-	{
-	}
-
-	/**
-	 * \brief Operation status.
-	 */
-	enum class Status
-	{
-		TBD, FAIL, SUCCESS
-	} status = Status::TBD;
-
-	const uint8_t* const transmit;
-	uint8_t transmitLength = 0;
-	uint8_t* const receive;
-	uint8_t receiveLength = 0;
-};
-
-class Peripheral:
-    public Flow::Component,
-    virtual public Flow::Driver::WithISR
-{
-public:
-	Flow::InOutPort<Operation*> inOutOperation{this};
-
-	virtual ~Peripheral()
-	{
-	}
-};
-
-} // namespace Slave
 } // namespace SSI
 } // namespace Driver
 } // namespace Flow

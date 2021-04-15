@@ -107,6 +107,46 @@
             "dependsOn": [
                 "ExportDev"
             ]
+        },
+        {
+            "label": "TM4C Install Debug",
+            "type": "shell",
+            "command": "conan install example/EK-TM4C129EXL -pr:h TM4C129ENCPDT -if=example/EK-TM4C129EXL-Debug/ -s build_type=Debug --build Flow/2.0@spiessensm/dev",
+            "dependsOn": [
+                "ExportDev"
+            ]
+        },
+        {
+            "label": "TM4C Build Debug",
+            "type": "shell",
+            "command": "conan build example/EK-TM4C129EXL -bf=example/EK-TM4C129EXL-Debug/",
+            "group": "build",
+            "dependsOn": [
+                "TM4C Install Debug"
+            ],
+            "problemMatcher": [
+                "$gcc"
+            ]
+        },
+        {
+            "label": "TM4C Install Release",
+            "type": "shell",
+            "command": "conan install example/EK-TM4C129EXL -pr:h TM4C129ENCPDT -if=example/EK-TM4C129EXL-Release/ -s build_type=Release --build Flow/2.0@spiessensm/dev",
+            "dependsOn": [
+                "ExportDev"
+            ]
+        },
+        {
+            "label": "TM4C Build Release",
+            "type": "shell",
+            "command": "conan build example/EK-TM4C129EXL -bf=example/EK-TM4C129EXL-Release/",
+            "group": "build",
+            "dependsOn": [
+                "TM4C Install Release"
+            ],
+            "problemMatcher": [
+                "$gcc"
+            ]
         }
     ]
 }

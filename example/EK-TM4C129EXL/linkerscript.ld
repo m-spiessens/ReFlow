@@ -109,12 +109,6 @@ SECTIONS
         KEEP(*(.fini_array))
         PROVIDE_HIDDEN (__fini_array_end = .);
 
-        KEEP(*(.jcr*))
-        . = ALIGN(4);
-
-        KEEP(*(.cy_ramfunc*))
-        . = ALIGN(4);
-
 		_edata = .;
     } > ram
 
@@ -135,17 +129,16 @@ SECTIONS
         __bss_end__ = .;
     } > ram
 
-    .heap (ORIGIN(ram) + LENGTH(ram) - _stack_size - _heap_size) :
+    .heap (ORIGIN(ram) + LENGTH(ram) - _stack_size - _heap_size) (NOLOAD) :
     {
         . = ALIGN(8);
         _heap = .;
         . += _heap_size;
         . = ALIGN(8);
         _eheap = .;
-        end = .;
     } > ram
 
-    .stack :
+    .stack (NOLOAD) :
     {
         . = ALIGN(8);
         . += _stack_size;

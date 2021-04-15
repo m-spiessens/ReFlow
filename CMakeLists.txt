@@ -8,7 +8,7 @@ conan_basic_setup(TARGETS)
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
-add_compile_options(-Wall -Wextra -pedantic)
+add_compile_options(-fno-rtti -fno-exceptions -fno-unwind-tables -ffunction-sections -fdata-sections -Wall -Wextra -pedantic)
 
 add_library(Flow "")
 target_include_directories(Flow

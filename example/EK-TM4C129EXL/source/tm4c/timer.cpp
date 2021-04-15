@@ -107,7 +107,7 @@ void SingleShot::run()
 		{
 			TimerIntDisable(base(), TIMER_TIMA_TIMEOUT);
 			TimerDisable(base(), TIMER_A);
-			TimerLoadSet(base(), TIMER_A, Clock::instance().getFrequency() / 1000 * periodMs);
+			TimerLoadSet(base(), TIMER_A, Clock::getFrequency() / 1000 * periodMs);
 			TimerIntEnable(base(), TIMER_TIMA_TIMEOUT);
 
 			TimerEnable(base(), TIMER_A);
@@ -159,7 +159,7 @@ void Continuous::start()
 
 	TimerIntDisable(base(), TIMER_TIMA_TIMEOUT);
 	TimerDisable(base(), TIMER_A);
-	TimerLoadSet(base(), TIMER_A, Clock::instance().getFrequency() / 1000 * periodMs);
+	TimerLoadSet(base(), TIMER_A, Clock::getFrequency() / 1000 * periodMs);
 	TimerIntEnable(base(), TIMER_TIMA_TIMEOUT);
 
 	Interrupt::VectorTable::enable(vector(Channel::A));

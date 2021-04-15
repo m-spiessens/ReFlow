@@ -24,28 +24,24 @@
 #ifndef TM4C_CLOCK_H_
 #define TM4C_CLOCK_H_
 
-#include "driver/clock.h"
-#include "driver/isr.h"
+#include "driver/frequency.h"
 
 namespace TM4C {
 
 enum class Device { TM4C123, TM4C129 };
 
-class Clock :
-		public Flow::Driver::Clock<Clock>,
-		public Flow::Driver::WithISR
+class Clock
 {
 public:
 	template<Device device>
-	void configure(Frequency frequency);
+	static void configure(Frequency frequency);
 
-	uint32_t now() const;
-
-	void trigger() final override;
-	void isr() final override;
+	static Frequency getFrequency();
 
 private:
-	uint32_t _now = 0;
+	static Frequency frequency;
+
+	Clock(){}
 };
 
 } // namespace TM4C

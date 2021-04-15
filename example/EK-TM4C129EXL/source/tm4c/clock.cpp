@@ -37,7 +37,7 @@ void Clock::configure<Device::TM4C129>(Frequency frequency)
 {
 	FPULazyStackingEnable();
 
-	this->frequency = SysCtlClockFreqSet((SYSCTL_XTAL_25MHZ
+	frequency = SysCtlClockFreqSet((SYSCTL_XTAL_25MHZ
 			| SYSCTL_OSC_MAIN
 			| SYSCTL_USE_PLL
 			| SYSCTL_CFG_VCO_480),
@@ -53,25 +53,18 @@ void Clock::configure<Device::TM4C123>(Frequency frequency)
 
 	assert(2 < divisor && divisor <= 16);
 
-	this->frequency = 200 MHz / divisor;
+	frequency = 200 MHz / divisor;
 
 	SysCtlClockSet((SYSCTL_OSC_INT
 			| SYSCTL_USE_PLL
 			| ((divisor - 1) << 23)));
 }
 
-uint32_t Clock::now() const
+Frequency Clock::getFrequency()
 {
-	return _now;
+	return frequency;
 }
 
-void Clock::trigger()
-{
-}
-
-void Clock::isr()
-{
-	_now++;
-}
+Frequency Clock::frequency = 0;
 
 } // namespace TM4C

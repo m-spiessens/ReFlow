@@ -57,7 +57,6 @@ enum class Polarity
 class Base
 {
 public:
-
 	/**
 	 * Create a digital i/o.
 	 *
@@ -68,9 +67,7 @@ public:
 	{
 	}
 
-	virtual ~Base()
-	{
-	}
+	virtual ~Base() = default;
 
 protected:
 	Polarity polarity;
@@ -108,13 +105,12 @@ public:
 	/**
 	 * \brief Pull resistor configuration.
 	 */
-	enum class Pull
-		: uint8_t
-		{
-			None = 0, /**< No pull resistor. */
-			Up, /**< Pull up resistor. */
-			Down, /**< Pull down resistor. */
-			COUNT /**< DO NOT USE  */
+	enum class Pull : uint8_t
+	{
+		None = 0, /**< No pull resistor. */
+		Up, /**< Pull up resistor. */
+		Down, /**< Pull down resistor. */
+		COUNT /**< DO NOT USE  */
 	};
 };
 
@@ -138,9 +134,7 @@ public:
 		(void)pull;
 	}
 
-	virtual ~Input()
-	{
-	}
+	virtual ~Input() = default;
 
 	/**
 	 * \brief Read the state of the digital input.
@@ -149,7 +143,12 @@ public:
 	 *
 	 * \return The state of the digital input.
 	 */
-	virtual bool get() = 0;
+	virtual bool get()
+	{
+		// Should be overloaded.
+		assert(false);
+		return false;
+	}
 };
 
 /**
@@ -172,13 +171,7 @@ public:
 	{
 	}
 
-    void start() final override
-    {
-    }
-
-    void stop() final override
-    {
-    }
+	virtual ~Output() = default;
 
 	void run() final override
 	{
@@ -196,14 +189,23 @@ public:
 	 *
 	 * \param state The state of the digital output.
 	 */
-	virtual void set(bool state) = 0;
+	virtual void set(bool state)
+	{
+		(void)state;
+		// Should be overloaded.
+		assert(false);
+	}
 
 	/**
 	 * \brief toggles the current state of the pin.
 	 *
 	 * \param
 	 */
-	virtual void toggle() = 0;
+	virtual void toggle()
+	{
+		// Should be overloaded.
+		assert(false);
+	}
 };
 
 /**
@@ -219,15 +221,14 @@ public:
 	/**
 	 * \brief Interrupt trigger configuration.
 	 */
-	enum class Trigger
-		: uint8_t
-		{
-			Change,
-			FallingEdge,
-			RisingEdge,
-			LevelLow,
-			LevelHigh,
-			COUNT /**< DO NOT USE */
+	enum class Trigger : uint8_t
+	{
+		Change,
+		FallingEdge,
+		RisingEdge,
+		LevelLow,
+		LevelHigh,
+		COUNT /**< DO NOT USE */
 	};
 
 	Flow::OutPort<bool> out;
@@ -244,10 +245,8 @@ public:
 		assert(_trigger < Trigger::COUNT);
 	}
 
-	virtual ~Interrupt()
-	{
-	}
-	virtual bool isrGet() = 0;
+	virtual ~Interrupt() = default;
+	
 protected:
 	Trigger _trigger;
 };

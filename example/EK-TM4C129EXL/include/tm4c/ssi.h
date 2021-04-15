@@ -36,7 +36,7 @@ class Base:
 public:
 
 	Base(uint8_t number);
-	virtual ~Base();
+	virtual ~Base() = default;
 
 	void trigger() override;
 

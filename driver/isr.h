@@ -37,12 +37,20 @@ public:
 	/**
 	 * \brief The associated interrupt service routine.
 	 */
-	virtual void isr() = 0;
+	virtual void isr()
+	{
+		// Should be overloaded.
+		assert(false);
+	}
 
 	/**
 	 * \brief Trigger the interrupt so the interrupt service routine will execute.
 	 */
-	virtual void trigger() = 0;
+	virtual void trigger()
+	{
+		// Should be overloaded.
+		assert(false);
+	}
 };
 
 } // namespace Driver

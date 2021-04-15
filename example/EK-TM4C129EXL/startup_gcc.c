@@ -181,6 +181,7 @@ void (* const vectors[])(void) =
 };
 
 __attribute__ ((aligned(1024)))
+__attribute__ ((section(".ramVectors")))
 void (*__ramVectors[sizeof(vectors) / sizeof(vectors[0])])(void);
 
 // The following are constructs created by the linker, indicating where the
