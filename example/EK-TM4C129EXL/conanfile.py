@@ -12,7 +12,7 @@ class FlowBlinky(ConanFile):
 
    def build(self):
       cmake = CMake(self, generator="Eclipse CDT4 - Unix Makefiles")
-      cmake.verbose = True
+      # cmake.verbose = True
 
       cmake.definitions["CONAN_C_FLAGS"] = "-march=armv7e-m -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16"
       cmake.definitions["CONAN_CXX_FLAGS"] = "-march=armv7e-m -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -fno-exceptions"
