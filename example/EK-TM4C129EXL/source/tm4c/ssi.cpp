@@ -148,9 +148,9 @@ const uint32_t Base::_dmaReceiveChannelAssign[] =
     UDMA_CH14_SSI3RX
 };
 
-Master::Master(uint8_t number, Flow::Driver::Digital::Output* slaveSelect[]):
+Master::Master(uint8_t number, Flow::Driver::Digital::Output* slaveSelect[], uint8_t slaves):
 		Base(number),
-        slaves(ArraySizeOf(slaveSelect)), 
+        slaves(slaves), 
         slaveSelect(slaveSelect)
 {
     while(!SysCtlPeripheralReady(peripheral()))
@@ -198,17 +198,16 @@ void Master::stop()
 
 bool Master::transceive(uint8_t slave, uint8_t* const transmit,
 	        uint16_t transmitLength, uint8_t* const receive,
-	        uint16_t receiveLength, bool multipart)
+	        uint16_t receiveLength)
 {
     assert(transmitLength > 0 || receiveLength > 0);
     assert(((transmitLength > 0) ? (transmit != nullptr) : true));
     assert(((receiveLength > 0) ? (receive != nullptr) : true));
-    assert(0 <= slave && slave < slaves);
+    assert(slave < slaves);
 
     _state = State::Busy;
 
     this->slave = slave;
-    this->multipart = multipart;
 
     uint32_t dmaEnable = 0;
 
@@ -295,11 +294,7 @@ void Master::isr()
     	if(!uDMAChannelIsEnabled(dmaReceiveChannel())
     			&& !uDMAChannelIsEnabled(dmaTransmitChannel()))
 		{
-            if(!multipart)
-            {
-                assert(slave >= 0);
-                slaveSelect[slave]->set(false);
-            }
+            slaveSelect[slave]->set(false);
 			_state = State::Ready;
 		}
 	}

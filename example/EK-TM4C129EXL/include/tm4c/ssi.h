@@ -69,7 +69,7 @@ class Master:
         public Base
 {
 public:
-	Master(uint8_t ssiNumber, Flow::Driver::Digital::Output* slaveSelect[]);
+	Master(uint8_t ssiNumber, Flow::Driver::Digital::Output* slaveSelect[], uint8_t slaves);
 	~Master();
 
 	void start() final override;
@@ -77,15 +77,14 @@ public:
 
 	bool transceive(uint8_t slave, uint8_t* const transmit,
 	        uint16_t transmitLength, uint8_t* const receive,
-	        uint16_t receiveLength, bool multipart = false) final override;
+	        uint16_t receiveLength) final override;
     
     virtual void attach(Flow::Driver::SSI::Master::Complete& complete) final override;
 
     void isr() final override;
 
 private:
-    int8_t slave = -1;
-    bool multipart = false;
+    uint8_t slave = 0;
     const uint8_t slaves;
     Flow::Driver::Digital::Output** slaveSelect;
 
