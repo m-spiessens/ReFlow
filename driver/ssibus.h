@@ -196,11 +196,6 @@ public:
 						currentOperation->status = Operation::Status::SUCCESS;
 					}
 
-					if(currentOperation->slaveSelect != nullptr)
-					{
-						currentOperation->slaveSelect->set(false);
-					}
-
 					endPoint[currentEndPoint]->send(currentOperation);
 					currentOperation = nullptr;
 				}
@@ -215,16 +210,10 @@ public:
 
 					if(endPoint[currentEndPoint]->receive(currentOperation))
 					{
-						if(currentOperation->slaveSelect != nullptr)
-						{
-							currentOperation->slaveSelect->set(true);
-						}
-
 						if(peripheral.transceive(currentEndPoint, currentOperation->transmit,
 						        currentOperation->transmitLength(),
 						        currentOperation->receive,
-						        currentOperation->receiveLength(),
-								currentOperation->multipart))
+						        currentOperation->receiveLength()))
 						{
 							break;
 						}
