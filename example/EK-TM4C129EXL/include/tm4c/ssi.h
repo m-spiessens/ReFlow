@@ -25,7 +25,7 @@
 #define TM4C_SSI_H_
 
 #include "driver/digitalio.h"
-#include "driver/ssibus.h"
+#include "driver/ssi.h"
 
 namespace TM4C {
 namespace SSI {

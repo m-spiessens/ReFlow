@@ -21,14 +21,14 @@
  * SOLUTION.
  */
 
-#ifndef FLOW_DRIVER_TWI_H_
-#define FLOW_DRIVER_TWI_H_
+#ifndef FLOW_DRIVER_TWIBUS_H_
+#define FLOW_DRIVER_TWIBUS_H_
 
 #include <stdint.h>
 
 #include "flow/flow.h"
 
-#include "driver/isr.h"
+#include "driver/twi.h"
 
 namespace Flow {
 namespace Driver {
@@ -41,91 +41,6 @@ namespace Driver {
  */
 namespace TWI
 {
-
-enum class Direction : uint_fast16_t
-{
-	TRANSMIT = 0, RECEIVE = 1
-};
-
-/**
- * \brief Interface to be implemented by a target specific TWI peripheral.
- *
- * The TWI::Bus interacts through this interface with
- * a target specific TWI peripheral.
- */
-class Peripheral:
-        virtual public Flow::Driver::WithISR
-{
-public:
-	/**
-	 * \brief The state of the peripheral.
-	 */
-	enum class State
-	{
-		INIT, ADDRESS, DATA, IDLE, NACK
-	};
-
-	virtual ~Peripheral() = default;
-
-	/**
-	 * \brief Configure and enable the peripheral.
-	 */
-	virtual void start()
-	{
-		// Should be overloaded.
-		assert(false);
-	}
-
-	/**
-	 * \brief Disable the peripheral.
-	 */
-	virtual void stop()
-	{
-		// Should be overloaded.
-		assert(false);
-	}
-
-	/**
-	 * \brief Perform a TWI operation.
-	 *
-	 * \param address 7 bit slave address. Bit 6..0 must contain the address.
-	 * \param direction Read or write operation.
-	 * \param length The length of the data buffer.
-	 * \param data The buffer with data to transmit or to store received data in, depending on the direction.
-	 *
-	 * \return Operation request was successful.
-	 */
-	virtual bool transceive(uint8_t address, Direction direction, uint32_t length, uint8_t* data)
-	{
-		(void)address;
-		(void)direction;
-		(void)length;
-		(void)data;
-		// Should be overloaded.
-		assert(false);
-	}
-
-	/**
-	 * \brief Get the peripheral status.
-	 *
-	 * \return Peripheral status.
-	 */
-	virtual State status() const
-	{
-		return state;
-	}
-
-	virtual void clearNack()
-	{
-		if(state == State::NACK)
-		{
-			state = State::IDLE;
-		}
-	}
-
-protected:
-	State state = State::INIT;
-};
 
 /**
  * \brief A TWI operation.
@@ -368,4 +283,4 @@ protected:
 } // namespace Driver
 } // namespace Flow
 
-#endif /* FLOW_DRIVER_TWI_H_ */
+#endif /* FLOW_DRIVER_TWIBUS_H_ */

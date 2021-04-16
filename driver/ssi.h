@@ -21,10 +21,8 @@
  * SOLUTION.
  */
 
-#ifndef FLOW_DRIVER_UART_H_
-#define FLOW_DRIVER_UART_H_
-
-#include "flow/flow.h"
+#ifndef FLOW_DRIVER_SSI_H_
+#define FLOW_DRIVER_SSI_H_
 
 #include "driver/isr.h"
 
@@ -32,20 +30,22 @@ namespace Flow {
 namespace Driver {
 
 /**
- * \brief Name space for all UART related classes.
+ * \brief Name space for all SSI related classes.
  *
  * This contains target agnostic implementations and interfaces
  * to which target specific peripherals should adhere.
  */
-namespace UART {
+namespace SSI {
+namespace Master {
 
 class Complete
 {
 public:
 	enum class Status
 	{
-		Idle, TransmitComplete, ReceiveComplete, Error, Overflow
+		Success, Error
 	};
+
 	virtual void complete(Status status)
 	{
 		(void)status;
@@ -55,10 +55,13 @@ public:
 };
 
 /**
- * \brief Interface to be implemented by a target specific UART peripheral.
+ * \brief Interface to be implemented by a target specific SSI peripheral.
+ *
+ * The SSI::Bus interacts through this interface with
+ * a target specific SSI peripheral.
  */
-class Peripheral :
-		public WithISR
+class Peripheral:
+		virtual public WithISR
 {
 public:
 	/**
@@ -66,7 +69,7 @@ public:
 	 */
 	enum class State
 	{
-		Init, Ready, Overflow
+		Init, Busy, Ready
 	};
 
 	virtual ~Peripheral() = default;
@@ -89,19 +92,26 @@ public:
 		assert(false);
 	}
 
-	virtual bool send(const void* const buffer, uint16_t& length)
+	/**
+	 * \brief Perform a full duplex SSI operation.
+	 *
+	 * \param slave The number of the slave to transceive to.
+	 * \param transmit The buffer to be transmitted.
+	 * \param transmitLength The lenght of the buffer to be transmitted.
+	 * \param receive The buffer to store received data in.
+	 * \param receiveLength The length of the buffer to store received data in.
+	 *
+	 * \return Operation request was successful.
+	 */
+	virtual bool transceive(uint8_t slave, uint8_t* const transmit,
+	        uint16_t transmitLength, uint8_t* const receive,
+	        uint16_t receiveLength)
 	{
-		(void)buffer;
-		(void)length;
-		// Should be overloaded.
-		assert(false);
-		return false;
-	}
-
-	virtual bool receive(volatile void* const buffer, uint16_t& length)
-	{
-		(void)buffer;
-		(void)length;
+		(void)slave;
+		(void)transmit;
+		(void)transmitLength;
+		(void)receive;
+		(void)receiveLength;
 		// Should be overloaded.
 		assert(false);
 		return false;
@@ -128,8 +138,9 @@ protected:
 	volatile State _state = State::Init;
 };
 
-} // namespace UART
+} // namespace Master
+} // namespace SSI
 } // namespace Driver
 } // namespace Flow
 
-#endif /* FLOW_DRIVER_UART_H_ */
+#endif /* FLOW_DRIVER_SSI_H_ */

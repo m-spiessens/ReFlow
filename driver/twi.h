@@ -21,10 +21,10 @@
  * SOLUTION.
  */
 
-#ifndef FLOW_DRIVER_UART_H_
-#define FLOW_DRIVER_UART_H_
+#ifndef FLOW_DRIVER_TWI_H_
+#define FLOW_DRIVER_TWI_H_
 
-#include "flow/flow.h"
+#include <stdint.h>
 
 #include "driver/isr.h"
 
@@ -32,33 +32,27 @@ namespace Flow {
 namespace Driver {
 
 /**
- * \brief Name space for all UART related classes.
+ * \brief Name space for all two wire interface (TWI) related classes.
  *
  * This contains target agnostic implementations and interfaces
  * to which target specific peripherals should adhere.
  */
-namespace UART {
-
-class Complete
+namespace TWI
 {
-public:
-	enum class Status
-	{
-		Idle, TransmitComplete, ReceiveComplete, Error, Overflow
-	};
-	virtual void complete(Status status)
-	{
-		(void)status;
-		// Should be overloaded.
-		assert(false);
-	}
+
+enum class Direction : uint_fast16_t
+{
+	TRANSMIT = 0, RECEIVE = 1
 };
 
 /**
- * \brief Interface to be implemented by a target specific UART peripheral.
+ * \brief Interface to be implemented by a target specific TWI peripheral.
+ *
+ * The TWI::Bus interacts through this interface with
+ * a target specific TWI peripheral.
  */
-class Peripheral :
-		public WithISR
+class Peripheral:
+        virtual public Flow::Driver::WithISR
 {
 public:
 	/**
@@ -66,7 +60,7 @@ public:
 	 */
 	enum class State
 	{
-		Init, Ready, Overflow
+		INIT, ADDRESS, DATA, IDLE, NACK
 	};
 
 	virtual ~Peripheral() = default;
@@ -89,27 +83,22 @@ public:
 		assert(false);
 	}
 
-	virtual bool send(const void* const buffer, uint16_t& length)
+	/**
+	 * \brief Perform a TWI operation.
+	 *
+	 * \param address 7 bit slave address. Bit 6..0 must contain the address.
+	 * \param direction Read or write operation.
+	 * \param length The length of the data buffer.
+	 * \param data The buffer with data to transmit or to store received data in, depending on the direction.
+	 *
+	 * \return Operation request was successful.
+	 */
+	virtual bool transceive(uint8_t address, Direction direction, uint32_t length, uint8_t* data)
 	{
-		(void)buffer;
+		(void)address;
+		(void)direction;
 		(void)length;
-		// Should be overloaded.
-		assert(false);
-		return false;
-	}
-
-	virtual bool receive(volatile void* const buffer, uint16_t& length)
-	{
-		(void)buffer;
-		(void)length;
-		// Should be overloaded.
-		assert(false);
-		return false;
-	}
-
-	virtual void attach(Complete& complete)
-	{
-		(void)complete;
+		(void)data;
 		// Should be overloaded.
 		assert(false);
 	}
@@ -119,17 +108,25 @@ public:
 	 *
 	 * \return Peripheral status.
 	 */
-	virtual State state() const
+	virtual State status() const
 	{
-		return _state;
+		return state;
+	}
+
+	virtual void clearNack()
+	{
+		if(state == State::NACK)
+		{
+			state = State::IDLE;
+		}
 	}
 
 protected:
-	volatile State _state = State::Init;
+	State state = State::INIT;
 };
 
-} // namespace UART
+} // namespace TWI
 } // namespace Driver
 } // namespace Flow
 
-#endif /* FLOW_DRIVER_UART_H_ */
+#endif /* FLOW_DRIVER_TWI_H_ */

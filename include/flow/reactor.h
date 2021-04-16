@@ -68,20 +68,19 @@ public:
 	*/
 	static void run();
 
-	/**
-	 * \brief Drop all registered components.
-	 */
 	static void reset();
+
+	static Reactor& instance();
 
 private:
 	Reactor();
+
+	static Reactor* _instance;
 
 	Component* first = nullptr;
 	Component* last = nullptr;
 
 	bool running = false;
-
-	static Reactor me;
 };
 
 namespace Test {
@@ -90,6 +89,7 @@ class Reactor
 {
 public:
 	Reactor();
+	~Reactor();
 
 	void start();
 	void stop();

@@ -31,6 +31,11 @@ Flow::Test::Reactor::Reactor()
 	Flow::Reactor::reset();
 }
 
+Flow::Test::Reactor::~Reactor()
+{
+	Flow::Reactor::reset();
+}
+
 void Flow::Test::Reactor::start()
 {
 	Flow::Reactor::start();

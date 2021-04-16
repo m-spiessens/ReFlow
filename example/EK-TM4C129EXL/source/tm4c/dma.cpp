@@ -30,9 +30,14 @@
 
 namespace TM4C {
 
-DMA& DMA::peripheral()
+DMA& DMA::instance()
 {
-    return _instance;
+    if(_instance == nullptr)
+    {
+        _instance = new DMA;
+    }
+
+    return *_instance;
 }
 
 void DMA::assign(uint32_t channelMapping)
@@ -57,6 +62,6 @@ DMA::DMA()
     uDMAControlBaseSet(uDmaControlTable);
 }
 
-DMA DMA::_instance;
+DMA* DMA::_instance = nullptr;
 
 } // namespace TM4C

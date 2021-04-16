@@ -44,6 +44,8 @@ Timer::Continuous timer{ 0, 500 /*ms*/ };
 Toggle toggle;
 Digital::Output led{ Pin::Port::N, 1, Digital::Polarity::Normal };
 
+Digital::Output sleep{ Pin::Port::E, 5, Digital::Polarity::Normal };
+
 int main()
 {
 	// Set up the clock circuit.
@@ -67,6 +69,7 @@ int main()
 	while(true)
 	{
 		Flow::Reactor::run();
+		sleep.toggle();
 	}
 }
 

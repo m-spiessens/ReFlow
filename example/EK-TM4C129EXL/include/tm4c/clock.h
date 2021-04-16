@@ -38,10 +38,14 @@ public:
 
 	static Frequency getFrequency();
 
+	static Clock& instance();
+
 private:
-	static Frequency frequency;
+	Frequency frequency = 0;
 
 	Clock(){}
+
+	static Clock* _instance;
 };
 
 } // namespace TM4C

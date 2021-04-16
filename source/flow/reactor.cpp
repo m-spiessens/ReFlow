@@ -28,23 +28,23 @@
 
 void Flow::Reactor::add(Component& component)
 {
-	if(me.first == nullptr && me.last == nullptr)
+	if(instance().first == nullptr)
 	{
-	    me.first = &component;
-	    me.last = &component;
+	    instance().first = &component;
+	    instance().last = &component;
 	}
 	else
 	{
-	    me.last->next = &component;
-	    me.last = &component;
+	    instance().last->next = &component;
+	    instance().last = &component;
 	}
 }
 
 void Flow::Reactor::start()
 {
-    assert(!me.running);
+    assert(!instance().running);
 
-    Component* current = me.first;
+    Component* current = instance().first;
     while(current != nullptr)
     {
         current->start();
@@ -52,14 +52,14 @@ void Flow::Reactor::start()
         current = current->next;
     }
 
-    me.running = true;
+    instance().running = true;
 }
 
 void Flow::Reactor::stop()
 {
-    assert(me.running);
+    assert(instance().running);
 
-    Component* current = me.first;
+    Component* current = instance().first;
     while(current != nullptr)
     {
         current->stop();
@@ -67,15 +67,15 @@ void Flow::Reactor::stop()
         current = current->next;
     }
 
-    me.running = false;
+    instance().running = false;
 }
 
 void Flow::Reactor::run()
 {
-    assert(me.running);
+    assert(instance().running);
 
 	bool ranSomething = false;
-	Component* current = me.first;
+	Component* current = instance().first;
 	while(current != nullptr)
 	{
 		if(current->tryRun())
@@ -94,8 +94,11 @@ void Flow::Reactor::run()
 
 void Flow::Reactor::reset()
 {
-	me.first = nullptr;
-	me.last = nullptr;
+	if(_instance != nullptr)
+	{
+		delete _instance;
+		_instance = nullptr;
+	}
 }
 
 Flow::Reactor::Reactor()
@@ -103,4 +106,14 @@ Flow::Reactor::Reactor()
 	Platform::configure();
 }
 
-Flow::Reactor Flow::Reactor::me;
+Flow::Reactor& Flow::Reactor::instance()
+{
+	if(_instance == nullptr)
+	{
+		_instance = new Reactor;
+	}
+
+	return *_instance;
+}
+
+Flow::Reactor* Flow::Reactor::_instance = nullptr;

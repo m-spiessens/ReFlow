@@ -172,8 +172,8 @@ void Master::start()
     SSIEnable(base());
     SSIDMAEnable(base(), (SSI_DMA_TX | SSI_DMA_RX));
 
-    DMA::peripheral().assign(dmaReceiveChannelAssign());
-    DMA::peripheral().assign(dmaTransmitChannelAssign());
+    DMA::instance().assign(dmaReceiveChannelAssign());
+    DMA::instance().assign(dmaTransmitChannelAssign());
 
     uDMAChannelControlSet(
             (dmaTransmitChannel() | UDMA_PRI_SELECT),

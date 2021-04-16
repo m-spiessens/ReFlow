@@ -27,7 +27,7 @@ package:
     - conan export . spiessensm/dev
     - conan remote add spiessensm-gitlab https://gitlab.com/api/v4/projects/24373418/packages/conan
     - CONAN_LOGIN_USERNAME=ci_user CONAN_PASSWORD=${CI_JOB_TOKEN} conan remove -f Flow/2.0@spiessensm/dev --remote=spiessensm-gitlab
-    - CONAN_LOGIN_USERNAME=ci_user CONAN_PASSWORD=${CI_JOB_TOKEN} conan upload Flow/2.0@spiessensm/dev --force --all --remote=spiessensm-gitlab
+    - CONAN_LOGIN_USERNAME=ci_user CONAN_PASSWORD=${CI_JOB_TOKEN} conan upload Flow/2.0@spiessensm/dev --force --remote=spiessensm-gitlab
 
 release:
   stage: deploy
@@ -38,7 +38,7 @@ release:
     - conan build . -bf build/
     - conan export . spiessensm/stable
     - conan remote add spiessensm-gitlab https://gitlab.com/api/v4/projects/24373418/packages/conan
-    - CONAN_LOGIN_USERNAME=ci_user CONAN_PASSWORD=${CI_JOB_TOKEN} conan upload Flow/${CI_COMMIT_TAG}@spiessensm/stable --all --remote=spiessensm-gitlab
+    - CONAN_LOGIN_USERNAME=ci_user CONAN_PASSWORD=${CI_JOB_TOKEN} conan upload Flow/${CI_COMMIT_TAG}@spiessensm/stable --remote=spiessensm-gitlab
 
 examples-EK-TM4C129EXL:
   stage: deploy

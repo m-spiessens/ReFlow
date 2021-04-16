@@ -21,13 +21,12 @@
  * SOLUTION.
  */
 
-#ifndef FLOW_DRIVER_SSI_H_
-#define FLOW_DRIVER_SSI_H_
+#ifndef FLOW_DRIVER_SSIBUS_H_
+#define FLOW_DRIVER_SSIBUS_H_
 
 #include "flow/flow.h"
 
-#include "driver/digitalio.h"
-#include "driver/isr.h"
+#include "driver/ssi.h"
 
 namespace Flow {
 namespace Driver {
@@ -41,107 +40,6 @@ namespace Driver {
 namespace SSI {
 namespace Master {
 
-class Complete
-{
-public:
-	enum class Status
-	{
-		Success, Error
-	};
-
-	virtual void complete(Status status)
-	{
-		(void)status;
-		// Should be overloaded.
-		assert(false);
-	}
-};
-
-/**
- * \brief Interface to be implemented by a target specific SSI peripheral.
- *
- * The SSI::Bus interacts through this interface with
- * a target specific SSI peripheral.
- */
-class Peripheral:
-		virtual public WithISR
-{
-public:
-	/**
-	 * \brief The state of the peripheral.
-	 */
-	enum class State
-	{
-		Init, Busy, Ready
-	};
-
-	virtual ~Peripheral() = default;
-
-	/**
-	 * \brief Configure and enable the peripheral.
-	 */
-	virtual void start()
-	{
-		// Should be overloaded.
-		assert(false);
-	}
-
-	/**
-	 * \brief Disable the peripheral.
-	 */
-	virtual void stop()
-	{
-		// Should be overloaded.
-		assert(false);
-	}
-
-	/**
-	 * \brief Perform a full duplex SSI operation.
-	 *
-	 * \param slave The number of the slave to transceive to.
-	 * \param transmit The buffer to be transmitted.
-	 * \param transmitLength The lenght of the buffer to be transmitted.
-	 * \param receive The buffer to store received data in.
-	 * \param receiveLength The length of the buffer to store received data in.
-	 *
-	 * \return Operation request was successful.
-	 */
-	virtual bool transceive(uint8_t slave, uint8_t* const transmit,
-	        uint16_t transmitLength, uint8_t* const receive,
-	        uint16_t receiveLength, bool multipart = false)
-	{
-		(void)slave;
-		(void)transmit;
-		(void)transmitLength;
-		(void)receive;
-		(void)receiveLength;
-		(void)multipart;
-		// Should be overloaded.
-		assert(false);
-		return false;
-	}
-
-	virtual void attach(Complete& complete)
-	{
-		(void)complete;
-		// Should be overloaded.
-		assert(false);
-	}
-
-	/**
-	 * \brief Get the peripheral status.
-	 *
-	 * \return Peripheral status.
-	 */
-	virtual State state() const
-	{
-		return _state;
-	}
-
-protected:
-	volatile State _state = State::Init;
-};
-
 /**
  * \brief An SSI operation.
  *
@@ -152,22 +50,17 @@ class Operation
 public:
 	/**
 	 * \brief Create a SSI operation.
-	 *
-	 * \param slaveSelect The digital output to be asserted during this operation.
-	 * If the FSS signal from the SSI peripheral is used slaveSelect can be omitted.
 	 */
-	Operation(Flow::Driver::Digital::Output* slaveSelect = nullptr) :
-			slaveSelect(slaveSelect)
+	Operation(uint16_t size) : 
+			_size(size)
 	{
 	}
 
 	virtual ~Operation() = default;
 
-	virtual uint16_t size() const
+	uint16_t size() const
 	{
-		// Should be overloaded.
-		assert(false);
-		return 0;
+		return _size;
 	}
 
 	void transmitLength(uint16_t length)
@@ -202,13 +95,11 @@ public:
 
 	uint8_t* transmit = nullptr;
 	uint8_t* receive = nullptr;
-	bool multipart = false;
 
 	uint32_t tag[4];
 
-	Flow::Driver::Digital::Output* slaveSelect = nullptr;
-
 private:
+	const uint16_t _size;
 	uint16_t _transmitLength = 0;
 	uint16_t _receiveLength = 0;
 };
@@ -392,4 +283,4 @@ public:
 } // namespace Driver
 } // namespace Flow
 
-#endif /* FLOW_DRIVER_SSI_H_ */
+#endif /* FLOW_DRIVER_SSIBUS_H_ */

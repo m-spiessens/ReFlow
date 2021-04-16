@@ -102,7 +102,7 @@
         {
             "label": "UploadDev",
             "type": "shell",
-            "command": "conan upload Flow/2.0@spiessensm/dev --all --remote=spiessensm",
+            "command": "conan upload Flow/2.0@spiessensm/dev --remote=spiessensm",
             "group": "test",
             "dependsOn": [
                 "ExportDev"

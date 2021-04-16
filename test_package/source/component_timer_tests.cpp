@@ -53,8 +53,6 @@ TEST_GROUP(Component_SoftwareTimer_TestBench)
 		disconnect(inResponseConnection);
 
 		delete unitUnderTest;
-
-		Flow::Reactor::reset();
 	}
 };
 
