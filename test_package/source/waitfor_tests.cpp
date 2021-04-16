@@ -64,7 +64,7 @@ TEST_GROUP(WaitFor_TestBench)
 		}
 	}* waiter;
 
-	std::vector<Flow::Connection*> connections;
+	std::vector<Flow::Connect*> connections;
 
 	Flow::OutPort<void> stimulusWait;
 	Flow::OutPort<int> stimulus;
@@ -90,7 +90,7 @@ TEST_GROUP(WaitFor_TestBench)
 	{
 		mock().clear();
 
-		for(Flow::Connection* connection : connections)
+		for(auto connection : connections)
 		{
 			Flow::disconnect(connection);
 		}

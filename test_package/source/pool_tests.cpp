@@ -61,16 +61,6 @@ TEST_GROUP(Pool_TestBench)
 	}
 };
 
-TEST(Pool_TestBench, CopyConstructor)
-{
-	Pool<char> other(1);
-	other.take();
-	Pool<char> some(2);
-	Pool<char> copied(other);
-	some = copied;
-	CHECK(!other.haveAvailable());
-}
-
 TEST(Pool_TestBench, HaveAvailableAfterCreation)
 {
 	for (unsigned int i = 0; i < UNITS; i++)
@@ -106,7 +96,7 @@ TEST(Pool_TestBench, NoAvailable)
 
 		// Pool should not have any more available.
 		Data* response = unitUnderTest[i]->take();
-		CHECK(response == nullptr);
+		CHECK_EQUAL(nullptr, response);
 
 		CHECK(!unitUnderTest[i]->haveAvailable());
 
@@ -173,7 +163,7 @@ TEST(Pool_TestBench, Threadsafe)
 		releaseThread.join();
 
 		CHECK(success);
-		CHECK(recycle.isEmpty());
+		CHECK(recycle.empty());
 
 		CHECK(unitUnderTest[i]->haveAvailable());
 	}

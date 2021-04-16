@@ -30,7 +30,7 @@
 
 #include "data.h"
 
-using Flow::Connection;
+using Flow::Connect;
 using Flow::OutPort;
 using Flow::InPort;
 using Flow::connect;
@@ -38,9 +38,9 @@ using Flow::connect;
 TEST_GROUP(Component_UpDownCounter_TestBench)
 {
 	OutPort<char> outStimulus;
-	Connection* outStimulusConnection;
+	Connect* outStimulusConnection;
 	UpDownCounter<char>* unitUnderTest;
-	Connection* inResponseConnection;
+	Connect* inResponseConnection;
 	InPort<unsigned int> inResponse{ nullptr };
 
 	void setup()
@@ -83,7 +83,7 @@ TEST(Component_UpDownCounter_TestBench, Counting)
 	CHECK(inResponse.receive(response));
 
 	unsigned int expected = 3;
-	CHECK(response == expected);
+	CHECK_EQUAL(expected, response);
 
 	unitUnderTest->run();
 
@@ -96,7 +96,7 @@ TEST(Component_UpDownCounter_TestBench, Counting)
 	CHECK(inResponse.receive(response));
 
 	expected = 4;
-	CHECK(response == expected);
+	CHECK_EQUAL(expected, response);
 
 	CHECK(outStimulus.send(123));
 
@@ -105,7 +105,7 @@ TEST(Component_UpDownCounter_TestBench, Counting)
 	CHECK(inResponse.receive(response));
 
 	expected = 3;
-	CHECK(response == expected);
+	CHECK_EQUAL(expected, response);
 
 	CHECK(outStimulus.send(123));
 	CHECK(outStimulus.send(123));
@@ -116,7 +116,7 @@ TEST(Component_UpDownCounter_TestBench, Counting)
 	CHECK(inResponse.receive(response));
 
 	expected = 0;
-	CHECK(response == expected);
+	CHECK_EQUAL(expected, response);
 
 	CHECK(outStimulus.send(123));
 
@@ -125,5 +125,5 @@ TEST(Component_UpDownCounter_TestBench, Counting)
 	CHECK(inResponse.receive(response));
 
 	expected = 1;
-	CHECK(response == expected);
+	CHECK_EQUAL(expected, response);
 }

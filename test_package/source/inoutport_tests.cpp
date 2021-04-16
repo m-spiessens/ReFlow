@@ -30,7 +30,7 @@
 
 #include "data.h"
 
-using Flow::Connection;
+using Flow::Connect;
 using Flow::InOutPort;
 using Flow::connect;
 
@@ -40,19 +40,19 @@ TEST_GROUP(InOutPort_TestBench)
 {
 	InOutPort<Data> unitUnderTestA{ nullptr };
 	InOutPort<Data> unitUnderTestB{ nullptr };
-	Connection* connectionAB;
+	Connect* connectionAB;
 
 	InOutPort<Data>* unitUnderTestC;
 	InOutPort<Data> unitUnderTestD{ nullptr };
-	Connection* connectionCD;
+	Connect* connectionCD;
 
 	InOutPort<Data> unitUnderTestE{ nullptr };
 	InOutPort<Data>* unitUnderTestF;
-	Connection* connectionEF;
+	Connect* connectionEF;
 
 	InOutPort<Data>* unitUnderTestG;
 	InOutPort<Data>* unitUnderTestH;
-	Connection* connectionGH;
+	Connect* connectionGH;
 
 	void setup()
 	{
@@ -106,7 +106,7 @@ TEST(InOutPort_TestBench, SendReceiveItem)
 	CHECK(unitUnderTestA.peek());
 	Data response;
 	CHECK(unitUnderTestA.receive(response));
-	CHECK(stimulus == response);
+	CHECK_EQUAL(stimulus, response);
 	CHECK(!unitUnderTestA.peek());
 	CHECK(!unitUnderTestA.receive(response));
 
@@ -114,7 +114,7 @@ TEST(InOutPort_TestBench, SendReceiveItem)
 	CHECK(unitUnderTestA.send(stimulus));
 	CHECK(unitUnderTestB.peek());
 	CHECK(unitUnderTestB.receive(response));
-	CHECK(stimulus == response);
+	CHECK_EQUAL(stimulus, response);
 	CHECK(!unitUnderTestB.peek());
 	CHECK(!unitUnderTestB.receive(response));
 }

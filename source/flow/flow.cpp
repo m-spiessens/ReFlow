@@ -28,7 +28,7 @@
 
 namespace Flow {
 
-void disconnect(Connection* connection)
+void disconnect(Connect* connection)
 {
 	delete connection;
 }
@@ -87,57 +87,121 @@ Peek::Peek(Component* owner) :
 	}
 }
 
-ConnectionOfType<void>::ConnectionOfType(OutPort<void>& sender, InPort<void>& receiver) :
-			sender(sender), receiver(receiver)
+InPort<void>::InPort(Component* owner) :
+		Peek(owner)
+{}
+
+bool InPort<void>::receive()
+{
+	return this->isConnected() ? this->connection->receive() : false;
+}
+
+bool InPort<void>::peek() const
+{
+	return this->isConnected() ? this->connection->peek() : false;
+}
+
+void InPort<void>::connect(Connection<void>* connection)
+{
+	assert(!isConnected());
+	this->connection = connection;
+}
+
+void InPort<void>::disconnect()
+{
+	this->connection = nullptr;
+}
+
+bool InPort<void>::full() const
+{
+	if(connection != nullptr)
+	{
+		return connection->full();
+	}
+	else
+	{
+		return false;
+	}
+}
+
+bool InPort<void>::isConnected() const
+{
+	return this->connection != nullptr;
+}
+
+bool OutPort<void>::send()
+{
+	return this->isConnected() ? this->connection->send() : false;
+}
+
+bool OutPort<void>::full()
+{
+	return this->isConnected() ? this->connection->full() : false;
+}
+
+void OutPort<void>::connect(Connection<void>* connection)
+{
+	assert(!isConnected());
+	this->connection = connection;
+}
+
+void OutPort<void>::disconnect()
+{
+	this->connection = nullptr;
+}
+
+bool OutPort<void>::isConnected() const
+{
+	return this->connection != nullptr;
+}
+
+Connection<void>::Connection(OutPort<void>& sender, InPort<void>& receiver, uint16_t size) :
+		Container(size),
+		sender(sender), receiver(receiver)
 {
 	sender.connect(this);
 	receiver.connect(this);
 }
 
-ConnectionOfType<void>::~ConnectionOfType<void>()
+Connection<void>::~Connection()
 {
 	sender.disconnect();
 	receiver.disconnect();
 }
 
-template<>
-Connection* connect(OutPort<void>& sender, InPort<void>& receiver,
-		uint16_t size)
-{
-	(void)size;
+// template<>
+// Connect* connect(OutPort<void>& sender, InPort<void>& receiver,
+// 		uint16_t size)
+// {
+// 	return new ConnectionOf<void>(sender, receiver, size);
+// }
 
-	return new ConnectionOfType<void>(sender, receiver);
-}
+// template<>
+// Connect* connect(OutPort<void>* sender, InPort<void>& receiver,
+// 		uint16_t size)
+// {
+// 	assert(sender != nullptr);
 
-template<>
-Connection* connect(OutPort<void>* sender, InPort<void>& receiver,
-		uint16_t size)
-{
-	(void)size;
-	assert(sender != nullptr);
+// 	return new ConnectionOf<void>(*sender, receiver, size);
+// }
 
-	return new ConnectionOfType<void>(*sender, receiver);
-}
+// template<>
+// Connect* connect(OutPort<void>& sender, InPort<void>* receiver,
+// 		uint16_t size)
+// {
+// 	assert(receiver != nullptr);
 
-template<>
-Connection* connect(OutPort<void>& sender, InPort<void>* receiver,
-		uint16_t size)
-{
-	(void)size;
-	assert(receiver != nullptr);
+// 	return new ConnectionOf<void>(sender, *receiver, size);
+// }
 
-	return new ConnectionOfType<void>(sender, *receiver);
-}
+// template<>
+// Connect* connect(OutPort<void>* sender, InPort<void>* receiver,
+// 		uint16_t size)
+// {
+// 	assert(sender != nullptr);
+// 	assert(receiver != nullptr);
 
-template<>
-Connection* connect(OutPort<void>* sender, InPort<void>* receiver,
-		uint16_t size)
-{
-	(void)size;
-	assert(sender != nullptr);
-	assert(receiver != nullptr);
-
-	return new ConnectionOfType<void>(*sender, *receiver);
-}
+// 	return new ConnectionOf<void>(*sender, *receiver, size);
+// }
 
 } // namespace Flow

@@ -39,7 +39,7 @@ TEST_GROUP(Reactor_TestBench)
 	Counter<void>* counterA;
 	Counter<uint32_t>* counterB;
 
-	std::vector<Flow::Connection*> connections;
+	std::vector<Flow::Connect*> connections;
 
 	Flow::InPort<uint32_t> inCount{ nullptr };
 
@@ -56,6 +56,7 @@ TEST_GROUP(Reactor_TestBench)
 			Flow::connect(timer->outTimeout, counterA->in),
 			Flow::connect(counterA->out, counterB->in),
 			Flow::connect(counterB->out, inCount)
+		
 		};
 	}
 
@@ -63,7 +64,7 @@ TEST_GROUP(Reactor_TestBench)
 	{
 		mock().clear();
 
-		for(Flow::Connection* connection : connections)
+		for(auto connection : connections)
 		{
 			Flow::disconnect(connection);
 		}

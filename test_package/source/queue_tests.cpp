@@ -61,39 +61,29 @@ TEST(Queue_TestBench, IsEmptyAfterCreation)
 {
 	for(unsigned int i = 0; i < UNITS; i++)
 	{
-		CHECK(unitUnderTest[i]->isEmpty());
+		CHECK(unitUnderTest[i]->empty());
 		Data response;
 		CHECK(!unitUnderTest[i]->dequeue(response));
 		CHECK(!unitUnderTest[i]->peek(response));
 	}
 }
 
-TEST(Queue_TestBench, CopyConstructor)
-{
-	Queue<char> other(1);
-	other.enqueue('0');
-	Queue<char> some(2);
-	Queue<char> copied(other);
-	some = copied;
-	CHECK(some.isFull());
-}
-
 TEST(Queue_TestBench, EnqueueDequeueItem)
 {
 	for(unsigned int i = 0; i < UNITS; i++)
 	{
-		CHECK(unitUnderTest[i]->isEmpty());
+		CHECK(unitUnderTest[i]->empty());
 		Data stimulus = Data(123, true);
 		CHECK(unitUnderTest[i]->enqueue(stimulus));
-		CHECK(!unitUnderTest[i]->isEmpty());
+		CHECK(!unitUnderTest[i]->empty());
 		Data response = Data();
 		CHECK(unitUnderTest[i]->elements() == 1);
 		CHECK(unitUnderTest[i]->peek(response));
-		CHECK(stimulus == response);
+		CHECK_EQUAL(stimulus, response);
 		response = Data();
 		CHECK(unitUnderTest[i]->dequeue(response));
-		CHECK(stimulus == response);
-		CHECK(unitUnderTest[i]->isEmpty());
+		CHECK_EQUAL(stimulus, response);
+		CHECK(unitUnderTest[i]->empty());
 		CHECK(!unitUnderTest[i]->dequeue(response));
 	}
 }
@@ -103,7 +93,7 @@ TEST(Queue_TestBench, FullQueue)
 	for(unsigned int i = 0; i < UNITS; i++)
 	{
 		// Queue should be empty.
-		CHECK(unitUnderTest[i]->isEmpty());
+		CHECK(unitUnderTest[i]->empty());
 
 		for(unsigned int c = 0; c < (QUEUE_SIZE[i] - 1); c++)
 		{
@@ -112,21 +102,25 @@ TEST(Queue_TestBench, FullQueue)
 			CHECK(unitUnderTest[i]->enqueue(stimulus));
 
 			// Queue should not be empty.
-			CHECK(!unitUnderTest[i]->isEmpty());
+			CHECK(!unitUnderTest[i]->empty());
 
 			// Queue shouldn't be full.
-			CHECK(!unitUnderTest[i]->isFull());
+			CHECK(!unitUnderTest[i]->full());
 		}
+
+		CHECK_EQUAL(QUEUE_SIZE[i] - 1, unitUnderTest[i]->elements());
 
 		Data lastStimulus = Data(QUEUE_SIZE[i], false);
 		// Queue should accept another item.
 		CHECK(unitUnderTest[i]->enqueue(lastStimulus));
 
 		// Queue should not be empty.
-		CHECK(!unitUnderTest[i]->isEmpty());
+		CHECK(!unitUnderTest[i]->empty());
 
 		// Queue should be full.
-		CHECK(unitUnderTest[i]->isFull());
+		CHECK(unitUnderTest[i]->full());
+
+		CHECK_EQUAL(QUEUE_SIZE[i], unitUnderTest[i]->elements());
 
 		// Queue shouldn't accept any more items.
 		CHECK(!unitUnderTest[i]->enqueue(lastStimulus));
@@ -142,26 +136,26 @@ TEST(Queue_TestBench, FullQueue)
 
 			// Item should be the expected.
 			Data expectedResponse = Data(c, true);
-			CHECK(response == expectedResponse);
+			CHECK_EQUAL(expectedResponse, response);
 
 			// Queue should not be empty.
-			CHECK(!unitUnderTest[i]->isEmpty());
+			CHECK(!unitUnderTest[i]->empty());
 
 			// Queue shouldn't be full.
-			CHECK(!unitUnderTest[i]->isFull());
+			CHECK(!unitUnderTest[i]->full());
 		}
 
 		// Should get another item from the Queue.
 		CHECK(unitUnderTest[i]->dequeue(response));
 
 		// Item should be the expected.
-		CHECK(lastStimulus == response);
+		CHECK_EQUAL(lastStimulus, response);
 
 		// Queue shouldn't be full.
-		CHECK(!unitUnderTest[i]->isFull());
+		CHECK(!unitUnderTest[i]->full());
 
 		// Queue should be empty.
-		CHECK(unitUnderTest[i]->isEmpty());
+		CHECK(unitUnderTest[i]->empty());
 
 		// Shouldn't get another item from the Queue.
 		CHECK(!unitUnderTest[i]->dequeue(response));
@@ -200,7 +194,7 @@ TEST(Queue_TestBench, Threadsafe)
 {
 	for (unsigned int i = 0; i < UNITS; i++)
 	{
-		CHECK(unitUnderTest[i]->isEmpty());
+		CHECK(unitUnderTest[i]->empty());
 
 		const unsigned long long numberOfItems = 1000;
 		bool success = true;
@@ -214,7 +208,7 @@ TEST(Queue_TestBench, Threadsafe)
 
 		CHECK(success);
 
-		CHECK(unitUnderTest[i]->isEmpty());
+		CHECK(unitUnderTest[i]->empty());
 	}
 }
 
@@ -224,25 +218,25 @@ TEST(Queue_TestBench, ElementsOverflow)
 	{
 		for(unsigned int u = 0; u < UNITS; u++)
 		{
-			CHECK(unitUnderTest[u]->isEmpty());
+			CHECK(unitUnderTest[u]->empty());
 			Data stimulus = Data(123, true);
 			CHECK(unitUnderTest[u]->enqueue(stimulus));
-			CHECK(!unitUnderTest[u]->isEmpty());
+			CHECK(!unitUnderTest[u]->empty());
 			Data response = Data();
 			CHECK(unitUnderTest[u]->elements() == 1);
 			CHECK(unitUnderTest[u]->peek(response));
-			CHECK(stimulus == response);
+			CHECK_EQUAL(stimulus, response);
 			response = Data();
 			CHECK(unitUnderTest[u]->dequeue(response));
-			CHECK(stimulus == response);
-			CHECK(unitUnderTest[u]->isEmpty());
+			CHECK_EQUAL(stimulus, response);
+			CHECK(unitUnderTest[u]->empty());
 			CHECK(!unitUnderTest[u]->dequeue(response));
 		}
 	}
 
 	for(unsigned int u = 0; u < UNITS; u++)
 	{
-		CHECK(unitUnderTest[u]->isEmpty());
+		CHECK(unitUnderTest[u]->empty());
 	}
 
 	for(unsigned int u = 0; u < UNITS; u++)
@@ -253,6 +247,6 @@ TEST(Queue_TestBench, ElementsOverflow)
 			CHECK(unitUnderTest[u]->enqueue(stimulus));
 		}
 		CHECK_EQUAL(QUEUE_SIZE[u], unitUnderTest[u]->elements());
-		CHECK(unitUnderTest[u]->isFull());
+		CHECK(unitUnderTest[u]->full());
 	}
 }

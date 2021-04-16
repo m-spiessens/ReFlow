@@ -23,6 +23,7 @@ PUBLIC
 target_sources(FlowTest
 PRIVATE
     source/main.cpp
+    source/data.cpp
     source/component_combine_tests.cpp
     source/component_invert_tests.cpp
     source/component_toggle_tests.cpp
@@ -57,6 +58,11 @@ PRIVATE
     -ftest-coverage
 )
 
+target_compile_definitions(FlowCoverage
+PRIVATE
+    -DNDEBUG
+)
+
 target_link_options(FlowCoverage
 PRIVATE
     -fprofile-arcs
@@ -77,6 +83,8 @@ PRIVATE
     ../source/flow/flow.cpp
     ../source/flow/reactor.cpp
     source/main.cpp
+    source/data.cpp
+    source/check.cpp
     source/component_combine_tests.cpp
     source/component_invert_tests.cpp
     source/component_toggle_tests.cpp

@@ -55,15 +55,15 @@ class Reactor;
  *
  * \note Recommendation: use Flow::disconnect() instead.
  */
-class Connection
+class Connect
 {
 public:
-	virtual ~Connection() = default;
+	virtual ~Connect() = default;
 };
 
 template<typename Type>
-class ConnectionOfType :
-		public Connection
+class ConnectionOf :
+		public Connect
 {
 public:
 	/**
@@ -101,6 +101,17 @@ public:
 	/**
 	 * \brief Is an element available for receiving?
 	 */
+	virtual bool peek(Type& element) const
+	{
+		(void)element;
+		// Should be overloaded.
+		assert(false);
+		return false; 
+	}
+
+	/**
+	 * \brief Is an element available for receiving?
+	 */
 	virtual bool peek() const
 	{
 		// Should be overloaded.
@@ -117,57 +128,16 @@ public:
 		assert(false);
 		return false; 
 	}
-};
 
-template<>
-class ConnectionOfType<void> :
-		public Connection
-{
-public:
-	ConnectionOfType<void>(OutPort<void>& sender, InPort<void>& receiver);
-
-	virtual ~ConnectionOfType<void>();
-
-	bool send()
+	/**
+	 * \brief How many elements available?
+	 */
+	virtual bool elements() const
 	{
-		bool available = !full();
-
-		if(available)
-		{
-			_send++;
-		}
-
-		return available;
+		// Should be overloaded.
+		assert(false);
+		return false; 
 	}
-
-	bool receive()
-	{
-		bool available = peek();
-
-		if(available)
-		{
-			_receive++;
-		}
-
-		return available;
-	}
-
-	bool peek() const
-	{
-		return _send != _receive;
-	}
-
-	bool full() const
-	{
-		return _send == static_cast<uint16_t>(_receive + UINT16_MAX);
-	}
-
-private:
-	OutPort<void>& sender;
-	InPort<void>& receiver;
-
-	volatile uint16_t _send = 0;
-	volatile uint16_t _receive = 0;
 };
 
 /**
@@ -248,8 +218,8 @@ private:
  * \note Recommendation: use Flow::connect() instead.
  */
 template<typename Type>
-class ConnectionFIFO :
-		public ConnectionOfType<Type>,
+class Connection :
+		virtual public ConnectionOf<Type>,
 		protected Queue<Type>
 {
 public:
@@ -260,7 +230,7 @@ public:
 	 * \param receiver The input port to be connected.
 	 * \param size The amount of elements the connection can buffer.
 	 */
-	ConnectionFIFO(OutPort<Type>& sender, InPort<Type>& receiver,
+	Connection(OutPort<Type>& sender, InPort<Type>& receiver,
 			uint16_t size) :
 			Queue<Type>(size), sender(sender), receiver(receiver)
 	{
@@ -271,7 +241,7 @@ public:
 	/**
 	 * \brief Destructor.
 	 */
-	virtual ~ConnectionFIFO()
+	virtual ~Connection()
 	{
 		sender.disconnect();
 		receiver.disconnect();
@@ -288,7 +258,7 @@ public:
 	 */
 	bool send(const Type& element) final override
 	{
-		return this->enqueue(element);
+		return Queue<Type>::enqueue(element);
 	}
 
 	/**
@@ -303,7 +273,15 @@ public:
 	 */
 	bool receive(Type& element) final override
 	{
-		return this->dequeue(element);
+		return Queue<Type>::dequeue(element);
+	}
+
+	/**
+	 * \brief Is an element available for receiving?
+	 */
+	bool peek(Type& element) const final override
+	{
+		return Queue<Type>::peek(element);
 	}
 
 	/**
@@ -311,7 +289,7 @@ public:
 	 */
 	bool peek() const final override
 	{
-		return !this->isEmpty();
+		return !Container::empty();
 	}
 
 	/**
@@ -319,7 +297,15 @@ public:
 	 */
 	bool full() const final override
 	{
-		return this->isFull();
+		return Container::full();
+	}
+
+	/**
+	 * \brief How many elements available?
+	 */
+	bool elements() const final override
+	{
+		return Container::elements();
 	}
 
 private:
@@ -333,18 +319,18 @@ private:
  * \note Recommendation: use Flow::connect() instead.
  */
 template<typename Type>
-class BiDirectionalConnectionFIFO :
-		public Connection
+class BiDirectionalConnection :
+		public Connect
 {
 public:
-	BiDirectionalConnectionFIFO(InOutPort<Type>& portA, InOutPort<Type>& portB,
+	BiDirectionalConnection(InOutPort<Type>& portA, InOutPort<Type>& portB,
 			uint16_t size) :
-			connectionA(ConnectionFIFO<Type>(portA, portB, size)),
-			connectionB(ConnectionFIFO<Type>(portB, portA, size))
+			connectionA(Connection<Type>(portA, portB, size)),
+			connectionB(Connection<Type>(portB, portA, size))
 	{}
 
 private:
-	ConnectionFIFO<Type> connectionA, connectionB;
+	Connection<Type> connectionA, connectionB;
 };
 
 class Peek
@@ -408,13 +394,21 @@ public:
 	}
 
 	/**
+	 * \brief Is an element available for receiving?
+	 */
+	bool peek(Type& element) const
+	{
+		return this->isConnected() ? this->connection->peek(element) : false;
+	}
+
+	/**
 	 * \brief Associate this input port with a connection.
 	 *
 	 * \note Recommendation: use Flow::connect() instead.
 	 *
 	 * \param connection The connection to be associated.
 	 */
-	void connect(ConnectionOfType<Type>* connection)
+	void connect(ConnectionOf<Type>* connection)
 	{
 		assert(!isConnected());
 		this->connection = connection;
@@ -449,62 +443,11 @@ public:
 	}
 
 private:
-	ConnectionOfType<Type>* connection = nullptr;
+	ConnectionOf<Type>* connection = nullptr;
 
 	/**
 	 * \brief Is this input port associated with a connection?
 	 */
-	bool isConnected() const
-	{
-		return this->connection != nullptr;
-	}
-};
-
-template<>
-class InPort<void> :
-		public Peek
-{
-public:
-	explicit InPort<void>(Component* owner) :
-			Peek(owner)
-	{}
-
-	bool receive()
-	{
-		return this->isConnected() ? this->connection->receive() : false;
-	}
-
-	bool peek() const final override
-	{
-		return this->isConnected() ? this->connection->peek() : false;
-	}
-
-	void connect(ConnectionOfType<void>* connection)
-	{
-		assert(!isConnected());
-		this->connection = connection;
-	}
-
-	void disconnect()
-	{
-		this->connection = nullptr;
-	}
-
-	bool full() const
-	{
-		if(connection != nullptr)
-		{
-			return connection->full();
-		}
-		else
-		{
-			return false;
-		}
-	}
-
-private:
-	ConnectionOfType<void>* connection = nullptr;
-
 	bool isConnected() const
 	{
 		return this->connection != nullptr;
@@ -555,7 +498,7 @@ public:
 	 *
 	 * \param connection The connection to be associated.
 	 */
-	void connect(ConnectionOfType<Type>* connection)
+	void connect(ConnectionOf<Type>* connection)
 	{
 		assert(!isConnected());
 		this->connection = connection;
@@ -572,7 +515,7 @@ public:
 	}
 
 private:
-	ConnectionOfType<Type>* connection = nullptr;
+	ConnectionOf<Type>* connection = nullptr;
 
 	bool isConnected() const
 	{
@@ -581,37 +524,81 @@ private:
 };
 
 template<>
+class InPort<void> :
+		public Peek
+{
+public:
+	explicit InPort<void>(Component* owner);
+
+	bool receive();
+
+	bool peek() const final override;
+
+	void connect(Connection<void>* connection);
+	void disconnect();
+
+	bool full() const;
+
+private:
+	Connection<void>* connection = nullptr;
+
+	bool isConnected() const;
+};
+
+template<>
 class OutPort<void>
 {
 public:
+	bool send();
+
+	bool full();
+
+	void connect(Connection<void>* connection);
+	void disconnect();
+
+private:
+	Connection<void>* connection = nullptr;
+
+	bool isConnected() const;
+};
+
+template<>
+class Connection<void> :
+		public Connect,
+		public Container
+{
+public:
+	Connection<void>(OutPort<void>& sender, InPort<void>& receiver, uint16_t size);
+
+	virtual ~Connection<void>();
+
 	bool send()
 	{
-		return this->isConnected() ? this->connection->send() : false;
+		bool available = !full();
+
+		if(available)
+		{
+			enqueued++;
+		}
+
+		return available;
 	}
 
-	bool full()
+	bool receive()
 	{
-		return this->isConnected() ? this->connection->full() : false;
-	}
+		bool available = peek();
 
-	void connect(ConnectionOfType<void>* connection)
-	{
-		assert(!isConnected());
-		this->connection = connection;
-	}
+		if(available)
+		{
+			dequeued++;
+		}
 
-	void disconnect()
-	{
-		this->connection = nullptr;
+		return available;
 	}
 
 private:
-	ConnectionOfType<void>* connection = nullptr;
-
-	bool isConnected() const
-	{
-		return this->connection != nullptr;
-	}
+	OutPort<void>& sender;
+	InPort<void>& receiver;
 };
 
 /**
@@ -637,7 +624,7 @@ public:
  *
  * \param connection The connection to be removed.
  */
-void disconnect(Connection* connection);
+void disconnect(Connect* connection);
 
 /**
  * \brief Connect an output port to an input port.
@@ -647,15 +634,15 @@ void disconnect(Connection* connection);
  * \param size The amount of elements the connection can buffer.
  */
 template<typename Type>
-Connection* connect(OutPort<Type>& sender, InPort<Type>& receiver,
+Connect* connect(OutPort<Type>& sender, InPort<Type>& receiver,
 		uint16_t size = 1)
 {
-	return new ConnectionFIFO<Type>(sender, receiver, size);
+	return new Connection<Type>(sender, receiver, size);
 }
 
-template<>
-Connection* connect(OutPort<void>& sender, InPort<void>& receiver,
-		uint16_t size);
+// template<>
+// Connection* connect(OutPort<void>& sender, InPort<void>& receiver,
+// 		uint16_t size);
 
 /**
  * \brief Connect an output port to an input port.
@@ -665,17 +652,17 @@ Connection* connect(OutPort<void>& sender, InPort<void>& receiver,
  * \param size The amount of elements the connection can buffer.
  */
 template<typename Type>
-Connection* connect(OutPort<Type>* sender, InPort<Type>& receiver,
+Connect* connect(OutPort<Type>* sender, InPort<Type>& receiver,
 		uint16_t size = 1)
 {
 	assert(sender != nullptr);
 
-	return new ConnectionFIFO<Type>(*sender, receiver, size);
+	return new Connection<Type>(*sender, receiver, size);
 }
 
-template<>
-Connection* connect(OutPort<void>* sender, InPort<void>& receiver,
-		uint16_t size);
+// template<>
+// Connection* connect(OutPort<void>* sender, InPort<void>& receiver,
+// 		uint16_t size);
 
 /**
  * \brief Connect an output port to an input port.
@@ -685,17 +672,17 @@ Connection* connect(OutPort<void>* sender, InPort<void>& receiver,
  * \param size The amount of elements the connection can buffer.
  */
 template<typename Type>
-Connection* connect(OutPort<Type>& sender, InPort<Type>* receiver,
+Connect* connect(OutPort<Type>& sender, InPort<Type>* receiver,
 		uint16_t size = 1)
 {
 	assert(receiver != nullptr);
 
-	return new ConnectionFIFO<Type>(sender, *receiver, size);
+	return new Connection<Type>(sender, *receiver, size);
 }
 
-template<>
-Connection* connect(OutPort<void>& sender, InPort<void>* receiver,
-		uint16_t size);
+// template<>
+// Connection* connect(OutPort<void>& sender, InPort<void>* receiver,
+// 		uint16_t size);
 
 /**
  * \brief Connect an output port to an input port.
@@ -705,18 +692,18 @@ Connection* connect(OutPort<void>& sender, InPort<void>* receiver,
  * \param size The amount of elements the connection can buffer.
  */
 template<typename Type>
-Connection* connect(OutPort<Type>* sender, InPort<Type>* receiver,
+Connect* connect(OutPort<Type>* sender, InPort<Type>* receiver,
 		uint16_t size = 1)
 {
 	assert(sender != nullptr);
 	assert(receiver != nullptr);
 
-	return new ConnectionFIFO<Type>(*sender, *receiver, size);
+	return new Connection<Type>(*sender, *receiver, size);
 }
 
-template<>
-Connection* connect(OutPort<void>* sender, InPort<void>* receiver,
-		uint16_t size);
+// template<>
+// Connection* connect(OutPort<void>* sender, InPort<void>* receiver,
+// 		uint16_t size);
 
 /**
  * \brief Connect two bidirectional ports.
@@ -726,10 +713,10 @@ Connection* connect(OutPort<void>* sender, InPort<void>* receiver,
  * \param size The amount of elements the connection can buffer.
  */
 template<typename Type>
-Connection* connect(InOutPort<Type>& portA, InOutPort<Type>& portB,
+Connect* connect(InOutPort<Type>& portA, InOutPort<Type>& portB,
 		uint16_t size = 1)
 {
-	return new BiDirectionalConnectionFIFO<Type>(portA, portB, size);
+	return new BiDirectionalConnection<Type>(portA, portB, size);
 }
 
 /**
@@ -740,12 +727,12 @@ Connection* connect(InOutPort<Type>& portA, InOutPort<Type>& portB,
  * \param size The amount of elements the connection can buffer.
  */
 template<typename Type>
-Connection* connect(InOutPort<Type>* portA, InOutPort<Type>& portB,
+Connect* connect(InOutPort<Type>* portA, InOutPort<Type>& portB,
 		uint16_t size = 1)
 {
 	assert(portA != nullptr);
 
-	return new BiDirectionalConnectionFIFO<Type>(*portA, portB, size);
+	return new BiDirectionalConnection<Type>(*portA, portB, size);
 }
 
 /**
@@ -756,12 +743,12 @@ Connection* connect(InOutPort<Type>* portA, InOutPort<Type>& portB,
  * \param size The amount of elements the connection can buffer.
  */
 template<typename Type>
-Connection* connect(InOutPort<Type>& portA, InOutPort<Type>* portB,
+Connect* connect(InOutPort<Type>& portA, InOutPort<Type>* portB,
 		uint16_t size = 1)
 {
 	assert(portB != nullptr);
 
-	return new BiDirectionalConnectionFIFO<Type>(portA, *portB, size);
+	return new BiDirectionalConnection<Type>(portA, *portB, size);
 }
 
 /**
@@ -772,13 +759,13 @@ Connection* connect(InOutPort<Type>& portA, InOutPort<Type>* portB,
  * \param size The amount of elements the connection can buffer.
  */
 template<typename Type>
-Connection* connect(InOutPort<Type>* portA, InOutPort<Type>* portB,
+Connect* connect(InOutPort<Type>* portA, InOutPort<Type>* portB,
 		uint16_t size = 1)
 {
 	assert(portA != nullptr);
 	assert(portB != nullptr);
 
-	return new BiDirectionalConnectionFIFO<Type>(*portA, *portB, size);
+	return new BiDirectionalConnection<Type>(*portA, *portB, size);
 }
 
 } //namespace Flow

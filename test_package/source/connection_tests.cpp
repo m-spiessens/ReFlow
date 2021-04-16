@@ -30,7 +30,7 @@
 
 #include "data.h"
 
-using Flow::ConnectionFIFO;
+using Flow::Connection;
 using Flow::OutPort;
 using Flow::InPort;
 
@@ -38,13 +38,13 @@ using Flow::InPort;
 
 TEST_GROUP(ConnectionOfType_TestBench)
 {
-	ConnectionFIFO<Data>* unitUnderTest;
+	Connection<Data>* unitUnderTest;
 	OutPort<Data> sender;
 	InPort<Data> receiver{ nullptr };
 
 	void setup()
 	{
-		unitUnderTest = new Flow::ConnectionFIFO<Data>(sender,
+		unitUnderTest = new Flow::Connection<Data>(sender,
 				receiver, CONNECTION_FIFO_SIZE);
 	}
 
@@ -67,9 +67,10 @@ TEST(ConnectionOfType_TestBench, SendReceiveItem)
 	Data stimulus = Data(123, true);
 	CHECK(unitUnderTest->send(stimulus));
 	CHECK(unitUnderTest->peek());
+	CHECK_EQUAL(1, unitUnderTest->elements());
 	Data response;
 	CHECK(unitUnderTest->receive(response));
-	CHECK(stimulus == response);
+	CHECK_EQUAL(stimulus, response);
 	CHECK(!unitUnderTest->peek());
 	CHECK(!unitUnderTest->receive(response));
 }
@@ -108,7 +109,7 @@ TEST(ConnectionOfType_TestBench, FullConnection)
 
 		// Item should be the expected.
 		Data expectedResponse = Data(c, true);
-		CHECK(response == expectedResponse);
+		CHECK_EQUAL(expectedResponse, response);
 
 		// Connection should not be empty.
 		CHECK(unitUnderTest->peek());
@@ -118,7 +119,7 @@ TEST(ConnectionOfType_TestBench, FullConnection)
 	CHECK(unitUnderTest->receive(response));
 
 	// Item should be the expected.
-	CHECK(lastStimulus == response);
+	CHECK_EQUAL(lastStimulus, response);
 
 	// Connection should be empty.
 	CHECK(!unitUnderTest->peek());
@@ -127,7 +128,7 @@ TEST(ConnectionOfType_TestBench, FullConnection)
 	CHECK(!unitUnderTest->receive(response));
 }
 
-static void producer(ConnectionFIFO<Data>* _unitUnderTest,
+static void producer(Connection<Data>* _unitUnderTest,
 		const unsigned long long count)
 {
 	for (unsigned long long c = 0; c <= count; c++)
@@ -137,7 +138,7 @@ static void producer(ConnectionFIFO<Data>* _unitUnderTest,
 	}
 }
 
-static void consumer(ConnectionFIFO<Data>* _unitUnderTest,
+static void consumer(Connection<Data>* _unitUnderTest,
 		const unsigned long long count, bool* success)
 {
 	unsigned long long c = 0;

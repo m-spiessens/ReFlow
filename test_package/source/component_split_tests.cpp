@@ -30,7 +30,7 @@
 
 #include "data.h"
 
-using Flow::Connection;
+using Flow::Connect;
 using Flow::OutPort;
 using Flow::InPort;
 using Flow::connect;
@@ -40,9 +40,9 @@ TEST_GROUP(Component_Split_TestBench)
 	constexpr static unsigned int SPLIT_COUNT = 5;
 
 	OutPort<char> outStimulus;
-	Connection* outStimulusConnection;
+	Connect* outStimulusConnection;
 	Split<char, SPLIT_COUNT>* unitUnderTest;
-	Connection* inResponseConnection[SPLIT_COUNT];
+	Connect* inResponseConnection[SPLIT_COUNT];
 	InPort<char>* inResponse[SPLIT_COUNT];
 
 	void setup()
@@ -107,7 +107,7 @@ TEST(Component_Split_TestBench, Split)
 		CHECK(inResponse[i]->receive(response));
 
 		char expected = 1;
-		CHECK(response == expected);
+		CHECK_EQUAL(expected, response);
 	}
 
 	unitUnderTest->run();
@@ -126,6 +126,6 @@ TEST(Component_Split_TestBench, Split)
 		CHECK(inResponse[i]->receive(response));
 
 		char expected = 123;
-		CHECK(response == expected);
+		CHECK_EQUAL(expected, response);
 	}
 }

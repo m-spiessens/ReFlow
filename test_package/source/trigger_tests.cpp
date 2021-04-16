@@ -30,7 +30,7 @@
 
 #include "data.h"
 
-using Flow::Connection;
+using Flow::Connect;
 using Flow::InPort;
 using Flow::OutPort;
 using Flow::connect;
@@ -39,11 +39,11 @@ TEST_GROUP(Trigger_TestBench)
 {
 	OutPort<void> unitUnderTestOut;
 	InPort<void> unitUnderTestIn{  nullptr  };
-	Connection* connection;
+	Connect* connection;
 
 	void setup()
 	{
-		connection = connect(unitUnderTestOut, unitUnderTestIn);
+		connection = connect(unitUnderTestOut, unitUnderTestIn, UINT16_MAX);
 	}
 
 	void teardown()

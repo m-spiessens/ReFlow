@@ -30,7 +30,7 @@
 
 #include "data.h"
 
-using Flow::Connection;
+using Flow::Connect;
 using Flow::OutPort;
 using Flow::InPort;
 using Flow::connect;
@@ -38,9 +38,9 @@ using Flow::connect;
 TEST_GROUP(Component_Toggle_TestBench)
 {
 	OutPort<void>* outStimulus;
-	Connection* outStimulusConnection;
+	Connect* outStimulusConnection;
 	Toggle* unitUnderTest;
-	Connection* inResponseConnection;
+	Connect* inResponseConnection;
 	InPort<bool> inResponse{ nullptr };
 
 	void setup()
@@ -100,7 +100,7 @@ TEST(Component_Toggle_TestBench, Toggle)
 	CHECK(inResponse.receive(currentResponse));
 
 	bool expected = !previousResponse;
-	CHECK(currentResponse == expected);
+	CHECK_EQUAL(expected, currentResponse);
 
 	previousResponse = currentResponse;
 
@@ -115,7 +115,7 @@ TEST(Component_Toggle_TestBench, Toggle)
 	CHECK(inResponse.receive(currentResponse));
 
 	expected = !previousResponse;
-	CHECK(currentResponse == expected);
+	CHECK_EQUAL(expected, currentResponse);
 
 	previousResponse = currentResponse;
 
@@ -126,7 +126,7 @@ TEST(Component_Toggle_TestBench, Toggle)
 	CHECK(inResponse.receive(currentResponse));
 
 	expected = !previousResponse;
-	CHECK(currentResponse == expected);
+	CHECK_EQUAL(expected, currentResponse);
 
 	previousResponse = currentResponse;
 
@@ -137,7 +137,7 @@ TEST(Component_Toggle_TestBench, Toggle)
 	CHECK(inResponse.receive(currentResponse));
 
 	expected = !previousResponse;
-	CHECK(currentResponse == expected);
+	CHECK_EQUAL(expected, currentResponse);
 
 	unitUnderTest->run();
 

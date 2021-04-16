@@ -131,7 +131,7 @@ public:
 	 */
 	bool haveAvailable() const
 	{
-		return !_available.isEmpty();
+		return !_available.empty();
 	}
 
 	/**

@@ -30,7 +30,7 @@
 
 #include "data.h"
 
-using Flow::Connection;
+using Flow::Connect;
 using Flow::OutPort;
 using Flow::InPort;
 using Flow::connect;
@@ -38,9 +38,9 @@ using Flow::connect;
 TEST_GROUP(Component_Invert_TestBench)
 {
 	OutPort<bool> outStimulus;
-	Connection* outStimulusConnection;
+	Connect* outStimulusConnection;
 	Invert<bool>* unitUnderTest;
-	Connection* inResponseConnection;
+	Connect* inResponseConnection;
 	InPort<bool> inResponse{ nullptr };
 
 	void setup()
@@ -83,7 +83,7 @@ TEST(Component_Invert_TestBench, FalseIsTrue)
 	CHECK(inResponse.receive(response));
 
 	bool expected = true;
-	CHECK(response == expected);
+	CHECK_EQUAL(expected, response);
 }
 
 TEST(Component_Invert_TestBench, TrueIsFalse)
@@ -98,5 +98,5 @@ TEST(Component_Invert_TestBench, TrueIsFalse)
 	CHECK(inResponse.receive(response));
 
 	bool expected = false;
-	CHECK(response == expected);
+	CHECK_EQUAL(expected, response);
 }

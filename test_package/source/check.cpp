@@ -21,7 +21,36 @@
  * SOLUTION.
  */
 
-#include "flow/components.h"
+#include "CppUTest/TestHarness.h"
+
 #include "flow/flow.h"
-#include "flow/pool.h"
-#include "flow/utility.h"
+#include "flow/reactor.h"
+
+#include "data.h"
+
+TEST_GROUP(Touch)
+{
+};
+
+TEST(Touch, Stubs)
+{
+    Flow::ConnectionOf<bool> connectionOfBool;
+    connectionOfBool.send(true);
+    bool b;
+    connectionOfBool.receive(b);
+    connectionOfBool.peek(b);
+    connectionOfBool.peek();
+    connectionOfBool.full();
+    connectionOfBool.elements();
+
+    Flow::Component component;
+    component.run();
+
+    Flow::Peek peek(nullptr);
+    peek.peek();
+
+    Data data(1, true);
+    StringFrom(data);
+
+    Flow::Reactor::reset();
+}

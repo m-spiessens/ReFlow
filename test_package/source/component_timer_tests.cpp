@@ -30,7 +30,7 @@
 
 #include "data.h"
 
-using Flow::Connection;
+using Flow::Connect;
 using Flow::OutPort;
 using Flow::InPort;
 using Flow::connect;
@@ -38,7 +38,7 @@ using Flow::connect;
 TEST_GROUP(Component_SoftwareTimer_TestBench)
 {
 	SoftwareTimer* unitUnderTest;
-	Connection* inResponseConnection;
+	Connect* inResponseConnection;
 	InPort<void> inResponse{ nullptr };
 
 	void setup()

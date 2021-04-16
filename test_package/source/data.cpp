@@ -21,55 +21,17 @@
  * SOLUTION.
  */
 
-#ifndef DATA_H_
-#define DATA_H_
+#include "data.h"
 
-#include <stdint.h>
-
-#include "CppUTest/TestHarness.h"
-
-#include "flow/flow.h"
-
-class Data
+SimpleString StringFrom(const Data& data)
 {
-public:
-	Data() :
-			integer(0), boolean(false)
-	{
-	}
+	SimpleString str;
 
-	Data(uint64_t i, bool b) :
-			integer(i), boolean(b)
-	{
-	}
+	str += "Data { uint64_t integer = ";
+	str += StringFromFormat("%lu ", data.integer);
+	str += ", bool boolean = ";
+	str += StringFromFormat("%s ", data.boolean ? "true" : "false");
+	str += " }";
 
-	bool operator==(const Data& other) const
-	{
-		bool equal = true;
-		equal = equal && (this->integer == other.integer);
-		equal = equal && (this->boolean == other.boolean);
-		return equal;
-	}
-
-	bool operator!=(const Data& other) const
-	{
-		return !(*this == other);
-	}
-
-	bool operator<(const Data& other) const
-	{
-		return this->integer < other.integer;
-	}
-
-	bool operator>=(const Data& other) const
-	{
-		return !(*this < other);
-	}
-
-	uint64_t integer;
-	bool boolean;
-};
-
-SimpleString StringFrom(const Data& data);
-
-#endif // DATA_H_
+	return str;
+}

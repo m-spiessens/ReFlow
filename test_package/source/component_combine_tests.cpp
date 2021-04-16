@@ -30,7 +30,7 @@
 
 #include "data.h"
 
-using Flow::Connection;
+using Flow::Connect;
 using Flow::OutPort;
 using Flow::InPort;
 using Flow::connect;
@@ -40,9 +40,9 @@ TEST_GROUP(Component_Combine_TestBench)
 	constexpr static unsigned int COMBINE_COUNT = 5;
 
 	OutPort<char> outStimulus[COMBINE_COUNT];
-	Connection* outStimulusConnection[COMBINE_COUNT];
+	Connect* outStimulusConnection[COMBINE_COUNT];
 	Combine<char, COMBINE_COUNT>* unitUnderTest;
-	Connection* inResponseConnection;
+	Connect* inResponseConnection;
 	InPort<char> inResponse{ nullptr };
 
 	void setup()
@@ -100,7 +100,7 @@ TEST(Component_Combine_TestBench, CompleteCombine)
 		CHECK(inResponse.receive(response));
 
 		char expected = i;
-		CHECK(response == expected);
+		CHECK_EQUAL(expected, response);
 	}
 
 	unitUnderTest->run();
@@ -119,7 +119,7 @@ TEST(Component_Combine_TestBench, CompleteCombine)
 		CHECK(inResponse.receive(response));
 
 		char expected = COMBINE_COUNT - i;
-		CHECK(response == expected);
+		CHECK_EQUAL(expected, response);
 	}
 }
 
@@ -137,17 +137,17 @@ TEST(Component_Combine_TestBench, PartialCombine)
 	CHECK(inResponse.receive(response));
 
 	char expected = 0;
-	CHECK(response == expected);
+	CHECK_EQUAL(expected, response);
 
 	CHECK(inResponse.receive(response));
 
 	expected = 2;
-	CHECK(response == expected);
+	CHECK_EQUAL(expected, response);
 
 	CHECK(inResponse.receive(response));
 
 	expected = 4;
-	CHECK(response == expected);
+	CHECK_EQUAL(expected, response);
 
 	CHECK(!inResponse.receive(response));
 
@@ -162,7 +162,7 @@ TEST(Component_Combine_TestBench, PartialCombine)
 	CHECK(inResponse.receive(response));
 
 	expected = 0;
-	CHECK(response == expected);
+	CHECK_EQUAL(expected, response);
 
 	CHECK(!inResponse.receive(response));
 
@@ -177,17 +177,17 @@ TEST(Component_Combine_TestBench, PartialCombine)
 	CHECK(inResponse.receive(response));
 
 	expected = 1;
-	CHECK(response == expected);
+	CHECK_EQUAL(expected, response);
 
 	CHECK(inResponse.receive(response));
 
 	expected = 3;
-	CHECK(response == expected);
+	CHECK_EQUAL(expected, response);
 
 	CHECK(inResponse.receive(response));
 
 	expected = 4;
-	CHECK(response == expected);
+	CHECK_EQUAL(expected, response);
 
 	CHECK(!inResponse.receive(response));
 }

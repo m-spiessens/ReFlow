@@ -24,8 +24,10 @@
 #ifndef FLOW_QUEUE_H_
 #define FLOW_QUEUE_H_
 
-#include <stdint.h>
-#include <utility>
+#include <malloc.h>
+#include <string.h>
+
+#include "flow/container.h"
 
 /**
  * \brief Flow is a pipes and filters implementation tailored for (but not exclusive to) microcontrollers.
@@ -33,23 +35,16 @@
 namespace Flow
 {
 
-/**
- * \brief Implementation of a queue or FIFO.
- *
- * A queue is thread safe in the sense that the enqueue() and dequeue() can be called concurrently.
- */
-template<typename DataType>
-class Queue
+class GenericQueue :
+		public Container
 {
 private:
-	DataType* _data;
-	uint16_t _size;
-	volatile uint16_t _first;
-	volatile uint16_t _last;
-	volatile uint16_t _enqueued;
-	volatile uint16_t _dequeued;
+	uint8_t* data;
+	const uint16_t elementSize;
+	volatile uint16_t first = 0;
+	volatile uint16_t last = 0;
 
-public:
+protected:
 	/**
 	 * \brief Create a queue.
 	 *
@@ -57,67 +52,11 @@ public:
 	 *
 	 * \param size The size of the queue in number of DataType.
 	 */
-	explicit Queue(uint16_t size) :
-			_size(size),
-			_first(0),
-			_last(0),
-			_enqueued(0),
-			_dequeued(0)
+	explicit GenericQueue(uint16_t elementCount, uint16_t elementSize) :
+			Container(elementCount),
+			elementSize(elementSize)
 	{
-		_data = new DataType[_size];
-	}
-
-	/**
-	 * \brief Copy constructor.
-	 *
-	 * Performs a complete, deep copy of the given queue.
-	 * The array of DataType will be allocated on the heap.
-	 *
-	 * \param other Queue to be copied.
-	 */
-	explicit Queue(const Queue<DataType>& other) :
-			_size(other._size),
-			_first(other._first),
-			_last(other._last),
-			_enqueued(other._enqueued),
-			_dequeued(other._dequeued)
-	{
-		_data = new DataType[_size];
-
-		for(uint_fast16_t i = 0; i < _size; i++)
-		{
-			_data[i] = other._data[i];
-		}
-	}
-
-	/**
-	 * \brief Assignment operator.
-	 */
-	Queue& operator=(const Queue<DataType>& other)
-	{
-		Queue<DataType> shadow(other);
-		*this = std::move(shadow);
-		return *this;
-	}
-
-	/**
-	 * \brief Move operator.
-	 */
-	Queue& operator=(Queue<DataType>&& other) noexcept
-	{
-		if(this != &other)
-		{
-			delete[] _data;
-			_data = other._data;
-			other._data = nullptr;
-			_size = other._size;
-			_first = other._first;
-			_last = other._last;
-			_enqueued = other._enqueued;
-			_dequeued = other._dequeued;
-		}
-
-		return *this;
+		data = (uint8_t*)malloc(elementCount * elementSize);
 	}
 
 	/**
@@ -125,35 +64,9 @@ public:
 	 *
 	 * Deallocates the array of DataType from the heap.
 	 */
-	~Queue()
+	~GenericQueue()
 	{
-		delete[] _data;
-	}
-
-	/**
-	 * \brief Is the queue empty?
-	 */
-	bool isEmpty() const
-	{
-		return (_enqueued == _dequeued);
-	}
-
-	/**
-	 * \brief Is the queue full?
-	 */
-	bool isFull() const
-	{
-		return (_enqueued == static_cast<uint16_t>(_dequeued + _size));
-	}
-
-	/**
-	 * \brief The number of elements in the queue.
-	 */
-	uint16_t elements() const
-	{
-		int32_t delta = static_cast<int32_t>(_enqueued) - static_cast<int32_t>(_dequeued);
-
-		return static_cast<uint16_t>((delta >= 0) ? delta : delta + UINT16_MAX + 1);
+		free(data);
 	}
 
 	/**
@@ -165,17 +78,17 @@ public:
 	 * \param element The element to be enqueued.
 	 * \return The element was successfully enqueued.
 	 */
-	bool enqueue(const DataType& element)
+	bool enqueue(const void* element)
 	{
 		bool success = false;
 
-		if (!isFull())
+		if (!full())
 		{
-			_data[_last] = element;
+			memcpy(&data[last * elementSize], element, elementSize);
 
-			_last = (_last == _size - 1) ? 0 : _last + 1;
+			last = (last == size() - 1) ? 0 : last + 1;
 
-			_enqueued++;
+			enqueued++;
 
 			success = true;
 		}
@@ -193,17 +106,17 @@ public:
 	 * \return An element was successfully dequeued.
 	 * 		Thus the element output parameter has a valid value.
 	 */
-	bool dequeue(DataType& element)
+	bool dequeue(void* element)
 	{
 		bool success = false;
 
-		if (!isEmpty())
+		if (!empty())
 		{
-			element = _data[_first];
+			memcpy(element , &data[first * elementSize], elementSize);
 
-			_first = (_first == _size - 1) ? 0 : _first + 1;
+			first = (first == size() - 1) ? 0 : first + 1;
 
-			_dequeued++;
+			dequeued++;
 
 			success = true;
 		}
@@ -221,18 +134,72 @@ public:
 	 * \return The queue is not empty.
 	 * 		Thus the element output parameter has a valid value.
 	 */
-	bool peek(DataType& element) const
+	bool peek(void* element) const
 	{
 		bool success = false;
 
-		if (!isEmpty())
+		if (!empty())
 		{
-			element = _data[_first];
+			memcpy(element , &data[first * elementSize], elementSize);
 
 			success = true;
 		}
 
 		return success;
+	}
+};
+
+template<typename Type>
+class Queue : 
+		public GenericQueue
+{
+public:
+	explicit Queue(uint16_t size) :
+			GenericQueue(size, sizeof(Type))
+	{
+	}
+
+	/**
+	 * \brief Enqueue an element of DataType.
+	 *
+	 * Can be called concurrently with respect to dequeue().
+	 * If the queue is full the given element is not added.
+	 *
+	 * \param element The element to be enqueued.
+	 * \return The element was successfully enqueued.
+	 */
+	bool enqueue(const Type& element)
+	{
+		return GenericQueue::enqueue(&element);
+	}
+	/**
+	 * \brief Dequeue an element of DataType.
+	 *
+	 * Can be called concurrently with respect to enqueue().
+	 *
+	 * \param element [output] The dequeued element.
+	 * 		The return value indicates whether the element is valid.
+	 * \return An element was successfully dequeued.
+	 * 		Thus the element output parameter has a valid value.
+	 */
+	bool dequeue(Type& element)
+	{
+		return GenericQueue::dequeue(&element);
+	}
+	
+	/**
+	 * \brief Peek in the queue.
+	 *
+	 * Does not modify the queue in any way.
+	 *
+	 * \param element [output] The next element to be dequeued.
+	 * 		The return value indicates whether the element is valid.
+	 * \return The queue is not empty.
+	 * 		Thus the element output parameter has a valid value.
+	 */
+	bool peek(Type& element) const
+	{
+		return GenericQueue::peek(&element);
 	}
 };
 

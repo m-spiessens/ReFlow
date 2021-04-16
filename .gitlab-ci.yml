@@ -43,6 +43,6 @@ release:
 examples-EK-TM4C129EXL:
   stage: deploy
   script:
-    - conan remote add spiessensm-gitlab https://gitlab.com/api/v4/projects/24373418/packages/conan
+    - conan export . spiessensm/dev
     - conan install example/EK-TM4C129EXL -pr:h TM4C129ENCPDT -if=example/EK-TM4C129EXL-Release/ -s build_type=Release
     - conan build example/EK-TM4C129EXL -bf=example/EK-TM4C129EXL-Release/

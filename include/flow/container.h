@@ -21,68 +21,55 @@
  * SOLUTION.
  */
 
+#ifndef FLOW_CONTAINER_H_
+#define FLOW_CONTAINER_H_
+
 #include <stdint.h>
 
-#include "CppUTest/TestHarness.h"
-
-#include "flow/components.h"
-#include "flow/reactor.h"
-
-#include "data.h"
-
-using Flow::Connect;
-using Flow::OutPort;
-using Flow::InPort;
-using Flow::connect;
-
-TEST_GROUP(Component_Convert_TestBench)
+namespace Flow
 {
-	OutPort<float> outStimulus;
-	Connect* outStimulusConnection;
-	Convert<float, int32_t>* unitUnderTest;
-	Connect* inResponseConnection;
-	InPort<int32_t> inResponse{ nullptr };
 
-	void setup()
+class Container
+{
+public:
+	Container(uint16_t size) :
+			_size(size)
 	{
-		unitUnderTest = new Convert<float, int32_t>();
-
-		outStimulusConnection = connect(outStimulus, unitUnderTest->inFrom);
-		inResponseConnection = connect(unitUnderTest->outTo, inResponse);
 	}
 
-	void teardown()
+	bool empty() const
 	{
-		disconnect(outStimulusConnection);
-		disconnect(inResponseConnection);
-
-		delete unitUnderTest;
-
-		Flow::Reactor::reset();
+		return (enqueued == dequeued);
 	}
+
+	bool full() const
+	{
+		return (enqueued == static_cast<uint16_t>(dequeued + size()));
+	}
+
+	bool peek() const
+	{
+		return !empty();
+	}
+
+	uint16_t elements() const
+	{
+		int32_t delta = static_cast<int32_t>(enqueued) - static_cast<int32_t>(dequeued);
+
+		return static_cast<uint16_t>((delta >= 0) ? delta : delta + UINT16_MAX + 1);
+	}
+
+	uint16_t size() const
+	{
+		return _size;
+	}
+
+protected:
+	volatile uint16_t enqueued = 0;
+	volatile uint16_t dequeued = 0;
+	const uint16_t _size;
 };
 
-TEST(Component_Convert_TestBench, Convert)
-{
-	CHECK(!inResponse.peek());
+} // namespace Flow
 
-	unitUnderTest->run();
-
-	CHECK(!inResponse.peek());
-
-	CHECK(outStimulus.send(1.0f));
-
-	unitUnderTest->run();
-
-	int32_t result = 0;
-	CHECK(inResponse.receive(result));
-	CHECK_EQUAL(1, result);
-
-	CHECK(outStimulus.send(-1.0f));
-
-	unitUnderTest->run();
-
-	result = 0;
-	CHECK(inResponse.receive(result));
-	CHECK_EQUAL(-1, result);
-}
+#endif /* FLOW_CONTAINER_H_ */
