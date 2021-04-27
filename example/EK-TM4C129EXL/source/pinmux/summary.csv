@@ -1,0 +1,12 @@
+Pin#, PORT IO, Function, Directions
+116,PJ0,GPIO_PJ0, false, true,Input
+117,PJ1,GPIO_PJ1, false, true,Input
+108,PN1,GPIO_PN1, false, false,Output
+107,PN0,GPIO_PN0, false, false,Output
+46,PF4,GPIO_PF4, false, false,Output
+124,PE5,GPIO_PE5, false, false,Output
+33,PA0,U0RX, , ,
+34,PA1,U0TX, , ,
+2,PD1,SSI2XDAT0, , ,
+1,PD0,SSI2XDAT1, , ,
+4,PD3,SSI2CLK, , ,

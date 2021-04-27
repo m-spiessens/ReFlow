@@ -1,6 +1,6 @@
 /* The MIT License (MIT)
  *
- * Copyright (c) 2020 Cynara Krewe
+ * Copyright (c) 2021 Mathias Spiessens
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software, hardware and associated documentation files (the "Solution"), to deal
@@ -25,12 +25,12 @@
 
 #include "CppUTest/TestHarness.h"
 
-#include "components.h"
-#include "reactor.h"
+#include "flow/components.h"
+#include "flow/reactor.h"
 
 #include "data.h"
 
-using Flow::Connection;
+using Flow::Connect;
 using Flow::OutPort;
 using Flow::InPort;
 using Flow::connect;
@@ -38,14 +38,14 @@ using Flow::connect;
 TEST_GROUP(Component_SoftwareTimer_TestBench)
 {
 	SoftwareTimer* unitUnderTest;
-	Connection* inResponseConnection;
-	InPort<Tick> inResponse{ nullptr };
+	Connect* inResponseConnection;
+	InPort<void> inResponse{ nullptr };
 
 	void setup()
 	{
 		unitUnderTest = new SoftwareTimer(100);
 
-		inResponseConnection = connect(unitUnderTest->outTick, inResponse);
+		inResponseConnection = connect(unitUnderTest->outTimeout, inResponse);
 	}
 
 	void teardown()
@@ -53,8 +53,6 @@ TEST_GROUP(Component_SoftwareTimer_TestBench)
 		disconnect(inResponseConnection);
 
 		delete unitUnderTest;
-
-		Flow::Reactor::reset();
 	}
 };
 
@@ -80,9 +78,7 @@ TEST(Component_SoftwareTimer_TestBench, TickPeriod100)
 
 	unitUnderTest->isr();
 
-	Tick tick = 1;
-	CHECK(inResponse.receive(tick));
-	CHECK(tick == TICK);
+	CHECK(inResponse.receive());
 
 	for (unsigned int i = 0; i < 100 - 1; i++)
 	{
@@ -93,8 +89,7 @@ TEST(Component_SoftwareTimer_TestBench, TickPeriod100)
 
 	unitUnderTest->isr();
 
-	CHECK(inResponse.receive(tick));
-	CHECK(tick == TICK);
+	CHECK(inResponse.receive());
 
 	for (unsigned int i = 0; i < 100 - 1; i++)
 	{
@@ -105,6 +100,5 @@ TEST(Component_SoftwareTimer_TestBench, TickPeriod100)
 
 	unitUnderTest->isr();
 
-	CHECK(inResponse.receive(tick));
-	CHECK(tick == TICK);
+	CHECK(inResponse.receive());
 }

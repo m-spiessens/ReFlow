@@ -1,6 +1,6 @@
 /* The MIT License (MIT)
  *
- * Copyright (c) 2020 Cynara Krewe
+ * Copyright (c) 2021 Mathias Spiessens
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software, hardware and associated documentation files (the "Solution"), to deal
@@ -26,7 +26,9 @@
 
 #include <stdint.h>
 
-#include "flow.h"
+#include "CppUTest/TestHarness.h"
+
+#include "flow/flow.h"
 
 class Data
 {
@@ -64,16 +66,10 @@ public:
 		return !(*this < other);
 	}
 
-private:
 	uint64_t integer;
 	bool boolean;
 };
 
-class DummyComponent
-:	public Flow::Component
-{
-public:
-	void run() final override{}
-};
+SimpleString StringFrom(const Data& data);
 
 #endif // DATA_H_

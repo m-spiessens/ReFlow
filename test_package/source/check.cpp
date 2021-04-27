@@ -1,6 +1,6 @@
 /* The MIT License (MIT)
  *
- * Copyright (c) 2020 Cynara Krewe
+ * Copyright (c) 2021 Mathias Spiessens
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software, hardware and associated documentation files (the "Solution"), to deal
@@ -21,7 +21,36 @@
  * SOLUTION.
  */
 
-#include "components.h"
-#include "flow.h"
-#include "pool.h"
-#include "utility.h"
+#include "CppUTest/TestHarness.h"
+
+#include "flow/flow.h"
+#include "flow/reactor.h"
+
+#include "data.h"
+
+TEST_GROUP(Touch)
+{
+};
+
+TEST(Touch, Stubs)
+{
+    Flow::ConnectionOf<bool> connectionOfBool;
+    connectionOfBool.send(true);
+    bool b;
+    connectionOfBool.receive(b);
+    connectionOfBool.peek(b);
+    connectionOfBool.peek();
+    connectionOfBool.full();
+    connectionOfBool.elements();
+
+    Flow::Component component;
+    component.run();
+
+    Flow::Peek peek(nullptr);
+    peek.peek();
+
+    Data data(1, true);
+    StringFrom(data);
+
+    Flow::Reactor::reset();
+}

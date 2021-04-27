@@ -1,6 +1,6 @@
 /* The MIT License (MIT)
  *
- * Copyright (c) 2020 Cynara Krewe
+ * Copyright (c) 2021 Mathias Spiessens
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software, hardware and associated documentation files (the "Solution"), to deal
@@ -25,12 +25,12 @@
 
 #include "CppUTest/TestHarness.h"
 
-#include "components.h"
-#include "reactor.h"
+#include "flow/components.h"
+#include "flow/reactor.h"
 
 #include "data.h"
 
-using Flow::Connection;
+using Flow::Connect;
 using Flow::OutPort;
 using Flow::InPort;
 using Flow::connect;
@@ -38,9 +38,9 @@ using Flow::connect;
 TEST_GROUP(Component_Convert_TestBench)
 {
 	OutPort<float> outStimulus;
-	Connection* outStimulusConnection;
+	Connect* outStimulusConnection;
 	Convert<float, int32_t>* unitUnderTest;
-	Connection* inResponseConnection;
+	Connect* inResponseConnection;
 	InPort<int32_t> inResponse{ nullptr };
 
 	void setup()
@@ -76,7 +76,7 @@ TEST(Component_Convert_TestBench, Convert)
 
 	int32_t result = 0;
 	CHECK(inResponse.receive(result));
-	CHECK(result == 1);
+	CHECK_EQUAL(1, result);
 
 	CHECK(outStimulus.send(-1.0f));
 
@@ -84,5 +84,5 @@ TEST(Component_Convert_TestBench, Convert)
 
 	result = 0;
 	CHECK(inResponse.receive(result));
-	CHECK(result == -1);
+	CHECK_EQUAL(-1, result);
 }

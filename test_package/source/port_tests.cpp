@@ -1,6 +1,6 @@
 /* The MIT License (MIT)
  *
- * Copyright (c) 2020 Cynara Krewe
+ * Copyright (c) 2021 Mathias Spiessens
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software, hardware and associated documentation files (the "Solution"), to deal
@@ -26,11 +26,11 @@
 
 #include "CppUTest/TestHarness.h"
 
-#include "flow.h"
+#include "flow/flow.h"
 
 #include "data.h"
 
-using Flow::Connection;
+using Flow::Connect;
 using Flow::OutPort;
 using Flow::InPort;
 using Flow::connect;
@@ -39,7 +39,7 @@ const static unsigned int CONNECTION_FIFO_SIZE = 10;
 
 TEST_GROUP(Port_TestBench)
 {
-	Connection* connection;
+	Connect* connection;
 	OutPort<Data>* outUnitUnderTest;
 	InPort<Data>* inUnitUnderTest;
 
@@ -74,9 +74,12 @@ TEST(Port_TestBench, SendReceiveItem)
 	Data stimulus = Data(123, true);
 	CHECK(outUnitUnderTest->send(stimulus));
 	CHECK(inUnitUnderTest->peek());
+	Data peek;
+	CHECK(inUnitUnderTest->peek(peek));
+	CHECK_EQUAL(stimulus, peek);
 	Data response;
 	CHECK(inUnitUnderTest->receive(response));
-	CHECK(stimulus == response);
+	CHECK_EQUAL(stimulus, response);
 	CHECK(!inUnitUnderTest->peek());
 	CHECK(!inUnitUnderTest->receive(response));
 }
@@ -119,7 +122,7 @@ TEST(Port_TestBench, FullConnection)
 
 		// Item should be the expected.
 		Data expectedResponse = Data(c, true);
-		CHECK(response == expectedResponse);
+		CHECK_EQUAL(expectedResponse, response);
 
 		// Port should not be empty.
 		CHECK(inUnitUnderTest->peek());
@@ -130,7 +133,7 @@ TEST(Port_TestBench, FullConnection)
 	CHECK(inUnitUnderTest->receive(response));
 
 	// Item should be the expected.
-	CHECK(lastStimulus == response);
+	CHECK_EQUAL(lastStimulus, response);
 
 	// Port should be empty.
 	CHECK(!inUnitUnderTest->peek());
@@ -169,7 +172,7 @@ static void consumer(InPort<Data>* _unitUnderTest,
 
 TEST(Port_TestBench, Threadsafe)
 {
-	const unsigned long long count = 1000000;
+	const unsigned long long count = 1000;
 	bool success = true;
 
 	std::thread producerThread(producer, outUnitUnderTest, count);

@@ -1,6 +1,6 @@
 /* The MIT License (MIT)
  *
- * Copyright (c) 2020 Cynara Krewe
+ * Copyright (c) 2021 Mathias Spiessens
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software, hardware and associated documentation files (the "Solution"), to deal
@@ -25,30 +25,30 @@
 
 #include "CppUTest/TestHarness.h"
 
-#include "components.h"
-#include "reactor.h"
+#include "flow/components.h"
+#include "flow/reactor.h"
 
 #include "data.h"
 
-using Flow::Connection;
+using Flow::Connect;
 using Flow::OutPort;
 using Flow::InPort;
 using Flow::connect;
 
 TEST_GROUP(Component_Toggle_TestBench)
 {
-	OutPort<Tick>* outStimulus;
-	Connection* outStimulusConnection;
+	OutPort<void>* outStimulus;
+	Connect* outStimulusConnection;
 	Toggle* unitUnderTest;
-	Connection* inResponseConnection;
+	Connect* inResponseConnection;
 	InPort<bool> inResponse{ nullptr };
 
 	void setup()
 	{
-		outStimulus = new OutPort<Tick>;
+		outStimulus = new OutPort<void>;
 		unitUnderTest = new Toggle();
 
-		outStimulusConnection = connect(outStimulus, unitUnderTest->tick);
+		outStimulusConnection = connect(outStimulus, unitUnderTest->in);
 		inResponseConnection = connect(unitUnderTest->out, inResponse);
 	}
 
@@ -75,7 +75,7 @@ TEST(Component_Toggle_TestBench, DormantWithoutStimulus)
 
 TEST(Component_Toggle_TestBench, Toggle)
 {
-	CHECK(outStimulus->send(TICK));
+	CHECK(outStimulus->send());
 
 	CHECK(!inResponse.peek());
 
@@ -92,7 +92,7 @@ TEST(Component_Toggle_TestBench, Toggle)
 
 	CHECK(!inResponse.peek());
 
-	CHECK(outStimulus->send(TICK));
+	CHECK(outStimulus->send());
 
 	unitUnderTest->run();
 
@@ -100,7 +100,7 @@ TEST(Component_Toggle_TestBench, Toggle)
 	CHECK(inResponse.receive(currentResponse));
 
 	bool expected = !previousResponse;
-	CHECK(currentResponse == expected);
+	CHECK_EQUAL(expected, currentResponse);
 
 	previousResponse = currentResponse;
 
@@ -108,36 +108,36 @@ TEST(Component_Toggle_TestBench, Toggle)
 
 	CHECK(!inResponse.peek());
 
-	CHECK(outStimulus->send(TICK));
+	CHECK(outStimulus->send());
 
 	unitUnderTest->run();
 
 	CHECK(inResponse.receive(currentResponse));
 
 	expected = !previousResponse;
-	CHECK(currentResponse == expected);
+	CHECK_EQUAL(expected, currentResponse);
 
 	previousResponse = currentResponse;
 
-	CHECK(outStimulus->send(TICK));
+	CHECK(outStimulus->send());
 
 	unitUnderTest->run();
 
 	CHECK(inResponse.receive(currentResponse));
 
 	expected = !previousResponse;
-	CHECK(currentResponse == expected);
+	CHECK_EQUAL(expected, currentResponse);
 
 	previousResponse = currentResponse;
 
-	CHECK(outStimulus->send(TICK));
+	CHECK(outStimulus->send());
 
 	unitUnderTest->run();
 
 	CHECK(inResponse.receive(currentResponse));
 
 	expected = !previousResponse;
-	CHECK(currentResponse == expected);
+	CHECK_EQUAL(expected, currentResponse);
 
 	unitUnderTest->run();
 

@@ -1,6 +1,6 @@
 /* The MIT License (MIT)
  *
- * Copyright (c) 2020 Cynara Krewe
+ * Copyright (c) 2021 Mathias Spiessens
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software, hardware and associated documentation files (the "Solution"), to deal
@@ -27,19 +27,19 @@
 #include "CppUTest/TestHarness.h"
 #include "CppUTestExt/MockSupport.h"
 
-#include "components.h"
-#include "reactor.h"
-#include "utility.h"
+#include "flow/components.h"
+#include "flow/reactor.h"
+#include "flow/utility.h"
 
 #include "data.h"
 
 TEST_GROUP(Reactor_TestBench)
 {
 	SoftwareTimer* timer;
-	Counter<Tick>* counterA;
+	Counter<void>* counterA;
 	Counter<uint32_t>* counterB;
 
-	std::vector<Flow::Connection*> connections;
+	std::vector<Flow::Connect*> connections;
 
 	Flow::InPort<uint32_t> inCount{ nullptr };
 
@@ -47,15 +47,16 @@ TEST_GROUP(Reactor_TestBench)
 	{
 		Flow::Reactor::reset();
 
-		timer = new SoftwareTimer{1};
-		counterA = new Counter<Tick>{UINT32_MAX};
-		counterB = new Counter<uint32_t>{UINT32_MAX};
+		timer = new SoftwareTimer{ 1 };
+		counterA = new Counter<void>{50};
+		counterB = new Counter<uint32_t>{101};
 
 		connections =
 		{
-			Flow::connect(timer->outTick, counterA->in),
+			Flow::connect(timer->outTimeout, counterA->in),
 			Flow::connect(counterA->out, counterB->in),
 			Flow::connect(counterB->out, inCount)
+		
 		};
 	}
 
@@ -63,7 +64,7 @@ TEST_GROUP(Reactor_TestBench)
 	{
 		mock().clear();
 
-		for(Flow::Connection* connection : connections)
+		for(auto connection : connections)
 		{
 			Flow::disconnect(connection);
 		}

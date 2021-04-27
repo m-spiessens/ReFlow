@@ -1,12 +1,18 @@
 # Flow {#mainpage}
 
-[![Build Status](https://travis-ci.com/CynaraKrewe/Flow.svg?branch=master](https://travis-ci.org/CynaraKrewe/Flow)
-[![Coverage Status](https://coveralls.io/repos/github/CynaraKrewe/Flow/badge.svg)](https://coveralls.io/github/CynaraKrewe/Flow)
-
-[We have conan packages!](https://bintray.com/cynarakrewe/CynaraConan)
+[![pipeline status](https://gitlab.com/m-spiessens/Flow/badges/master/pipeline.svg)](https://gitlab.com/m-spiessens/Flow/-/commits/master)
+[![coverage report](https://gitlab.com/m-spiessens/Flow/badges/master/coverage.svg)](https://gitlab.com/m-spiessens/Flow/-/commits/master)
 
 Flow is a pipes and filters implementation tailored for (but not exclusive to) ARM Cortex-M microcontrollers. It provides 3 concepts: component, port and connection.
 A minimal cooperative scheduler helps you build low-power, reactive applications with ease.
+
+## Get Flow!
+
+[We have conan packages!](https://spiessensm.jfrog.io/ui/packages?packageType=conan&type=packages)
+
+```bash
+conan remote add spiessensm https://spiessensm.jfrog.io/artifactory/api/conan/spiessensm
+```
 
 ## Concepts
 
@@ -55,7 +61,7 @@ A few different strategies might be a future extension.
 
 ### Blinky
 
-Blinky is a minimal example application that performs blinking of a LED. It runs on a [EK-TM4CEXL launchpad](http://www.ti.com/tool/EK-TM4C129EXL) with cooperative scheduling.
+Blinky is a minimal example application that performs blinking of a LED. It runs on a [EK-TM4C129EXL launchpad](http://www.ti.com/tool/EK-TM4C129EXL) with cooperative scheduling.
 
 Blinky is composed of 3 components: a timer, toggling and a digital output. The timer will generate a tick every configured period. The toggling will consume the tick and invert an internal boolean value. The boolean value is sent to the digital output, which has a LED attached.
 
@@ -73,7 +79,7 @@ The components (actually the ports of the components) are connected so they can 
 
 ```cpp
 // Connect the components of the application.
-Flow::connect(timer.outTick, toggle.tick);
+Flow::connect(timer.outTimeout, toggle.in);
 Flow::connect(toggle.out, led.inState);
 ```
 
@@ -88,5 +94,4 @@ while(true)
 	Flow::Reactor::run();
 }
 ```
-The full example can be found at [FlowBlinky](https://github.com/CynaraKrewe/FlowBlinky).
-A more complex example with PWM, UART, USB and ADC can be found at [FlowTM4C](https://github.com/CynaraKrewe/FlowTM4C).
+The full example can be found in `example/EK-TM4C129EXL`.

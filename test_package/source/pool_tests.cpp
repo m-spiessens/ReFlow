@@ -1,6 +1,6 @@
 /* The MIT License (MIT)
  *
- * Copyright (c) 2020 Cynara Krewe
+ * Copyright (c) 2021 Mathias Spiessens
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software, hardware and associated documentation files (the "Solution"), to deal
@@ -26,8 +26,8 @@
 
 #include "CppUTest/TestHarness.h"
 
-#include "pool.h"
-#include "utility.h"
+#include "flow/pool.h"
+#include "flow/utility.h"
 
 #include "data.h"
 
@@ -60,16 +60,6 @@ TEST_GROUP(Pool_TestBench)
 		}
 	}
 };
-
-TEST(Pool_TestBench, CopyConstructor)
-{
-	Pool<char> other(1);
-	other.take();
-	Pool<char> some(2);
-	Pool<char> copied(other);
-	some = copied;
-	CHECK(!other.haveAvailable());
-}
 
 TEST(Pool_TestBench, HaveAvailableAfterCreation)
 {
@@ -106,7 +96,7 @@ TEST(Pool_TestBench, NoAvailable)
 
 		// Pool should not have any more available.
 		Data* response = unitUnderTest[i]->take();
-		CHECK(response == nullptr);
+		CHECK_EQUAL(nullptr, response);
 
 		CHECK(!unitUnderTest[i]->haveAvailable());
 
@@ -157,7 +147,7 @@ TEST(Pool_TestBench, Threadsafe)
 	{
 		CHECK(unitUnderTest[i]->haveAvailable());
 
-		const unsigned long long numberOfItems = 1000000;
+		const unsigned long long numberOfItems = 1000;
 		bool success = true;
 
 		for (unsigned int t = 0; t < POOL_SIZE[i]; t++)
@@ -173,7 +163,7 @@ TEST(Pool_TestBench, Threadsafe)
 		releaseThread.join();
 
 		CHECK(success);
-		CHECK(recycle.isEmpty());
+		CHECK(recycle.empty());
 
 		CHECK(unitUnderTest[i]->haveAvailable());
 	}

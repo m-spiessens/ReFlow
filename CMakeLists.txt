@@ -8,20 +8,18 @@ conan_basic_setup(TARGETS)
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
-if(CMAKE_BUILD_TYPE STREQUAL "Debug")
-    add_compile_options(-Wall -Wextra -pedantic -fprofile-arcs -ftest-coverage)
-endif()
-
-configure_file(include/version.h.in version.h)
+add_compile_options(-fno-rtti -fno-exceptions -fno-unwind-tables -ffunction-sections -fdata-sections -Wall -Wextra -pedantic)
 
 add_library(Flow "")
-target_include_directories(Flow PUBLIC 
+target_include_directories(Flow
+PUBLIC 
     "${PROJECT_BINARY_DIR}"
-    "${PROJECT_SOURCE_DIR}/include")
+    "${PROJECT_SOURCE_DIR}/include"
+)
 
 target_sources(Flow
-    PRIVATE
-        source/components.cpp
-        source/flow.cpp
-        source/reactor.cpp
+PRIVATE
+    source/flow/components.cpp
+    source/flow/flow.cpp
+    source/flow/reactor.cpp
 )
