@@ -19,3 +19,5 @@ CMakeCache.txt
 CMakeFiles/
 conan.lock
 graph_info.json
+example/*-Debug/
+example/*-Release/

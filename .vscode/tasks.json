@@ -147,6 +147,46 @@
             "problemMatcher": [
                 "$gcc"
             ]
+        },
+        {
+            "label": "nRF5340 Install Debug",
+            "type": "shell",
+            "command": "conan install example/nRF5340-DK -pr:h nRF5340 -if=example/nRF5340-DK-Debug/ -s build_type=Debug --build Flow/2.0@spiessensm/dev",
+            "dependsOn": [
+                "ExportDev"
+            ]
+        },
+        {
+            "label": "nRF5340 Build Debug",
+            "type": "shell",
+            "command": "conan build example/nRF5340-DK -bf=example/nRF5340-DK-Debug/",
+            "group": "build",
+            "dependsOn": [
+                "nRF5340 Install Debug"
+            ],
+            "problemMatcher": [
+                "$gcc"
+            ]
+        },
+        {
+            "label": "nRF5340 Install Release",
+            "type": "shell",
+            "command": "conan install example/nRF5340-DK -pr:h nRF5340 -if=example/nRF5340-DK-Release/ -s build_type=Release --build Flow/2.0@spiessensm/dev",
+            "dependsOn": [
+                "ExportDev"
+            ]
+        },
+        {
+            "label": "nRF5340 Build Release",
+            "type": "shell",
+            "command": "conan build example/nRF5340-DK -bf=example/nRF5340-DK-Release/",
+            "group": "build",
+            "dependsOn": [
+                "nRF5340 Install Release"
+            ],
+            "problemMatcher": [
+                "$gcc"
+            ]
         }
     ]
 }
