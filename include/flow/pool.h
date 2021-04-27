@@ -71,52 +71,6 @@ public:
 	}
 
 	/**
-	 * \brief Copy constructor.
-	 *
-	 * Performs a complete, deep copy of the given pool.
-	 * The array of DataType will be allocated on the heap.
-	 *
-	 * \param other Pool to be copied.
-	 */
-	explicit Pool(const Pool<DataType>& other) :
-			_size(other._size),
-			_data(new DataType[_size]),
-			_available(other._available)
-	{
-		for (uint_fast16_t i = 0; i < _size; i++)
-		{
-			_data[i] = other._data[i];
-		}
-	}
-
-	/**
-	 * \brief Assignment operator.
-	 */
-	Pool& operator=(const Pool<DataType>& other)
-	{
-		Pool<DataType> shadow(other);
-		*this = std::move(shadow);
-		return *this;
-	}
-
-	/**
-	 * \brief Move operator.
-	 */
-	Pool& operator=(Pool<DataType>&& other) noexcept
-	{
-		if(this != &other)
-		{
-			delete[] _data;
-			_data = other._data;
-			other._data = nullptr;
-			_size = other._size;
-			_available = other._available;
-		}
-
-		return *this;
-	}
-
-	/**
 	 * \brief Destructor.
 	 *
 	 * Deallocates the array of DataType from the heap.
