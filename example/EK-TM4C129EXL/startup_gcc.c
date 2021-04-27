@@ -46,138 +46,41 @@ extern unsigned stack __asm("_stack");
 // The vector table. Note: the proper constructs must be placed on this to
 // ensure that it ends up at physical address 0x0000.0000.
 __attribute__ ((section(".vectors")))
-void (* const vectors[])(void) =
+void (* const vectors[128])(void) =
 {
-	(void *)&stack,   // The initial stack pointer
-	reset,          // The reset handler
-	nmi,// Must be serviced by ROM code for IPC to work!!!
-	faultHard,		// The hard fault handler
-	faultMPU,		// The MPU fault handler
-	faultBus,		// The bus fault handler
-	faultUsage,		// The usage fault handler
-	0,				// Reserved
-	0,				// Reserved
-	0,				// Reserved
-	0,				// Reserved
-	isrNotExpected, // SVCall handler
-	isrNotExpected, // Debug monitor handler
-	0,                 // Reserved
-	isrNotExpected, // The PendSV handler
-	isrNotExpected, // The SysTick handler
+	(void *)&stack,		// The initial stack pointer
+	reset,          	// The reset handler
+	nmi,				// Non-maskable interrupt
+	faultHard,			// The hard fault handler
+	faultMPU,			// The MPU fault handler
+	faultBus,			// The bus fault handler
+	faultUsage,			// The usage fault handler
+	0,					// Reserved
+	0,					// Reserved
+	0,					// Reserved
+	0,					// Reserved
+	&isrNotExpected,	// SVCall handler
+	&isrNotExpected,	// Debug monitor handler
+	0,					// Reserved
+	&isrNotExpected,	// The PendSV handler
+	&isrNotExpected,	// The SysTick handler
 	//
-    /* ----------------------  Museic Specific Interrupt Handlers  ---------------------------------------- */
-	isrNotExpected, // GPIO Port A
-	isrNotExpected, // GPIO Port B
-	isrNotExpected, // GPIO Port C
-	isrNotExpected, // GPIO Port D
-	isrNotExpected, // GPIO Port E
-	isrNotExpected, // UART0 Rx and Tx
-	isrNotExpected, // UART1 Rx and Tx
-	isrNotExpected, // SSI0 Rx and Tx
-    isrNotExpected, // I2C0 Master and Slave
-    isrNotExpected, // PWM Fault
-    isrNotExpected, // PWM Generator 0
-    isrNotExpected, // PWM Generator 1
-    isrNotExpected, // PWM Generator 2
-    isrNotExpected, // Quadrature Encoder 0
-    isrNotExpected, // ADC0 Sequence 0
-    isrNotExpected, // ADC0 Sequence 1
-    isrNotExpected, // ADC0 Sequence 2
-    isrNotExpected, // ADC0 Sequence 3
-    isrNotExpected, // Watchdog timer
-    isrNotExpected, // Timer 0 subtimer A
-    isrNotExpected, // Timer 0 subtimer B
-    isrNotExpected, // Timer 1 subtimer A
-    isrNotExpected, // Timer 1 subtimer B
-    isrNotExpected, // Timer 2 subtimer A
-    isrNotExpected, // Timer 2 subtimer B
-    isrNotExpected, // Analog Comparator 0
-    isrNotExpected, // Analog Comparator 1
-    isrNotExpected, // Analog Comparator 2
-    isrNotExpected, // System Control (PLL, OSC, BO)
-    isrNotExpected, // FLASH Control
-	isrNotExpected, // GPIO Port F
-	isrNotExpected, // GPIO Port G
-	isrNotExpected, // GPIO Port H
-	isrNotExpected, // UART2 Rx and Tx
-    isrNotExpected, // SSI1 Rx and Tx
-    isrNotExpected, // Timer 3 subtimer A
-    isrNotExpected, // Timer 3 subtimer B
-    isrNotExpected, // I2C1 Master and Slave
-    isrNotExpected, // CAN0
-    isrNotExpected, // CAN1
-	isrNotExpected, // Ethernet
-    isrNotExpected, // Hibernate
-	isrNotExpected, // USB0
-    isrNotExpected, // PWM Generator 3
-    isrNotExpected, // uDMA Software Transfer
-    isrNotExpected, // uDMA Error
-    isrNotExpected, // ADC1 Sequence 0
-    isrNotExpected, // ADC1 Sequence 1
-    isrNotExpected, // ADC1 Sequence 2
-    isrNotExpected, // ADC1 Sequence 3
-    isrNotExpected, // External Bus Interface 0
-    isrNotExpected, // GPIO Port J
-	isrNotExpected, // GPIO Port K
-	isrNotExpected, // GPIO Port L
-	isrNotExpected, // SSI2 Rx and Tx
-    isrNotExpected, // SSI3 Rx and Tx
-	isrNotExpected, // UART3 Rx and Tx
-	isrNotExpected, // UART4 Rx and Tx
-	isrNotExpected, // UART5 Rx and Tx
-	isrNotExpected, // UART6 Rx and Tx
-	isrNotExpected, // UART7 Rx and Tx
-    isrNotExpected, // I2C2 Master and Slave
-    isrNotExpected, // I2C3 Master and Slave
-	isrNotExpected, // Timer 4 subtimer A
-    isrNotExpected, // Timer 4 subtimer B
-	isrNotExpected, // Timer 5 subtimer A
-    isrNotExpected, // Timer 5 subtimer B
-    isrNotExpected, // FPU
-    0, // Reserved
-    0, // Reserved
-    isrNotExpected, // I2C4 Master and Slave
-    isrNotExpected, // I2C5 Master and Slave
-	isrNotExpected, // GPIO Port M
-	isrNotExpected, // GPIO Port N
-    0, // Reserved
-    isrNotExpected, // Tamper
-    isrNotExpected, // GPIO Port P (Summary or P0)
-	isrNotExpected, // GPIO Port P1
-	isrNotExpected, // GPIO Port P2
-	isrNotExpected, // GPIO Port P3
-	isrNotExpected, // GPIO Port P4
-	isrNotExpected, // GPIO Port P5
-	isrNotExpected, // GPIO Port P6
-	isrNotExpected, // GPIO Port P7
-	isrNotExpected, // GPIO Port Q (Summary or Q0)
-	isrNotExpected, // GPIO Port Q1
-	isrNotExpected, // GPIO Port Q2
-	isrNotExpected, // GPIO Port Q3
-	isrNotExpected, // GPIO Port Q4
-	isrNotExpected, // GPIO Port Q5
-	isrNotExpected, // GPIO Port Q6
-	isrNotExpected, // GPIO Port Q7
-	isrNotExpected, // GPIO Port R
-	isrNotExpected, // GPIO Port S
-    isrNotExpected, // SHA/MD5 0
-    isrNotExpected, // AES 0
-    isrNotExpected, // DES3DES 0
-    isrNotExpected, // LCD Controller 0
-    isrNotExpected, // Timer 6 subtimer A
-    isrNotExpected, // Timer 6 subtimer B
-    isrNotExpected, // Timer 7 subtimer A
-    isrNotExpected, // Timer 7 subtimer B
-    isrNotExpected, // I2C6 Master and Slave
-    isrNotExpected, // I2C7 Master and Slave
-    isrNotExpected, // HIM Scan Matrix Keyboard 0
-    isrNotExpected, // One Wire 0
-    isrNotExpected, // HIM PS/2 0
-    isrNotExpected, // HIM LED Sequencer 0
-    isrNotExpected, // HIM Consumer IR 0
-    isrNotExpected, // I2C8 Master and Slave
-    isrNotExpected, // I2C9 Master and Slave
-	isrNotExpected  // GPIO Port T
+    &isrNotExpected, &isrNotExpected, &isrNotExpected, &isrNotExpected, &isrNotExpected, &isrNotExpected,
+	&isrNotExpected, &isrNotExpected, &isrNotExpected, &isrNotExpected, &isrNotExpected, &isrNotExpected,
+	&isrNotExpected, &isrNotExpected, &isrNotExpected, &isrNotExpected, &isrNotExpected, &isrNotExpected,
+	&isrNotExpected, &isrNotExpected, &isrNotExpected, &isrNotExpected, &isrNotExpected, &isrNotExpected,
+	&isrNotExpected, &isrNotExpected, &isrNotExpected, &isrNotExpected, &isrNotExpected, &isrNotExpected,
+	&isrNotExpected, &isrNotExpected, &isrNotExpected, &isrNotExpected, &isrNotExpected, &isrNotExpected,
+	&isrNotExpected, &isrNotExpected, &isrNotExpected, &isrNotExpected, &isrNotExpected, &isrNotExpected,
+	&isrNotExpected, &isrNotExpected, &isrNotExpected, &isrNotExpected, &isrNotExpected, &isrNotExpected,
+    &isrNotExpected, &isrNotExpected, &isrNotExpected, &isrNotExpected, &isrNotExpected, &isrNotExpected,
+    &isrNotExpected, &isrNotExpected, &isrNotExpected, &isrNotExpected, &isrNotExpected, &isrNotExpected,
+    &isrNotExpected, &isrNotExpected, &isrNotExpected, &isrNotExpected, &isrNotExpected, &isrNotExpected,
+    &isrNotExpected, &isrNotExpected, &isrNotExpected, &isrNotExpected, &isrNotExpected, &isrNotExpected,
+    &isrNotExpected, &isrNotExpected, &isrNotExpected, &isrNotExpected, &isrNotExpected, &isrNotExpected,
+    &isrNotExpected, &isrNotExpected, &isrNotExpected, &isrNotExpected, &isrNotExpected, &isrNotExpected,
+    &isrNotExpected, &isrNotExpected, &isrNotExpected, &isrNotExpected, &isrNotExpected, &isrNotExpected,
+    &isrNotExpected, &isrNotExpected, &isrNotExpected, &isrNotExpected, &isrNotExpected, &isrNotExpected
 };
 
 __attribute__ ((aligned(1024)))
@@ -200,7 +103,7 @@ extern void _init(void);
 
 // This is the code that gets called when the processor first starts execution
 // following a reset event.  Only the absolutely necessary set is performed,
-// after which the application supplied entry() routine is called.  Any fancy
+// after which the application supplied main() routine is called.  Any fancy
 // actions (such as making decisions based on the reset cause register, and
 // resetting the bits in that register) are left solely in the hands of the
 // application.

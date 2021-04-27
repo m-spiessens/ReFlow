@@ -85,6 +85,7 @@ SECTIONS
     .data : AT (_etext)
     {
         _data = .;
+        KEEP(*(.ramVectors))
 
         *(vtable)
         *(.data*)
