@@ -3,15 +3,15 @@
 [![pipeline status](https://gitlab.com/m-spiessens/Flow/badges/master/pipeline.svg)](https://gitlab.com/m-spiessens/Flow/-/commits/master)
 [![coverage report](https://gitlab.com/m-spiessens/Flow/badges/master/coverage.svg)](https://gitlab.com/m-spiessens/Flow/-/commits/master)
 
-Flow is a pipes and filters implementation tailored for (but not exclusive to) ARM Cortex-M microcontrollers. It provides 3 concepts: component, port and connection.
+Flow is an [actor model](https://en.wikipedia.org/wiki/Actor_model) implementation tailored for (but not exclusive to) ARM Cortex-M microcontrollers. It provides 3 concepts: component, port and connection.
 A minimal cooperative scheduler helps you build low-power, reactive applications with ease.
 
 ## Get Flow!
 
-[We have conan packages!](https://spiessensm.jfrog.io/ui/packages?packageType=conan&type=packages)
+[We have conan packages!](https://gitlab.com/m-spiessens/conan.io/-/packages)
 
 ```bash
-conan remote add spiessensm https://spiessensm.jfrog.io/artifactory/api/conan/spiessensm
+conan config install https://gitlab.com/m-spiessens/conan-config.git
 ```
 
 ## Concepts
@@ -94,4 +94,4 @@ while(true)
 	Flow::Reactor::run();
 }
 ```
-The full example can be found in `example/EK-TM4C129EXL`.
+The full examples can be found in `example/<dev_board>`.
