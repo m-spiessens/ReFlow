@@ -1,0 +1,6 @@
+[submodule "example/3rd-party/nrfx"]
+	path = example/3rd-party/nrfx
+	url = git@github.com:NordicSemiconductor/nrfx.git
+[submodule "example/3rd-party/CMSIS_5"]
+	path = example/3rd-party/CMSIS_5
+	url = git@github.com:ARM-software/CMSIS_5.git

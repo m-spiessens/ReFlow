@@ -6,14 +6,6 @@
 Flow is an [actor model](https://en.wikipedia.org/wiki/Actor_model) implementation tailored for (but not exclusive to) ARM Cortex-M microcontrollers. It provides 3 concepts: component, port and connection.
 A minimal cooperative scheduler helps you build low-power, reactive applications with ease.
 
-## Get Flow!
-
-[We have conan packages!](https://gitlab.com/m-spiessens/conan.io/-/packages)
-
-```bash
-conan config install https://gitlab.com/m-spiessens/conan-config.git
-```
-
 ## Concepts
 
 ### Component
@@ -55,7 +47,9 @@ The current scheduling strategy is a simple round robin.
 
 Priority could be introduced by changing the Flow::Reactor::run() implementation. After finding a Flow::Component that had to be run (and running it) the reactor continues in the list. If the reactor would start from the start of the list after running a component, the order in which Flow::Components are created will define their priority for scheduling. This way different data paths could have different priorities. 
 
-A few different strategies might be a future extension.
+## Get started
+
+Open Visual Studio Code, `ctrl+shift+p` -> `Tasks: Run Test Task` 
 
 ## Example
 
@@ -95,3 +89,7 @@ while(true)
 }
 ```
 The full examples can be found in `example/<dev_board>`.
+
+### Get Started
+
+Open Visual Studio Code, `ctrl+shift+b` -> `TM4C [configure & build]` 

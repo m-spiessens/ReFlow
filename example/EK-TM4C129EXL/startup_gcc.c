@@ -46,7 +46,7 @@ extern unsigned stack __asm("_stack");
 // The vector table. Note: the proper constructs must be placed on this to
 // ensure that it ends up at physical address 0x0000.0000.
 __attribute__ ((section(".vectors")))
-void (* const vectors[128])(void) =
+void (*const vectors[128])(void) =
 {
 	(void *)&stack,		// The initial stack pointer
 	reset,          	// The reset handler
@@ -134,7 +134,7 @@ void reset(void)
 	}
 
 	// Reset stack pointer.
-	__ramVectors[0] = (void*)&stack;
+	__ramVectors[0] = (void *)&stack;
 
 #define VTOR *(uint32_t*)0xE000ED08
 

@@ -66,7 +66,7 @@ void SingleShot::start()
 {
 	nrf_timer_mode_set(peripheral(), NRF_TIMER_MODE_TIMER);
 	nrf_timer_bit_width_set(peripheral(), NRF_TIMER_BIT_WIDTH_32);
-	nrf_timer_frequency_set(peripheral(), NRF_TIMER_FREQ_125kHz);
+	nrf_timer_prescaler_set(peripheral(), NRF_TIMER_FREQ_125kHz);
 
 	Interrupt::VectorTable::enable(vector());
 }
@@ -130,7 +130,7 @@ void Continuous::start()
 {
 	nrf_timer_mode_set(peripheral(), NRF_TIMER_MODE_TIMER);
 	nrf_timer_bit_width_set(peripheral(), NRF_TIMER_BIT_WIDTH_32);
-	nrf_timer_frequency_set(peripheral(), NRF_TIMER_FREQ_125kHz);
+	nrf_timer_prescaler_set(peripheral(), NRF_TIMER_FREQ_125kHz);
 
 	nrf_timer_cc_set(peripheral(), NRF_TIMER_CC_CHANNEL0, 125 * periodMs);
 	nrf_timer_int_enable(peripheral(), NRF_TIMER_INT_COMPARE0_MASK);
