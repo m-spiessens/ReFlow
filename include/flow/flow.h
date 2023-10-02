@@ -27,7 +27,6 @@
 #include <assert.h>
 #include <signal.h>
 
-#include "container.h"
 #include "queue.h"
 
 using etl::Queue;
@@ -567,8 +566,7 @@ private:
 
 template<>
 class Connection<void> :
-		public Connect,
-		public Container
+		public Connect
 {
 public:
 	Connection<void>(OutPort<void>& sender, InPort<void>& receiver, uint16_t size);
@@ -599,9 +597,29 @@ public:
 		return available;
 	}
 
+	bool full() const
+	{
+		return (enqueued == static_cast<uint16_t>(dequeued + _size));
+	}
+	
+	bool peek() const
+	{
+		return !empty();
+	}
+
+
 private:
 	OutPort<void>& sender;
 	InPort<void>& receiver;
+	
+	std::atomic<uint16_t> enqueued = 0;
+	std::atomic<uint16_t> dequeued = 0;
+	const size_t _size;
+	
+	bool empty() const
+	{
+		return (enqueued == dequeued);
+	}
 };
 
 /**
