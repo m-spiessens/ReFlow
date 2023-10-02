@@ -156,7 +156,7 @@ bool OutPort<void>::isConnected() const
 }
 
 Connection<void>::Connection(OutPort<void>& sender, InPort<void>& receiver, uint16_t size) :
-		Container(size),
+		_size(size),
 		sender(sender), receiver(receiver)
 {
 	sender.connect(this);
@@ -168,40 +168,5 @@ Connection<void>::~Connection()
 	sender.disconnect();
 	receiver.disconnect();
 }
-
-// template<>
-// Connect* connect(OutPort<void>& sender, InPort<void>& receiver,
-// 		uint16_t size)
-// {
-// 	return new ConnectionOf<void>(sender, receiver, size);
-// }
-
-// template<>
-// Connect* connect(OutPort<void>* sender, InPort<void>& receiver,
-// 		uint16_t size)
-// {
-// 	assert(sender != nullptr);
-
-// 	return new ConnectionOf<void>(*sender, receiver, size);
-// }
-
-// template<>
-// Connect* connect(OutPort<void>& sender, InPort<void>* receiver,
-// 		uint16_t size)
-// {
-// 	assert(receiver != nullptr);
-
-// 	return new ConnectionOf<void>(sender, *receiver, size);
-// }
-
-// template<>
-// Connect* connect(OutPort<void>* sender, InPort<void>* receiver,
-// 		uint16_t size)
-// {
-// 	assert(sender != nullptr);
-// 	assert(receiver != nullptr);
-
-// 	return new ConnectionOf<void>(*sender, *receiver, size);
-// }
 
 } // namespace Flow
