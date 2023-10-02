@@ -15,6 +15,7 @@ if(NOT CMAKE_BUILD_TYPE)
 endif()
 
 add_library(Flow)
+
 target_include_directories(Flow
 PUBLIC 
     include/
@@ -22,9 +23,14 @@ PUBLIC
 
 target_sources(Flow
 PRIVATE
-    source/flow/components.cpp
-    source/flow/flow.cpp
-    source/flow/reactor.cpp
+    source/components.cpp
+    source/flow.cpp
+    source/reactor.cpp
+)
+
+target_link_libraries(Flow
+PUBLIC
+    etl
 )
 
 add_library(driver INTERFACE)
@@ -33,6 +39,8 @@ target_include_directories(driver
 INTERFACE
     ./
 )
+
+add_subdirectory(include/etl)
 
 if(${CMAKE_SYSTEM_NAME} STREQUAL Linux)
     add_subdirectory(test/)

@@ -26,13 +26,15 @@
 
 #include <stdint.h>
 
+#include <atomic>
+
 namespace Flow
 {
 
 class Container
 {
 public:
-	Container(uint16_t size) :
+	Container(size_t size) :
 			_size(size)
 	{
 	}
@@ -52,22 +54,22 @@ public:
 		return !empty();
 	}
 
-	uint16_t elements() const
+	size_t elements() const
 	{
 		int32_t delta = static_cast<int32_t>(enqueued) - static_cast<int32_t>(dequeued);
 
 		return static_cast<uint16_t>((delta >= 0) ? delta : delta + UINT16_MAX + 1);
 	}
 
-	uint16_t size() const
+	size_t size() const
 	{
 		return _size;
 	}
 
 protected:
-	volatile uint16_t enqueued = 0;
-	volatile uint16_t dequeued = 0;
-	const uint16_t _size;
+	std::atomic<uint16_t> enqueued = 0;
+	std::atomic<uint16_t> dequeued = 0;
+	const size_t _size;
 };
 
 } // namespace Flow

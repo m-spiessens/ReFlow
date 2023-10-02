@@ -27,7 +27,10 @@
 #include <assert.h>
 #include <signal.h>
 
+#include "container.h"
 #include "queue.h"
+
+using etl::Queue;
 
 /**
  * \brief Flow is a pipes and filters implementation tailored for (but not exclusive to) microcontrollers.
@@ -289,7 +292,7 @@ public:
 	 */
 	bool peek() const final override
 	{
-		return !Container::empty();
+		return !Queue<Type>::empty();
 	}
 
 	/**
@@ -297,7 +300,7 @@ public:
 	 */
 	bool full() const final override
 	{
-		return Container::full();
+		return Queue<Type>::full();
 	}
 
 	/**
@@ -305,7 +308,7 @@ public:
 	 */
 	bool elements() const final override
 	{
-		return Container::elements();
+		return Queue<Type>::elements();
 	}
 
 private:

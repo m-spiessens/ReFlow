@@ -20,12 +20,10 @@ PRIVATE
     source/component_invert_tests.cpp
     source/component_toggle_tests.cpp
     source/inoutport_tests.cpp
-    source/queue_tests.cpp
     source/trigger_tests.cpp
     source/component_convert_tests.cpp
     source/component_split_tests.cpp
     source/component_updowncounter_tests.cpp
-    source/pool_tests.cpp
     source/reactor_tests.cpp
     source/component_counter_tests.cpp
     source/component_timer_tests.cpp

@@ -4,3 +4,6 @@
 [submodule "example/3rd-party/CMSIS_5"]
 	path = example/3rd-party/CMSIS_5
 	url = git@github.com:ARM-software/CMSIS_5.git
+[submodule "include/etl"]
+	path = include/etl
+	url = git@github.com:m-spiessens/etl.git
