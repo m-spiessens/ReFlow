@@ -1,7 +1,6 @@
-# Flow {#mainpage}
+# ReFlow {#mainpage}
 
-[![pipeline status](https://gitlab.com/m-spiessens/Flow/badges/master/pipeline.svg)](https://gitlab.com/m-spiessens/Flow/-/commits/master)
-[![coverage report](https://gitlab.com/m-spiessens/Flow/badges/master/coverage.svg)](https://gitlab.com/m-spiessens/Flow/-/commits/master)
+[![ReFlow CI](https://github.com/m-spiessens/ReFlow/actions/workflows/ci.yml/badge.svg)](https://github.com/m-spiessens/ReFlow/actions/workflows/ci.yml)
 
 Flow is an [actor model](https://en.wikipedia.org/wiki/Actor_model) implementation tailored for (but not exclusive to) ARM Cortex-M microcontrollers. It provides 3 concepts: component, port and connection.
 A minimal cooperative scheduler helps you build low-power, reactive applications with ease.
