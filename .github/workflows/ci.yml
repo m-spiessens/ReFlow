@@ -1,4 +1,4 @@
-name: Embedded Template Library CI
+name: ReFlow CI
 
 on: [push]
 
@@ -6,7 +6,7 @@ jobs:
   build-test:
     runs-on: ubuntu-latest
     steps:
-      - name: Install xmllint
+      - name: Install cpputest
         run: sudo apt-get install -y cpputest
       - name: Check out repository
         uses: actions/checkout@v3
