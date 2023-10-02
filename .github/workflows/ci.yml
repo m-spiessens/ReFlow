@@ -1,0 +1,21 @@
+name: Embedded Template Library CI
+
+on: [push]
+
+jobs:
+  build-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v3
+      - name: Create build/ directory
+        run: mkdir build/
+      - name: Configure
+        working-directory: build/
+        run: cmake ..
+      - name: Build
+        working-directory: build/
+        run: cmake --build . --parallel
+      - name: Run tests
+        working-directory: build/
+        run: ctest -V
